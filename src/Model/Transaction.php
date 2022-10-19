@@ -8,8 +8,10 @@ class Transaction
     private string $description;
     private float $price;
     private string $category;
-    private bool $io; // entrada/saída
+    private bool $io; // input/output
+
     private static float $totalInputs = 0;
+    private static float $totalOutputs = 0;
 
 
     public function __construct(
@@ -24,8 +26,7 @@ class Transaction
         $this->category = $category;
         $this->io = $io;
 
-        self::$totalInputs += $this->getPrice();
-
+        $this->io ? self::$totalInputs += $this->getPrice() : self::$totalOutputs += $this->getPrice();
     }
 
     public function getDescription(): string
@@ -71,6 +72,11 @@ class Transaction
     public static function getTotalInputs(): float
     {
         return self::$totalInputs;
+    }
+
+    public static function getTotalOutputs(): float
+    {
+        return self::$totalOutputs;
     }
 
 }
