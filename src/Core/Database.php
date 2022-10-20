@@ -81,6 +81,25 @@ class Database extends PDO
         } catch (\PDOException $PDOException) {
             echo $PDOException->getMessage() . PHP_EOL;
         }
+    }
+
+    public function dataPagination()
+    {
+
+        $search = "SELECT * FROM Transactions;";
+        $totalReg = 10;
+
+        $currentPage = 1;
+
+        $start = $currentPage - 1;
+        $start = $start - $totalReg;
+
+        // substituir por pdo
+        $offset = mysqli_query("$search LIMIT $start, $totalReg");
+        $all = mysqli_query("$search");
+
+        $totalRegisters = mysqli_num_rows($all);
+        echo $totalRegisters;
 
     }
 

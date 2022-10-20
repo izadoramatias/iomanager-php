@@ -48,5 +48,6 @@ echo TransactionController::calculateFinanceTotal() . PHP_EOL;
 
 
 $testeDB = new Database();
+$testeDB->dataPagination();
 $result = $testeDB->insertDataOnTable($teste3);
 
