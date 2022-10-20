@@ -1,6 +1,7 @@
 <?php
 
 namespace Manager\Core;
+use Manager\Model\Transaction;
 use PDO;
 
 class Database extends PDO
@@ -12,9 +13,11 @@ class Database extends PDO
     private $DB_HOST = 'localhost';
 
     private $conn;
+    private Transaction $transaction;
 
-    public function  __construct()
-    {
+    public function  __construct(
+
+    ) {
         try {
 
             $this->conn = new PDO("mysql:host=$this->DB_HOST;user=$this->DB_USER;password=$this->DB_PASSWORD");
@@ -27,6 +30,7 @@ class Database extends PDO
 
             echo $PDOException->getMessage() . PHP_EOL;
         }
+
     }
 
     private function databaseCreate(): void
@@ -47,7 +51,7 @@ class Database extends PDO
     private function createTable(): void
     {
         $sqlTable = "CREATE TABLE IF NOT EXISTS Transactions (
-                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                idTransaction INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 description VARCHAR(45) NOT NULL,
                 price DECIMAL(10, 2) NOT NULL,
                 category VARCHAR(45) NOT NULL,
@@ -58,6 +62,27 @@ class Database extends PDO
         echo 'Table created successfully!' . PHP_EOL;
     }
 
+    public function insertDataOnTable(Transaction $transaction)
+    {
+
+        $description = $transaction->getDescription();
+        $price = $transaction->getPrice();
+        $category = $transaction->getCategory();
+        $io = (int)($transaction->getIO());
+
+        try {
+            $insertSql = 'INSERT INTO Transactions (description, price, category, io)
+            VALUES (?, ?, ?, ?);';
+
+            $statement = $this->conn->prepare($insertSql);
+            $result = $statement->execute([$description, $price, $category, $io]);
+
+            echo 'inserido com sucesso!' . PHP_EOL;
+        } catch (\PDOException $PDOException) {
+            echo $PDOException->getMessage() . PHP_EOL;
+        }
+
+    }
+
 }
 
-$teste = new Database();

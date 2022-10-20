@@ -19,7 +19,7 @@ class Transaction
         string $description,
         float $price,
         string $category,
-        bool $io
+        bool $io = null
 
     ) {
         $this->description = $description;
