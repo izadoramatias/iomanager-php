@@ -14,6 +14,9 @@ class TransactionController
         Transaction $transaction
     ) {
         $this->transaction = $transaction;
+    }public function getPrice(): float
+    {
+        return $this->price;
     }
 
     public static function calculateFinanceTotal(): float
@@ -24,6 +27,9 @@ class TransactionController
 
         return $totalIO;
     }
+
+
+
 }
 
 $teste1 = new Transaction('Notebook', 3800, 'Eletrônicos', false);

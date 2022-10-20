@@ -5,6 +5,7 @@ namespace Manager\Model;
 class Transaction
 {
 
+    private int $idTransaction;
     private string $description;
     private float $price;
     private string $category;
@@ -27,6 +28,12 @@ class Transaction
         $this->io = $io;
 
         $this->io ? self::$totalInputs += $this->getPrice() : self::$totalOutputs += $this->getPrice();
+    }
+
+    // para pegar o ID da transação, será preciso acessar o banco
+    public function getIdTransaction(): int
+    {
+        return $this->idTransaction;
     }
 
     public function getDescription(): string
