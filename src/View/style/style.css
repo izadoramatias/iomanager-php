@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    border: none;
+    text-decoration: none;
+}
+
+body {
+    height: 100vh;
+}
+
+body,
+button {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container,
+.content {
+    height: 100%;
+}
+
+nav{
+    padding: 40px 160px;
+}
+
+nav {
+    height: 30%;
+    background-color: #121214;
+    position: relative;
+}
+
+nav header {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+nav header .new__transaction{}
+
+nav header .new__transaction button {
+    cursor: pointer;
+    padding: 12px 20px;
+    font-weight: 600;
+    color: #fcfcfc;
+    background-color: #00875c;
+    border-radius: 6px;
+
+    transition: filter .4s;
+}
+
+nav header .new__transaction button:hover {
+    filter: brightness(.9);
+}
+
+.io__data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.io__data .input__data,
+.io__data .output__data,
+.io__data .total__data{
+    width: 352px;
+    padding: 24px 32px;
+    background-color: #323238;
+    border-radius: 6px;
+}
+
+.io__data .input__data header p,
+.io__data .output__data header p,
+.io__data .total__data header p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.io__data .input__data .io__icon img,
+.io__data .output__data .io__icon img,
+.io__data .total__data .io__icon img{
+    width: 70%;
+}
+
+.io__data .input__data .io__description,
+.io__data .output__data .io__description,
+.io__data .total__data .io__description {
+    font-size: 14px;
+    color: #fcfcfc;
+    font-weight: 400;
+}
+
+.io__data .input__data .input__money,
+.io__data .output__data .output__money,
+.io__data .total__data .total__money {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fcfcfc;
+    margin-top: 12px;
+}
