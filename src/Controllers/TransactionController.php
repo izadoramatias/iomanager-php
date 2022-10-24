@@ -39,6 +39,13 @@ class TransactionController extends Database
 
     }
 
+    public function createNewTransaction()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            echo $_POST['description'];
+        }
+    }
+
 }
 
 $teste1 = new Transaction('Notebook', 3800, 'Eletrônicos', 1);

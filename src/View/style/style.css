@@ -34,6 +34,7 @@ input {
 
 .content.popup-open {
     filter: brightness(.3);
+    pointer-events: none;
 }
 
 .container,

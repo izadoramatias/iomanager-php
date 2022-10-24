@@ -91,10 +91,10 @@
         <div class="newTransaction__popup">
             <p class="popup__title">Nova Transação</p>
 
-            <form action="">
-                <input type="text" name="description" id="description" placeholder="Descrição">
-                <input type="number" name="price" id="price" placeholder="Preço">
-                <input type="text" name="category" id="category" placeholder="Categoria">
+            <form method="post" action="../Controllers/TransactionController.php">
+                <input type="text" name="description" id="description" placeholder="Descrição" required>
+                <input type="number" name="price" id="price" placeholder="Preço" required>
+                <input type="text" name="category" id="category" placeholder="Categoria" required>
 
                 <button type="submit">Cadastrar</button>
             </form>
