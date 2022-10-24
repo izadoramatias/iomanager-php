@@ -2,22 +2,15 @@
 
 namespace Manager\Controllers;
 
-require_once 'autoload.php';
-
 use Manager\Core\Database;
 use Manager\Model\Transaction;
 
-class TransactionController
+class TransactionController extends Database
 {
 
     private Transaction $transaction;
 
-    public function __construct(
-
-        Transaction $transaction
-    ) {
-        $this->transaction = $transaction;
-    }
+    public function __construct() {}
 
     public function getPrice(): float
     {
@@ -33,21 +26,38 @@ class TransactionController
         return $totalIO;
     }
 
-}
+    public static function findAllRecords()
+    {
+        $teste = new Database();
+        $sql = "SELECT * FROM Transactions";
+        $query = $teste->conn->prepare($sql);
+        $query->execute();
 
+        $result = $query->fetchAll();
+
+        return $result;
+
+    }
+
+}
 
 $teste1 = new Transaction('Notebook', 3800, 'Eletrônicos', 1);
 $teste2 = new Transaction('Escrivaninha', 920, 'Móveis', false);
 $teste3 = new Transaction('Cadeira de escritório', 1600, 'Móveis', false);
 $teste5 = new Transaction("TV Full HD 72' Samsung ", 4800, 'Móveis', 0);
 $teste4 = new Transaction('Desenvolvimento de site', 8600, 'Venda', true);
-echo Transaction::getTotalInputs() . PHP_EOL;
-echo Transaction::getTotalOutputs() . PHP_EOL;
+//echo Transaction::getTotalInputs() . PHP_EOL;
+//echo Transaction::getTotalOutputs() . PHP_EOL;
+//
+//echo TransactionController::calculateFinanceTotal() . PHP_EOL;
 
-echo TransactionController::calculateFinanceTotal() . PHP_EOL;
 
+$testeDB = new TransactionController();
+$allDataRecords = TransactionController::findAllRecords();
 
-$testeDB = new Database();
-$testeDB->dataPagination();
-$result = $testeDB->insertDataOnTable($teste3);
+foreach ($allDataRecords as $record) {
+    var_dump([$record['idTransaction'] => $record['description']]);
+}
+
+//$result = $testeDB->insertDataOnTable($teste3);
 

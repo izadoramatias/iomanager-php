@@ -106,3 +106,39 @@ nav header .new__transaction button:hover {
     color: #fcfcfc;
     margin-top: 12px;
 }
+
+.content main {
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5rem;
+    background-color: #202024;
+
+    font-size: .9rem;
+    color: #fcfcfc;
+    text-align: center;
+}
+
+main section {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+
+    border-radius: 5px;
+    background-color: #29292E;
+    padding: 20px 32px;
+}
+main section:first-child {
+    margin-top: 2rem;
+}
+
+main section .price__input {
+    color: #00B37E;
+}
+
+main section .price__output {
+    color: #F75A68;
+}
+

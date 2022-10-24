@@ -12,7 +12,7 @@ class Database extends PDO
     private $DB_PASSWORD = '12345';
     private $DB_HOST = 'localhost';
 
-    private $conn;
+    protected $conn;
     private Transaction $transaction;
 
     public function  __construct(
@@ -30,7 +30,6 @@ class Database extends PDO
 
             echo $PDOException->getMessage() . PHP_EOL;
         }
-
     }
 
     private function databaseCreate(): void
@@ -86,21 +85,21 @@ class Database extends PDO
     public function dataPagination()
     {
 
-        $search = "SELECT * FROM Transactions;";
-        $totalReg = 10;
+        $offset = 10;
+        $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 3;
+        $start = ($page * $offset) - $offset;
 
-        $currentPage = 1;
+        $sql = "SELECT * FROM Transactions LIMIT " . $start . ", " . $offset . ";";
 
-        $start = $currentPage - 1;
-        $start = $start - $totalReg;
 
-        // substituir por pdo
-        $offset = mysqli_query("$search LIMIT $start, $totalReg");
-        $all = mysqli_query("$search");
+        try {
 
-        $totalRegisters = mysqli_num_rows($all);
-        echo $totalRegisters;
+            $query = $this->conn->prepare($sql);
+            $query->execute();
+        } catch (\PDOException $PDOException) {
 
+            echo 'erro ao retornar os dados. ' . $PDOException->getMessage() . PHP_EOL;
+        }
     }
 
 }

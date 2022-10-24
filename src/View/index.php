@@ -42,7 +42,7 @@
                         </header>
                         <div class="input__money">
                             <span>R$</span>
-                            <span>16.400, 00</span>
+                            <span>16.400,00</span>
                         </div>
                     </section>
                     <section class="output__data">
@@ -56,7 +56,7 @@
                         </header>
                         <div class="output__money">
                             <span>R$</span>
-                            <span>1.259, 00</span>
+                            <span>1.259,00</span>
                         </div>
                     </section>
                     <section class="total__data">
@@ -70,13 +70,20 @@
                         </header>
                         <div class="total__money">
                             <span>R$</span>
-                            <span>15.141, 00</span>
+                            <span>15.141,00</span>
                         </div>
                     </section>
                 </div>
             </nav>
 
-            <main></main>
+            <main>
+                <section>
+                    <p class="description">Desenvolvimento de site</p>
+                    <p class="price__input">R$ 12.000,00</p>
+                    <p class="category">Venda</p>
+                    <p class="date">13/04/2022</p>
+                </section>
+            </main>
 
         </div>
     </div>
