@@ -2,18 +2,38 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: none;
 
     border: none;
     text-decoration: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
 
 body {
     height: 100vh;
 }
 
 body,
-button {
+button,
+input {
     font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    position: relative;
+}
+
+.content.popup-open {
+    filter: brightness(.3);
 }
 
 .container,
@@ -142,3 +162,62 @@ main section .price__output {
     color: #F75A68;
 }
 
+.container .newTransaction__popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 35%;
+    min-height: 65%;
+    background-color: #323238;
+
+    padding: 48px;
+    border-radius: 6px;
+    box-shadow: 12px 8px 12px -7px rgba(0,0,0,0.2);
+
+    display: none;
+}
+
+.container .newTransaction__popup.popup-open {
+    display: block;
+}
+
+.container .newTransaction__popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.newTransaction__popup p.popup__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fcfcfc;
+    margin-bottom: 2rem;
+}
+
+.newTransaction__popup form input {
+    padding: 1rem;
+    background-color: #121214;
+    border-radius: 6px;
+    color: #7C7C8A;
+}
+
+.newTransaction__popup form button {
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #00875F;
+
+    margin-top: 2rem;
+    color: #fcfcfc;
+    font-weight: 700;
+    font-size: .9rem;
+
+    cursor: pointer;
+    transition: filter .3s;
+}
+
+.newTransaction__popup form button:hover {
+    filter: brightness(.9);
+}

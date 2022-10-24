@@ -6,6 +6,6 @@ spl_autoload_register(function (string $nomeCompletoDaClasse){
     $caminhoArquivo .= '.php';
 
     if (file_exists($caminhoArquivo)) {
-        require_once $caminhoArquivo;
+        echo $caminhoArquivo . PHP_EOL;
     }
 });

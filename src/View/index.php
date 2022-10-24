@@ -25,7 +25,7 @@
                         </a>
                     </div>
                     <div class="new__transaction">
-                        <button>
+                        <button id="newTransaction">
                             Nova transação
                         </button>
                     </div>
@@ -83,10 +83,26 @@
                     <p class="category">Venda</p>
                     <p class="date">13/04/2022</p>
                 </section>
+
             </main>
 
         </div>
+
+        <div class="newTransaction__popup">
+            <p class="popup__title">Nova Transação</p>
+
+            <form action="">
+                <input type="text" name="description" id="description" placeholder="Descrição">
+                <input type="number" name="price" id="price" placeholder="Preço">
+                <input type="text" name="category" id="category" placeholder="Categoria">
+
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+
     </div>
+
+    <script src="script/scripts.js"></script>
 
 </body>
 </html>

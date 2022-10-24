@@ -14,7 +14,7 @@ class TransactionController extends Database
 
     public function getPrice(): float
     {
-        return $this->price;
+        return $this->transaction->getPrice();
     }
 
     public static function calculateFinanceTotal(): float
