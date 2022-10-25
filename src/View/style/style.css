@@ -202,6 +202,14 @@ main section .price__output {
     background-color: #121214;
     border-radius: 6px;
     color: #7C7C8A;
+
+    transition: border ease-out .1s;
+}
+
+.newTransaction__popup form input:valid,
+.newTransaction__popup form input:focus{
+    outline: 2px solid #00875F;
+    border: 2px solid #323238;
 }
 
 .newTransaction__popup form button {
@@ -221,4 +229,9 @@ main section .price__output {
 
 .newTransaction__popup form button:hover {
     filter: brightness(.9);
+}
+
+.newTransaction__popup form button:focus {
+    outline: 2px solid #fcfcfc;
+    border: 2px solid #323238;
 }

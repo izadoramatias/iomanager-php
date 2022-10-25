@@ -39,10 +39,10 @@ class TransactionController extends Database
 
     }
 
-    public function createNewTransaction()
+    public static function createNewTransaction()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            echo $_POST['description'];
+            var_dump($_POST);
         }
     }
 
@@ -66,5 +66,6 @@ foreach ($allDataRecords as $record) {
     var_dump([$record['idTransaction'] => $record['description']]);
 }
 
+TransactionController::createNewTransaction();
 //$result = $testeDB->insertDataOnTable($teste3);
 
