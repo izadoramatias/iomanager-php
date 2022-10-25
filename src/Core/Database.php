@@ -1,6 +1,7 @@
 <?php
 
 namespace Manager\Core;
+
 use Manager\Model\Transaction;
 use PDO;
 
@@ -15,9 +16,8 @@ class Database extends PDO
     protected $conn;
     private Transaction $transaction;
 
-    public function  __construct(
-
-    ) {
+    public function  __construct()
+    {
         try {
 
             $this->conn = new PDO("mysql:host=$this->DB_HOST;user=$this->DB_USER;password=$this->DB_PASSWORD");
