@@ -1,5 +1,14 @@
 <?php
 
+//unset($_POST['description'], $_POST['price'], $_POST['category']);
+
+if (!empty($_POST)) {
+    echo 'request realizado!' . "<br>";
+    var_dump($_POST);
+}
+
+var_dump($_POST);
+
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +104,7 @@
         <div class="newTransaction__popup">
             <p class="popup__title">Nova Transação</p>
 
-            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
                 <input type="text" name="description" id="description" placeholder="Descrição" required>
                 <input type="number" name="price" id="price" placeholder="Preço" required>
                 <input type="text" name="category" id="category" placeholder="Categoria" required>

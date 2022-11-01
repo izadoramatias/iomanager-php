@@ -43,7 +43,7 @@ class TransactionController extends Database
 
     public static function createNewTransaction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
             var_dump($_POST);
         }
     }
