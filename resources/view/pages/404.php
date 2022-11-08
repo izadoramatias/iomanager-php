@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>err... 404</title>
 
-    <link rel="stylesheet" href="/resources/view/pages/assets/css/err404.css">
+    <link rel="stylesheet" href="/app/public/assets/css/err404.css">
 
-    <link rel="shortcut icon" href="/resources/view/pages/assets/icons/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/app/public/assets/icons/favicon.svg" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,8 +31,8 @@
     </div>
 </div>
 
-    <script src="/resources/view/pages/scripts/particles.js"></script>
-    <script src="/resources/view/pages/scripts/app.js"></script>
+    <script src="/app/public/assets/scripts/particles.js"></script>
+    <script src="/app/public/assets/scripts/app.js"></script>
 
 </body>
 </html>
