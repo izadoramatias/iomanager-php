@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>err... 404</title>
 
-    <link rel="stylesheet" href="/app/public/assets/css/err404.css">
+    <link  rel="stylesheet" href="../../../app/public/assets/css/err404.css">
 
     <link rel="shortcut icon" href="/app/public/assets/icons/favicon.svg" type="image/x-icon">
 
