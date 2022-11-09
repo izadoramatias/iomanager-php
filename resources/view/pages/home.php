@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <title>IOManager</title>
 
-        <link rel="shortcut icon" href="../../../app/public/assets/icons/favicon.svg" type="image/x-icon">
-        <link rel="stylesheet" href="../../../app/public/assets/css/style.css">
+        <link rel="shortcut icon" href="./assets/icons/favicon.svg" type="image/x-icon">
+        <link rel="stylesheet" href="./assets/css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
                     <header>
                         <div class="logo">
                             <a href="">
-                                <img src="../../../app/public/assets/icons/logo.svg" alt="Logo IOManager">
+                                <img src="./assets/icons/logo.svg" alt="Logo IOManager">
                             </a>
                         </div>
                         <div class="new__transaction">
@@ -36,7 +36,7 @@
                                 <p>
                                     <span class="io__description">Entradas</span>
                                     <span class="io__icon">
-                                        <img src="../../../app/public/assets/icons/input-icon.svg" alt="Input money icon">
+                                        <img src="./assets/icons/input-icon.svg" alt="Input money icon">
                                     </span>
                                 </p>
                             </header>
@@ -50,7 +50,7 @@
                                 <p>
                                     <span class="io__description">Saídas</span>
                                     <span class="io__icon">
-                                        <img src="../../../app/public/assets/icons/output-icon.svg" alt="Output money icon">
+                                        <img src="./assets/icons/output-icon.svg" alt="Output money icon">
                                     </span>
                                 </p>
                             </header>
@@ -64,7 +64,7 @@
                                 <p>
                                     <span class="io__description">Total</span>
                                     <span class="io__icon">
-                                        <img src="../../../app/public/assets/icons/money-icon.svg" alt="Dollar icon">
+                                        <img src="./assets/icons/money-icon.svg" alt="Dollar icon">
                                     </span>
                                 </p>
                             </header>
@@ -102,7 +102,7 @@
 
         </div>
 
-        <script src="../../../app/public/assets/scripts/script.js"></script>
+        <script src="./assets/scripts/script.js"></script>
 
     </body>
 </html>

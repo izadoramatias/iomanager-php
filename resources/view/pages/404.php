@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>err... 404</title>
 
-    <link  rel="stylesheet" href="../../../app/public/assets/css/err404.css">
+    <link  rel="stylesheet" href="./assets/css/err404.css">
 
-    <link rel="shortcut icon" href="/app/public/assets/icons/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/icons/favicon.svg" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,14 +25,14 @@
         </div>
 
         <button class="back__home">
-            <a href="http://localhost:8080/home">Back Home</a>
+            <a href="/home">Back Home</a>
         </button>
 
     </div>
 </div>
 
-    <script src="/app/public/assets/scripts/particles.js"></script>
-    <script src="/app/public/assets/scripts/app.js"></script>
+    <script src="./assets/scripts/particles.js"></script>
+    <script src="./assets/scripts/app.js"></script>
 
 </body>
 </html>
