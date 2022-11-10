@@ -42,7 +42,7 @@
                             </header>
                             <div class="input__money">
                                 <span>R$</span>
-                                <span>{{entradas}}</span>
+                                <span><?= isset($entrada) ? $entrada : 0; ?></span>
                             </div>
                         </section>
                         <section class="output__data">
@@ -56,7 +56,7 @@
                             </header>
                             <div class="output__money">
                                 <span>R$</span>
-                                <span>{{saidas}}</span>
+                                <span><?= isset($saida) ? $saida : 0; ?></span>
                             </div>
                         </section>
                         <section class="total__data">
@@ -70,7 +70,7 @@
                             </header>
                             <div class="total__money">
                                 <span>R$</span>
-                                <span>{{total}}</span>
+                                <span><?= isset($total) ? $total : 0; ?></span>
                             </div>
                         </section>
                     </div>
