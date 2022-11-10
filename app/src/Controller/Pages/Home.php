@@ -10,7 +10,7 @@ use App\Controller\Transaction as TransactionController;
 
 class Home extends HtmlController implements InterfaceRequestController {
 
-    private TransactionController $transaction;
+    private static TransactionController $transaction;
 
     public static function processRequest(): void
     {
@@ -20,8 +20,6 @@ class Home extends HtmlController implements InterfaceRequestController {
 
         $requestTemplate = $_SERVER['PATH_INFO']; // pega o recurso pesquisado pelo usuário na uri
         $requestTemplate = str_replace('/', '', $requestTemplate);
-
-//        MySql::connect();
 
         $totalInputs = Transaction::getTotalInputs();
         $totalOutputs = Transaction::getTotalOutputs();
@@ -33,7 +31,7 @@ class Home extends HtmlController implements InterfaceRequestController {
             'entrada' => $totalInputs,
             'saida' => $totalOutputs,
             'total' => $total,
-            'teste' => TransactionController::processRequest()
+//            'teste' => self::$transaction
         ]);
 
     }
