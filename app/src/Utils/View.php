@@ -7,8 +7,8 @@ class View
 
     private static function getContentView(string $view): string
     {
-        $file = __DIR__ . '/../../resources/view/' . $view . '.html';
-        $err404 = __DIR__ . '/../../resources/view/pages/404.php';
+        $file = __DIR__ . '/../../../resources/view/' . $view . '.html';
+        $err404 = __DIR__ . '/../../../resources/view/pages/404.php';
 
         return file_exists($file) ? file_get_contents($file) : file_get_contents($err404);
     }
