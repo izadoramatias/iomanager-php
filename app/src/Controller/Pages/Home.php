@@ -10,7 +10,12 @@ use App\Controller\Transaction as TransactionController;
 
 class Home extends HtmlController implements InterfaceRequestController {
 
-    private static TransactionController $transaction;
+    private static $transaction;
+
+    public function __construct()
+    {
+        $this::$transaction =new \App\Controller\Transaction();
+    }
 
     public static function processRequest(): void
     {
@@ -31,7 +36,7 @@ class Home extends HtmlController implements InterfaceRequestController {
             'entrada' => $totalInputs,
             'saida' => $totalOutputs,
             'total' => $total,
-//            'teste' => self::$transaction
+            'teste' => self::$transaction
         ]);
 
     }

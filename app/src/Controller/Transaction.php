@@ -6,7 +6,6 @@ use App\Model\Repository\Transactions;
 
 class Transaction
 {
-
     public static function processRequest()
     {
 

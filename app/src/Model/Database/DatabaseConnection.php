@@ -13,7 +13,7 @@ class DatabaseConnection
     public static function connect()
     {
 
-        if (is_null(self::$pdo)) {
+        if (!self::$pdo) {
 
             try {
                 self::$pdo = new PDO("mysql:host=". DB_HOST,DB_USER, DB_PASS);
