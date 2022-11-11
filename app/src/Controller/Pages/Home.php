@@ -19,9 +19,9 @@ class Home extends HtmlController implements InterfaceRequestController {
 
     public static function processRequest(): void
     {
-        $computer = new Transaction('pc gamer', 5400, 'compra', false);
-        $site = new Transaction('desenvolvimento de app', 7900, 'venda', true);
-        $design = new Transaction('design cliente', 6600, 'venda', true);
+//        $computer = new Transaction('pc gamer', 5400, 'compra', false);
+//        $site = new Transaction('desenvolvimento de app', 7900, 'venda', true);
+//        $design = new Transaction('design cliente', 6600, 'venda', true);
 
         $requestTemplate = $_SERVER['PATH_INFO']; // pega o recurso pesquisado pelo usuário na uri
         $requestTemplate = str_replace('/', '', $requestTemplate);
@@ -37,7 +37,7 @@ class Home extends HtmlController implements InterfaceRequestController {
                 'entrada' => $totalInputs,
                 'saida' => $totalOutputs,
                 'total' => $total,
-                'teste' => self::$transaction::processRequest()
+                'transacoes' => self::$transaction::processRequest()
             ]);
 
     }

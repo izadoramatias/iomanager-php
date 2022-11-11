@@ -23,6 +23,8 @@ class DatabaseConnection
                 self::$pdo = new PDO("mysql:host=" . DB_HOST . ";", DB_USER, DB_PASS);
                 self::$pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 
+                self::$pdo->exec('USE ' . DB_NAME . ';');
+
             } catch (\Exception $exception) {
                 echo 'Erro ao conectar';
                 error_log($exception->getMessage());

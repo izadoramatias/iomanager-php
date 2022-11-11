@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-use App\Model\Repository\Transactions;
+use App\Model\Repository\TransactionsFindAll;
 
 class Transaction
 {
     public static function processRequest()
     {
 
-        $transactionsRepository = new Transactions();
-
+        $transactionsRepository = new TransactionsFindAll();
         $all = $transactionsRepository::findAll();
+
         return $all;
     }
 }

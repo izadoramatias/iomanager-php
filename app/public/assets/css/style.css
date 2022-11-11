@@ -129,13 +129,15 @@ nav header .new__transaction button:hover {
 }
 
 .content main {
-    height: 70%;
+    height: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: .5rem;
     background-color: #202024;
+
+    padding: 60px 0px 30px 0px;
 
     font-size: .9rem;
     color: #fcfcfc;

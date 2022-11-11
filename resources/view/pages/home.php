@@ -83,14 +83,23 @@
                         <p class="category">Venda</p>
                         <p class="date">13/04/2022</p>
                     </section>
-                    <?php var_dump($teste); ?>
+
+                    <?php foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
+                        <section>
+                            <p class="description"><?php echo $description; ?></p>
+                            <p class="price__input"><?php echo $price; ?></p>
+                            <p class="category"><?php echo $category; ?></p>
+                            <p class="date">13/04/2022</p>
+                        </section>
+                    <?php endforeach; ?>
+
                 </main>
             </div>
 
             <div class="newTransaction__popup">
                 <p class="popup__title">Nova Transação</p>
 
-                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <form method="post" action="/new-transaction">
                     <input type="text" name="description" id="description" placeholder="Descrição" required>
                     <input type="number" name="price" id="price" placeholder="Preço" required>
                     <input type="text" name="category" id="category" placeholder="Categoria" required>
@@ -98,7 +107,6 @@
                     <button type="submit">Cadastrar</button>
                 </form>
             </div>
-
 
         </div>
 
