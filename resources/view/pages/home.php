@@ -77,32 +77,44 @@
                 </nav>
 
                 <main>
-                    <section>
-                        <p class="description">Desenvolvimento de site</p>
-                        <p class="price__input">R$ 12.000,00</p>
-                        <p class="category">Venda</p>
-                        <p class="date">13/04/2022</p>
-                    </section>
 
-                    <?php foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
-                        <section>
-                            <p class="description"><?php echo $description; ?></p>
-                            <p class="price__input"><?php echo $price; ?></p>
-                            <p class="category"><?php echo $category; ?></p>
-                            <p class="date">13/04/2022</p>
-                        </section>
-                    <?php endforeach; ?>
+                    <?php
+
+                        if (!empty($transacoes)) {
+                            foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
+                                <section>
+                                    <p class="description"><?php echo $description; ?></p>
+                                    <p class="price__input" >R$ <?php echo number_format($price, 2); ?></p>
+                                    <p class="category"><?php echo $category; ?></p>
+                                    <p class="date">13/04/2022</p>
+                                </section>
+                            <?php endforeach;
+                        } else {
+                            echo 'Nenhuma transação cadastrada   ):';
+                        } ?>
 
                 </main>
             </div>
 
             <div class="newTransaction__popup">
                 <p class="popup__title">Nova Transação</p>
-
                 <form method="post" action="/new-transaction">
                     <input type="text" name="description" id="description" placeholder="Descrição" required>
                     <input type="number" name="price" id="price" placeholder="Preço" required>
                     <input type="text" name="category" id="category" placeholder="Categoria" required>
+                    <input type="date" name="date" id="date" placeholder="Data" required>
+
+                    <div class="transaction__type">
+                        <div role="radio" class="form-check">
+                            <input value="true" class="form-check-input" type="radio" name="type" id="input">
+                            <label class="form-check-label" for="input">Entrada</label>
+                        </div>
+
+                        <div role="radio" class="form-check">
+                            <input value="false" class="form-check-input" type="radio" name="type" id="output">
+                            <label class="form-check-label" for="output">Saída</label>
+                        </div>
+                    </div>
 
                     <button type="submit">Cadastrar</button>
                 </form>

@@ -14,9 +14,11 @@ class InsertTransaction implements InterfaceRequestController
     public function __construct()
     {
         self::$transaction = new NewTransaction();
-        self::$databaseConnection = new DatabaseConnection();
 
+        self::$databaseConnection = new DatabaseConnection();
         self::$databaseConnection::connect();
+
+        (self::$databaseConnection::$pdo)->exec('USE ' . DB_NAME . ';');
     }
 
     public static function processRequest(): void
@@ -24,8 +26,8 @@ class InsertTransaction implements InterfaceRequestController
 
         extract(self::$transaction::processRequest(), EXTR_OVERWRITE);
 
-        $insertQuery = "INSERT INTO Transactions (description, price, category, io)
-        VALUES ('$description', $price, '$category', false);";
+        $insertQuery = "INSERT INTO Transactions (description, price, category, date, type)
+        VALUES ('$description', $price, '$category', '$date', $type);";
 
         if ((self::$databaseConnection::$pdo)->query($insertQuery)) {
             echo 'Transação inserida com sucesso!';

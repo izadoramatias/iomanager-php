@@ -129,6 +129,7 @@ nav header .new__transaction button:hover {
 }
 
 .content main {
+    min-height: 70%;
     height: max-content;
     display: flex;
     align-items: center;
@@ -153,8 +154,13 @@ main section {
     background-color: #29292E;
     padding: 20px 32px;
 }
+
 main section:first-child {
     margin-top: 2rem;
+}
+
+main section p {
+    width: 25%;
 }
 
 main section .price__input {
@@ -208,10 +214,23 @@ main section .price__output {
     transition: border ease-out .1s;
 }
 
-.newTransaction__popup form input:valid,
-.newTransaction__popup form input:focus{
+.newTransaction__popup form input:not([type=radio]):valid,
+.newTransaction__popup form input:not([type=radio]):focus{
     outline: 2px solid #00875F;
     border: 2px solid #323238;
+}
+
+.newTransaction__popup .transaction__type {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+
+}
+
+.newTransaction__popup .transaction__type label {
+    font-size: 15px;
+    font-weight: 400;
+    color: #fcfcfc;
 }
 
 .newTransaction__popup form button {
@@ -220,7 +239,6 @@ main section .price__output {
     border-radius: 6px;
     background-color: #00875F;
 
-    margin-top: 2rem;
     color: #fcfcfc;
     font-weight: 700;
     font-size: .9rem;

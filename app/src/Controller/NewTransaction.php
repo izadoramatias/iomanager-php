@@ -11,11 +11,15 @@ class NewTransaction
         $description = $_POST['description'];
         $price = $_POST['price'];
         $category = $_POST['category'];
+        $date = $_POST['date'];
+        $type = $_POST['type'];
 
         return [
             'description' => $description,
             'price' => $price,
-            'category' => $category
+            'category' => $category,
+            'date' => $date,
+            'type' => $type
         ];
     }
 }

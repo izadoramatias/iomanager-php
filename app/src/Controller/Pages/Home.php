@@ -4,6 +4,8 @@ namespace App\Controller\Pages;
 
 use App\Controller\HtmlController;
 use App\Controller\InterfaceRequestController;
+use App\Model\Database\DatabaseConnection;
+use App\Model\Database\DatabaseCreation;
 use \App\Model\Entity\Transaction;
 use App\Controller\Transaction as TransactionController;
 
@@ -11,10 +13,15 @@ use App\Controller\Transaction as TransactionController;
 class Home extends HtmlController implements InterfaceRequestController {
 
     private static ?TransactionController $transaction = null;
+    private static ?DatabaseCreation $databaseCreation = null;
 
     public function __construct()
     {
         $this::$transaction = new TransactionController();
+
+        self::$databaseCreation = new DatabaseCreation();
+        self::$databaseCreation::create();
+
     }
 
     public static function processRequest(): void

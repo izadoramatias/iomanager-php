@@ -9,6 +9,7 @@ class Transaction
     public string $description;
     public float $price;
     public string $category;
+    private string $date;
     public bool $io;
 
     private static float $totalInputs = 0;
@@ -19,6 +20,7 @@ class Transaction
         string $description,
         float $price,
         string $category,
+        string $date,
         bool $io = null
 
     ){
@@ -28,6 +30,7 @@ class Transaction
         $this->io = $io;
 
         $this->io ? self::$totalInputs += $this->getPrice() : self::$totalOutputs += $this->getPrice();
+        $this->date = $date;
     }
 
     private function getPrice(): float
@@ -44,5 +47,6 @@ class Transaction
     {
         return self::$totalOutputs;
     }
+
 
 }
