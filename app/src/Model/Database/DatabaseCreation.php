@@ -5,23 +5,32 @@ namespace App\Model\Database;
 class DatabaseCreation
 {
 
+    private static ?DatabaseConnection $databaseConnection = null;
+
+    public function __construct()
+    {
+        self::$databaseConnection = new DatabaseConnection();
+    }
+
     public static function create()
     {
 
+        $pdo = self::$databaseConnection::$pdo;
+
         try {
 
-            $createDB = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
-            self::$pdo->exec($createDB);
+            $createDB = 'CREATE DATABASE IF NOT EXISTS ' . DB_NAME . ';';
+            $pdo->exec($createDB);
+            $pdo->exec('USE ' . DB_NAME . ';');
 
-            $createTable =  "CREATE TABLE Transactions(
-                                idTransaction int NOT NULL AUTO_INCREMENT,
+            $createTable =  "
+                            CREATE TABLE Transactions(
+                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                                 description varchar(255) NOT NULL,
                                 price float NOT NULL,
                                 category varchar(45) NOT NULL,
-                                io BIT NOT NULL                                
-                            )";
-            self::$pdo->exec($createTable);
-            echo 'tabela criada com sucesso!';
+                                io bit NOT NULL);";
+            $pdo->exec($createTable);
 
         } catch (\PDOException $exception) {
 

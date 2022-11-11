@@ -9,11 +9,17 @@ use App\Model\Database\DatabaseCreation;
 class Transactions
 {
 
+    private static DatabaseConnection $connect;
+    private static DatabaseCreation $create;
+
     public function __construct()
     {
 
-        DatabaseConnection::connect();
-        DatabaseCreation::create();
+        self::$connect = new DatabaseConnection();
+        self::$create = new DatabaseCreation();
+
+        self::$connect::connect();
+        self::$create::create();
     }
 
     public static function findAll()

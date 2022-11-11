@@ -83,9 +83,8 @@
                         <p class="category">Venda</p>
                         <p class="date">13/04/2022</p>
                     </section>
-
+                    <?php var_dump($teste); ?>
                 </main>
-
             </div>
 
             <div class="newTransaction__popup">
@@ -99,6 +98,7 @@
                     <button type="submit">Cadastrar</button>
                 </form>
             </div>
+
 
         </div>
 
