@@ -105,10 +105,22 @@ nav header .new__transaction button:hover {
     width: 100%;
 }
 
-.io__data .input__data .io__icon img,
-.io__data .output__data .io__icon img,
-.io__data .total__data .io__icon img{
-    width: 70%;
+.io__data .input__data .io__icon i,
+.io__data .output__data .io__icon i,
+.io__data .total__data .io__icon i {
+    font-size: 1.5rem;
+}
+
+.io__data .input__data .io__icon i {
+    color: #00B37E;
+}
+
+.io__data .output__data .io__icon i {
+    color: #F75A68;
+}
+
+.io__data .total__data .io__icon i {
+    color: #fcfcfc;
 }
 
 .io__data .input__data .io__description,
@@ -172,7 +184,7 @@ main section .price__output {
 }
 
 .container .newTransaction__popup {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -188,8 +200,23 @@ main section .price__output {
     display: none;
 }
 
+@keyframes bright-in {
+    0% {
+        filter: brightness(0);
+    }
+
+    50% {
+        filter: brightness(.5);
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+}
+
 .container .newTransaction__popup.popup-open {
     display: block;
+    animation: bright-in .4s ease;
 }
 
 .container .newTransaction__popup form {
@@ -203,6 +230,22 @@ main section .price__output {
     font-weight: 700;
     color: #fcfcfc;
     margin-bottom: 2rem;
+}
+
+.newTransaction__popup .header__popup {
+    display: flex;
+    justify-content: space-between;
+}
+
+.newTransaction__popup .header__popup span {
+    margin-bottom: 2rem;
+}
+
+.newTransaction__popup .header__popup span i {
+    font-size: 1.5rem;
+    color: #7C7C8A;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .newTransaction__popup form input {

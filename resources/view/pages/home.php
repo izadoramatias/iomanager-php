@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
+        <!-- phosphor icons script -->
+        <script src="https://unpkg.com/phosphor-icons"></script>
+
     </head>
     <body>
 
@@ -36,7 +39,7 @@
                                 <p>
                                     <span class="io__description">Entradas</span>
                                     <span class="io__icon">
-                                        <img src="./assets/icons/input-icon.svg" alt="Input money icon">
+                                        <i class="ph-arrow-circle-up"></i>
                                     </span>
                                 </p>
                             </header>
@@ -50,7 +53,7 @@
                                 <p>
                                     <span class="io__description">Saídas</span>
                                     <span class="io__icon">
-                                        <img src="./assets/icons/output-icon.svg" alt="Output money icon">
+                                        <i class="ph-arrow-circle-down"></i>
                                     </span>
                                 </p>
                             </header>
@@ -64,7 +67,7 @@
                                 <p>
                                     <span class="io__description">Total</span>
                                     <span class="io__icon">
-                                        <img src="./assets/icons/money-icon.svg" alt="Dollar icon">
+                                        <i class="ph-currency-dollar"></i>
                                     </span>
                                 </p>
                             </header>
@@ -97,7 +100,14 @@
             </div>
 
             <div class="newTransaction__popup">
-                <p class="popup__title">Nova Transação</p>
+                <div class="header__popup">
+                    <p class="popup__title">Nova Transação</p>
+                    <span>
+                        <i class="ph-x-bold close__popup"></i>
+                    </span>
+                </div>
+
+
                 <form method="post" action="/new-transaction">
                     <input type="text" name="description" id="description" placeholder="Descrição" required>
                     <input type="number" name="price" id="price" placeholder="Preço" required>
