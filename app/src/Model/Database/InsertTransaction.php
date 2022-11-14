@@ -4,6 +4,7 @@ namespace App\Model\Database;
 
 use App\Controller\InterfaceRequestController;
 use App\Controller\NewTransaction;
+use App\Model\Entity\Transaction;
 
 class InsertTransaction implements InterfaceRequestController
 {
@@ -31,10 +32,9 @@ class InsertTransaction implements InterfaceRequestController
 
         if ((self::$databaseConnection::$pdo)->query($insertQuery)) {
             echo 'Transação inserida com sucesso!';
+
             header('Location: /home');
         }
-
-
 
     }
 }

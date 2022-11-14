@@ -4,9 +4,11 @@ namespace App\Controller\Pages;
 
 use App\Controller\HtmlController;
 use App\Controller\InterfaceRequestController;
-use App\Model\Database\DatabaseConnection;
+use App\Controller\TransactionsInput;
+use App\Controller\TransactionsOutput;
 use App\Model\Database\DatabaseCreation;
 use \App\Model\Entity\Transaction;
+use App\Model\Services\CalculateTotalTransactions;
 use App\Controller\Transaction as TransactionController;
 
 
@@ -26,28 +28,24 @@ class Home extends HtmlController implements InterfaceRequestController {
 
     public static function processRequest(): void
     {
-//        $computer = new Transaction('pc gamer', 5400, 'compra', false);
-//        $site = new Transaction('desenvolvimento de app', 7900, 'venda', true);
-//        $design = new Transaction('design cliente', 6600, 'venda', true);
-
         $requestTemplate = $_SERVER['PATH_INFO']; // pega o recurso pesquisado pelo usuário na uri
         $requestTemplate = str_replace('/', '', $requestTemplate);
 
-        $totalInputs = Transaction::getTotalInputs();
-        $totalOutputs = Transaction::getTotalOutputs();
-        $total = Transaction::getTotalInputs() - Transaction::getTotalOutputs();
-
+        $entrada = TransactionsInput::processRequest();
+        $saida = TransactionsOutput::processRequest();
+        $total = CalculateTotalTransactions::calculate();
 
         echo (new Home())->renderHtml(
             "pages/$requestTemplate.php",
             [
-                'entrada' => $totalInputs,
-                'saida' => $totalOutputs,
-                'total' => $total,
+                'entrada' => number_format($entrada, 2, ',', '.'),
+                'saida' => number_format($saida, 2, ',', '.'),
+                'total' => number_format($total, 2, ',', '.'),
                 'transacoes' => self::$transaction::processRequest()
             ]);
 
     }
 
-
 }
+
+

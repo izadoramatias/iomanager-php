@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use \App\Model\Entity\Transaction;
+
 class NewTransaction
 {
 
@@ -13,6 +15,8 @@ class NewTransaction
         $category = $_POST['category'];
         $date = $_POST['date'];
         $type = $_POST['type'];
+
+        new Transaction($description, $price, $category, $date, $type);
 
         return [
             'description' => $description,

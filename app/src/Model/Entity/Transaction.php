@@ -2,6 +2,8 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Services\DataTypeTransaction;
+
 class Transaction
 {
 
@@ -28,12 +30,10 @@ class Transaction
         $this->price = $price;
         $this->category = $category;
         $this->io = $io;
-
-        $this->io ? self::$totalInputs += $this->getPrice() : self::$totalOutputs += $this->getPrice();
         $this->date = $date;
     }
 
-    private function getPrice(): float
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -48,5 +48,14 @@ class Transaction
         return self::$totalOutputs;
     }
 
+    public static function setTotalInputs(float $input = 0): float
+    {
+        return self::$totalInputs += $input;
+    }
+
+    public static function setTotalOutputs(float $output = 0): float
+    {
+        return self::$totalOutputs += $output;
+    }
 
 }

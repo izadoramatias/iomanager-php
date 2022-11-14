@@ -87,7 +87,7 @@
                             foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
                                 <section>
                                     <p class="description"><?php echo $description; ?></p>
-                                    <p class="price__input" >R$ <?php echo number_format($price, 2); ?></p>
+                                    <p class="price__input" >R$ <?php echo number_format($price, 2, ',', '.'); ?></p>
                                     <p class="category"><?php echo $category; ?></p>
                                     <p class="date">13/04/2022</p>
                                 </section>
