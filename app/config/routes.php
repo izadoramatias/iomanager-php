@@ -1,7 +1,7 @@
 <?php
 
 use App\Controller\Pages\Home;
-use App\Model\Database\InsertTransaction;
+use App\Controller\InsertTransaction;
 use App\Controller\CleanTransactions;
 
 return [

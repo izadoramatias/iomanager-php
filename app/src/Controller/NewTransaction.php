@@ -16,6 +16,10 @@ class NewTransaction
         $date = $_POST['date'];
         $type = $_POST['type'];
 
+        echo '<pre>';
+        var_dump($_POST);
+        echo '</pre>';
+
         new Transaction($description, $price, $category, $date, $type);
 
         return [

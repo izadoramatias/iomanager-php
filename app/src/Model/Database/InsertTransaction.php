@@ -2,11 +2,9 @@
 
 namespace App\Model\Database;
 
-use App\Controller\InterfaceRequestController;
 use App\Controller\NewTransaction;
-use App\Model\Entity\Transaction;
 
-class InsertTransaction implements InterfaceRequestController
+class InsertTransaction
 {
 
     private static ?DatabaseConnection $databaseConnection = null;
@@ -22,13 +20,11 @@ class InsertTransaction implements InterfaceRequestController
         (self::$databaseConnection::$pdo)->exec('USE ' . DB_NAME . ';');
     }
 
-    public static function processRequest(): void
+    public static function insert(): void
     {
 
         extract(self::$transaction::processRequest(), EXTR_OVERWRITE);
 
-//        $insertQuery = "INSERT INTO Transactions (description, price, category, date, type)
-//        VALUES ('$description', $price, '$category', '$date', $type);";
         $statement = self::$databaseConnection::$pdo->
         prepare("INSERT INTO Transactions (description, price, category, date, type) VALUES 
             (:description, :price, :category, :date, :type);");
@@ -36,8 +32,8 @@ class InsertTransaction implements InterfaceRequestController
         $statement->bindParam(':description', $description, self::$databaseConnection::$pdo::PARAM_STR);
         $statement->bindParam(':price', $price);
         $statement->bindParam(':category', $category, self::$databaseConnection::$pdo::PARAM_STR);
-        $statement->bindParam(':date', $date, self::$databaseConnection::$pdo::PARAM_STR);;
-        $statement->bindParam(':type', $type, self::$databaseConnection::$pdo::PARAM_INT);
+        $statement->bindParam(':date', $date, self::$databaseConnection::$pdo::PARAM_STR);
+        $statement->bindParam(':type', $type , self::$databaseConnection::$pdo::PARAM_INT);
 
         try {
 
