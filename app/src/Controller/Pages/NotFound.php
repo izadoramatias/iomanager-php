@@ -2,13 +2,15 @@
 
 namespace App\Controller\Pages;
 
+use App\Controller\HtmlController;
 use App\Controller\InterfaceRequestController;
 
-class NotFound implements InterfaceRequestController
+class NotFound extends HtmlController implements InterfaceRequestController
 {
 
     public static function processRequest(): void
     {
-        require __DIR__ . '/../../../../resources/view/pages/404.php';
+
+        echo self::renderHtml('/pages/404.php', array());
     }
 }

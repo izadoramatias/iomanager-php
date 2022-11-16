@@ -110,7 +110,7 @@
 
                 <form method="post" action="/new-transaction">
                     <input type="text" name="description" id="description" placeholder="Descrição" required>
-                    <input type="number" name="price" id="price" placeholder="Preço" required>
+                    <input step="any" type="number" name="price" id="price" placeholder="Preço" required>
                     <input type="text" name="category" id="category" placeholder="Categoria" required>
                     <input type="date" name="date" id="date" placeholder="Data" required>
 

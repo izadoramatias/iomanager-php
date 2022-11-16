@@ -2,14 +2,13 @@
 
 namespace App\Controller\Pages;
 
-use App\Controller\HtmlController;
-use App\Controller\InterfaceRequestController;
-use App\Controller\TransactionsInput;
-use App\Controller\TransactionsOutput;
+use App\Controller\{HtmlController,
+    InterfaceRequestController,
+    TransactionsInput,
+    TransactionsOutput,
+    Transaction as TransactionController};
 use App\Model\Database\DatabaseCreation;
-use \App\Model\Entity\Transaction;
 use App\Model\Services\CalculateTotalTransactions;
-use App\Controller\Transaction as TransactionController;
 
 
 class Home extends HtmlController implements InterfaceRequestController {
@@ -35,7 +34,7 @@ class Home extends HtmlController implements InterfaceRequestController {
         $saida = TransactionsOutput::processRequest();
         $total = CalculateTotalTransactions::calculate();
 
-        echo (new Home())->renderHtml(
+        echo self::renderHtml(
             "pages/$requestTemplate.php",
             [
                 'entrada' => number_format($entrada, 2, ',', '.'),
