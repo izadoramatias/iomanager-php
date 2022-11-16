@@ -49,9 +49,5 @@ class InsertTransaction implements InterfaceRequestController
             http_response_code(500);
         }
 
-//        if () {
-//            header('Location: /home');
-//        }
-
     }
 }
