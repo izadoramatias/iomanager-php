@@ -350,15 +350,16 @@ main section .price__output {
     gap: 10px;
 }
 
-.container .confirm__clean__transactions .action__buttons button a {
+.container .confirm__clean__transactions .action__buttons a {
     color: #fcfcfc;
 }
 
-.container .confirm__clean__transactions .action__buttons button {
+.container .confirm__clean__transactions .action__buttons a{
     width: 100%;
     padding: 1rem;
     border: none;
     border-radius: 6px;
+    text-align: center;
 
     color: #fcfcfc;
     font-weight: 700;
@@ -368,14 +369,14 @@ main section .price__output {
     transition: filter .3s;
 }
 
-.container .confirm__clean__transactions .action__buttons button:hover {
+.container .confirm__clean__transactions .action__buttons a:hover {
     filter: brightness(.9);
 }
 
-.container .confirm__clean__transactions .action__buttons .confirm {
+.container .confirm__clean__transactions .action__buttons .confirm{
     background-color: #00875F;
 }
 
-.container .confirm__clean__transactions .action__buttons .cancel {
+.container .confirm__clean__transactions .action__buttons .cancel{
     background: #7C7C8A;
 }

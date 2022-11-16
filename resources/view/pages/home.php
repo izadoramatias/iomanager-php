@@ -145,12 +145,8 @@
                 </header>
 
                 <div class="action__buttons">
-                    <button class="confirm">
-                        <a href="/clean-transactions">Sim, limpar!</a>
-                    </button>
-                    <button class="cancel">
-                        <a href="/home">Cancelar</a>
-                    </button>
+                    <a class="confirm" href="/clean-transactions">Sim, limpar!</a>
+                    <a class="cancel" href="/home">Cancelar</a>
                 </div>
             </div>
 
