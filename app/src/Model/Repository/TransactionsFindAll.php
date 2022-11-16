@@ -19,8 +19,8 @@ class TransactionsFindAll
 
     public static function findAll()
     {
-        $findAllTransactionsQuery = (self::$databaseConnection::$pdo)->prepare("SELECT * FROM Transactions;");
-        $findAllTransactionsQuery->execute();
+        $findAllTransactionsQuery = (self::$databaseConnection::$pdo)->query("SELECT * FROM Transactions;");
+//        $findAllTransactionsQuery->execute();
 
         $allTransactions = $findAllTransactionsQuery->fetchAll();
         return $allTransactions;

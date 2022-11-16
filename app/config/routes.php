@@ -5,5 +5,6 @@ use App\Model\Database\InsertTransaction;
 
 return [
     '/home' => Home::class,
-    '/new-transaction' => InsertTransaction::class
+    '/new-transaction' => InsertTransaction::class,
+    '/clean-transactions' => CleanTransactions::class
 ];

@@ -27,11 +27,19 @@
                                 <img src="./assets/icons/logo.svg" alt="Logo IOManager">
                             </a>
                         </div>
-                        <div class="new__transaction">
-                            <button id="newTransaction">
-                                Nova transação
-                            </button>
+                        <div class="action__buttons">
+                            <div class="new__transaction">
+                                <button id="newTransaction">
+                                    Nova transação
+                                </button>
+                            </div>
+                            <div class="clean__transactions">
+                                <button id="cleanTransactions">
+                                    Limpar transações
+                                </button>
+                            </div>
                         </div>
+
                     </header>
                     <div class="io__data">
                         <section class="input__data">
@@ -128,6 +136,22 @@
 
                     <button type="submit">Cadastrar</button>
                 </form>
+            </div>
+
+            <div class="confirm__clean__transactions">
+                <header>
+                    <h1>Tem certeza que deseja remover todas as transações?</h1>
+                    <p class="alert__message">Essa ação não poderá ser desfeita!</p>
+                </header>
+
+                <div class="action__buttons">
+                    <button class="confirm">
+                        <a href="/clean-transactions">Sim, limpar!</a>
+                    </button>
+                    <button class="cancel">
+                        <a href="/home">Cancelar</a>
+                    </button>
+                </div>
             </div>
 
         </div>

@@ -27,14 +27,31 @@ class InsertTransaction implements InterfaceRequestController
 
         extract(self::$transaction::processRequest(), EXTR_OVERWRITE);
 
-        $insertQuery = "INSERT INTO Transactions (description, price, category, date, type)
-        VALUES ('$description', $price, '$category', '$date', $type);";
+//        $insertQuery = "INSERT INTO Transactions (description, price, category, date, type)
+//        VALUES ('$description', $price, '$category', '$date', $type);";
+        $statement = self::$databaseConnection::$pdo->
+        prepare("INSERT INTO Transactions (description, price, category, date, type) VALUES 
+            (:description, :price, :category, :date, :type);");
 
-        if ((self::$databaseConnection::$pdo)->query($insertQuery)) {
-            echo 'Transação inserida com sucesso!';
+        $statement->bindParam(':description', $description, self::$databaseConnection::$pdo::PARAM_STR);
+        $statement->bindParam(':price', $price);
+        $statement->bindParam(':category', $category, self::$databaseConnection::$pdo::PARAM_STR);
+        $statement->bindParam(':date', $date, self::$databaseConnection::$pdo::PARAM_STR);;
+        $statement->bindParam(':type', $type, self::$databaseConnection::$pdo::PARAM_INT);
 
+        try {
+
+            $statement->execute();
             header('Location: /home');
+
+        } catch (\PDOException $PDOException) {
+            echo "Error: " . $PDOException->getMessage();
+            http_response_code(500);
         }
+
+//        if () {
+//            header('Location: /home');
+//        }
 
     }
 }

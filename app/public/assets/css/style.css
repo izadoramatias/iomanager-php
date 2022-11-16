@@ -59,20 +59,30 @@ nav header {
     justify-content: space-between;
 }
 
-nav header .new__transaction{}
+nav header .action__buttons {
+    display: flex;
+    gap: 5px;
+}
 
-nav header .new__transaction button {
+nav header .action__buttons button {
     cursor: pointer;
     padding: 12px 20px;
     font-weight: 600;
     color: #fcfcfc;
-    background-color: #00875c;
     border-radius: 6px;
 
     transition: filter .4s;
 }
 
-nav header .new__transaction button:hover {
+nav header .action__buttons #newTransaction {
+    background-color: #00B37E;
+}
+
+nav header .action__buttons #cleanTransactions {
+    background-color: #F75A68;
+}
+
+nav header .action__buttons button:hover {
     filter: brightness(.9);
 }
 
@@ -297,4 +307,75 @@ main section .price__output {
 .newTransaction__popup form button:focus {
     outline: 2px solid #fcfcfc;
     border: 2px solid #323238;
+}
+
+/* POPUP CONFIRMAR LIMPEZA DE TRANSAÇÕES */
+.container .confirm__clean__transactions {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    flex-direction: column;
+    justify-content: space-around;
+
+    width: 35%;
+    min-height: 65%;
+    background-color: #323238;
+
+    padding: 48px;
+    border-radius: 6px;
+    box-shadow: 12px 8px 12px -7px rgba(0,0,0,0.2);
+
+    display: none;
+}
+
+.container .confirm__clean__transactions.popup-open {
+    display: flex;
+}
+
+.container .confirm__clean__transactions header h1 {
+    color: #fcfcfc;
+    font-size: 1.8rem;
+    text-align: left;
+}
+
+.container .confirm__clean__transactions header .alert__message {
+    color: #F75A68;
+    font-size: 13px;
+}
+
+.container .confirm__clean__transactions .action__buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.container .confirm__clean__transactions .action__buttons button a {
+    color: #fcfcfc;
+}
+
+.container .confirm__clean__transactions .action__buttons button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+
+    color: #fcfcfc;
+    font-weight: 700;
+    font-size: .9rem;
+
+    cursor: pointer;
+    transition: filter .3s;
+}
+
+.container .confirm__clean__transactions .action__buttons button:hover {
+    filter: brightness(.9);
+}
+
+.container .confirm__clean__transactions .action__buttons .confirm {
+    background-color: #00875F;
+}
+
+.container .confirm__clean__transactions .action__buttons .cancel {
+    background: #7C7C8A;
 }
