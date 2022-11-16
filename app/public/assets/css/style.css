@@ -82,7 +82,7 @@ nav header .new__transaction button:hover {
     justify-content: space-between;
     gap: 32px;
     position: absolute;
-    top: 62%;
+    top: 22vh;
     left: 50%;
     transform: translateX(-50%);
 }
