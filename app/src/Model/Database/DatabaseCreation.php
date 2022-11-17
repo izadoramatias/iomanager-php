@@ -30,7 +30,7 @@ class DatabaseCreation
                                 price float NOT NULL,
                                 category varchar(45) NOT NULL,
                                 date varchar(10) NOT NULL,
-                                type bit NOT NULL);";
+                                type TINYINT NOT NULL);";
             $pdo->exec($createTable);
 
         } catch (\PDOException $exception) {

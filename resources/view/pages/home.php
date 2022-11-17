@@ -95,7 +95,7 @@
                             foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
                                 <section>
                                     <p class="description"><?php echo $description; ?></p>
-                                    <p class="<?= $type ? 'price__input' : 'price__output'; ?>" >R$ <?php echo number_format($price, 2, ',', '.'); ?></p>
+                                    <p class="<?= $type === 1 ? 'price__input' : 'price__output'; ?>" >R$ <?php echo number_format($price, 2, ',', '.'); ?></p>
                                     <p class="category"><?php echo $category; ?></p>
                                     <p class="date"><?php echo str_replace('-', '/', $date); ?></p>
                                 </section>
@@ -124,12 +124,12 @@
 
                     <div class="transaction__type">
                         <div role="radio" class="form-check">
-                            <input value="true" class="form-check-input" type="radio" name="type" id="input">
+                            <input value="1" class="form-check-input" type="radio" name="type" id="input">
                             <label class="form-check-label" for="input">Entrada</label>
                         </div>
 
                         <div role="radio" class="form-check">
-                            <input value="false" class="form-check-input" type="radio" name="type" id="output">
+                            <input value="0" class="form-check-input" type="radio" name="type" id="output">
                             <label class="form-check-label" for="output">Saída</label>
                         </div>
                     </div>
