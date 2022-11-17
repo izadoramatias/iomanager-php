@@ -10,15 +10,11 @@ class NewTransaction
     public static function processRequest(): array
     {
 
-        $description = $_POST['description'];
-        $price = $_POST['price'];
-        $category = $_POST['category'];
-        $date = $_POST['date'];
-        $type = $_POST['type'];
-
-        echo '<pre>';
-        var_dump($_POST);
-        echo '</pre>';
+        $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+        $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+        $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING);
+        $date = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING);
+        $type = filter_input(INPUT_POST, 'type', FILTER_VALIDATE_INT);
 
         new Transaction($description, $price, $category, $date, $type);
 

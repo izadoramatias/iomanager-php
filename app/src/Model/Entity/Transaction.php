@@ -2,8 +2,6 @@
 
 namespace App\Model\Entity;
 
-use App\Model\Services\DataTypeTransaction;
-
 class Transaction
 {
 
@@ -13,9 +11,6 @@ class Transaction
     public string $category;
     private string $date;
     public bool $io;
-
-    private static float $totalInputs = 0;
-    private static float $totalOutputs = 0;
 
     public function __construct(
 
@@ -29,33 +24,8 @@ class Transaction
         $this->description = $description;
         $this->price = $price;
         $this->category = $category;
-        $this->io = $io;
         $this->date = $date;
-    }
-
-    public function getPrice(): float
-    {
-        return $this->price;
-    }
-
-    public static function getTotalInputs(): float
-    {
-        return self::$totalInputs;
-    }
-
-    public static function getTotalOutputs(): float
-    {
-        return self::$totalOutputs;
-    }
-
-    public static function setTotalInputs(float $input = 0): float
-    {
-        return self::$totalInputs += $input;
-    }
-
-    public static function setTotalOutputs(float $output = 0): float
-    {
-        return self::$totalOutputs += $output;
+        $this->io = $io;
     }
 
 }
