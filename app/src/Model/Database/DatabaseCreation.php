@@ -5,18 +5,12 @@ namespace App\Model\Database;
 class DatabaseCreation
 {
 
-    private static ?DatabaseConnection $databaseConnection = null;
-
-    public function __construct()
-    {
-        self::$databaseConnection = new DatabaseConnection();
-        self::$databaseConnection::connect();
-    }
+    public static ?DatabaseCreation $databaseCreation = null;
 
     public static function create()
     {
 
-        $pdo = self::$databaseConnection::$pdo;
+        $pdo = DatabaseConnection::$pdo;
         try {
 
             $createDB = 'CREATE DATABASE IF NOT EXISTS ' . DB_NAME . ';';

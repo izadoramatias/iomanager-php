@@ -7,17 +7,12 @@ use App\Controller\NewTransaction;
 class InsertTransaction
 {
 
-    private static ?DatabaseConnection $databaseConnection = null;
     private static NewTransaction $transaction;
 
     public function __construct()
     {
         self::$transaction = new NewTransaction();
-
-        self::$databaseConnection = new DatabaseConnection();
-        self::$databaseConnection::connect();
-
-        (self::$databaseConnection::$pdo)->exec('USE ' . DB_NAME . ';');
+        (DatabaseConnection::$pdo)->exec('USE ' . DB_NAME . ';');
     }
 
     public static function insert(): void
@@ -25,15 +20,15 @@ class InsertTransaction
 
         extract(self::$transaction::processRequest(), EXTR_OVERWRITE);
 
-        $statement = self::$databaseConnection::$pdo->
+        $statement = DatabaseConnection::$pdo->
         prepare("INSERT INTO Transactions (description, price, category, date, type) VALUES 
             (:description, :price, :category, :date, :type);");
 
-        $statement->bindParam(':description', $description, self::$databaseConnection::$pdo::PARAM_STR);
+        $statement->bindParam(':description', $description, DatabaseConnection::$pdo::PARAM_STR);
         $statement->bindParam(':price', $price);
-        $statement->bindParam(':category', $category, self::$databaseConnection::$pdo::PARAM_STR);
-        $statement->bindParam(':date', $date, self::$databaseConnection::$pdo::PARAM_STR);
-        $statement->bindParam(':type', $type , self::$databaseConnection::$pdo::PARAM_INT);
+        $statement->bindParam(':category', $category, DatabaseConnection::$pdo::PARAM_STR);
+        $statement->bindParam(':date', $date, DatabaseConnection::$pdo::PARAM_STR);
+        $statement->bindParam(':type', $type , DatabaseConnection::$pdo::PARAM_INT);
 
         try {
 

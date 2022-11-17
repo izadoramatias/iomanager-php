@@ -8,19 +8,9 @@ use App\Model\Database\DatabaseConnection;
 class TransactionsFindAll
 {
 
-    private static ?DatabaseConnection $databaseConnection = null;
-
-    public function __construct()
-    {
-
-        self::$databaseConnection = new DatabaseConnection();
-        self::$databaseConnection::connect();
-    }
-
     public static function findAll()
     {
-        $findAllTransactionsQuery = (self::$databaseConnection::$pdo)->query("SELECT * FROM Transactions;");
-//        $findAllTransactionsQuery->execute();
+        $findAllTransactionsQuery = (DatabaseConnection::$pdo)->query("SELECT * FROM Transactions;");
 
         $allTransactions = $findAllTransactionsQuery->fetchAll();
         return $allTransactions;

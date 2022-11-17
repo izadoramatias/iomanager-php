@@ -8,6 +8,7 @@ class DatabaseConnection
 {
 
     public static ?PDO $pdo = null;
+    public static ?DatabaseConnection $databaseConnection = null;
 
     public static function connect()
     {
@@ -18,6 +19,7 @@ class DatabaseConnection
 
                 self::$pdo = new PDO("mysql:host=" . DB_HOST . ";", DB_USER, DB_PASS);
                 self::$pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
+
 
             } catch (\Exception $exception) {
 
