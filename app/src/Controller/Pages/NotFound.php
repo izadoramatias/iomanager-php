@@ -8,9 +8,8 @@ use App\Controller\InterfaceRequestController;
 class NotFound extends HtmlController implements InterfaceRequestController
 {
 
-    public static function processRequest(): void
+    public static function processRequest(): mixed
     {
-
         echo self::renderHtml('/pages/404.php', array());
     }
 }

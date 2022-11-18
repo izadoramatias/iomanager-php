@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Model\Repository\TransactionsFindAll;
 
-class Transaction
+class Transaction implements InterfaceRequestController
 {
-    public static function processRequest()
+    public static function processRequest(): mixed
     {
 
         $transactionsRepository = new TransactionsFindAll();

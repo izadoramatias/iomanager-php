@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
-use \App\Model\Entity\Transaction;
+use App\Model\Entity\Transaction;
 
-class NewTransaction
+class NewTransaction implements InterfaceRequestController
 {
 
-    public static function processRequest(): array
+    public static function processRequest(): mixed
     {
+
+//        echo "<pre>";
+//        var_dump($_POST);
+//        echo "</pre>"; exit();
 
         $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
         $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);

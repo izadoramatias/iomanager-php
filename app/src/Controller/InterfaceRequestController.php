@@ -5,5 +5,5 @@ namespace App\Controller;
 interface InterfaceRequestController
 {
 
-        public static function processRequest(): void;
+        public static function processRequest(): mixed;
 }

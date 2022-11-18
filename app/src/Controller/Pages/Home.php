@@ -19,7 +19,7 @@ class Home extends HtmlController implements InterfaceRequestController {
         $this::$transaction = new TransactionController();
     }
 
-    public static function processRequest(): void
+    public static function processRequest(): mixed
     {
         $requestTemplate = $_SERVER['PATH_INFO']; // pega o recurso pesquisado pelo usuário na uri
         $requestTemplate = str_replace('/', '', $requestTemplate);

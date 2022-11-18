@@ -90,8 +90,12 @@
                 <main>
 
                     <?php
+                        function loadTransactionsList($transacoes): void {
 
-                        if (!empty($transacoes)) {
+                            if (empty($transacoes)) {
+                                echo 'Nenhuma transação cadastrada   ):';
+                                return;
+                            }
                             foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
                                 <section>
                                     <p class="description"><?php echo $description; ?></p>
@@ -100,9 +104,10 @@
                                     <p class="date"><?php echo str_replace('-', '/', $date); ?></p>
                                 </section>
                             <?php endforeach;
-                        } else {
-                            echo 'Nenhuma transação cadastrada   ):';
-                        } ?>
+                        }
+
+                        loadTransactionsList($transacoes);
+                    ?>
 
                 </main>
             </div>
