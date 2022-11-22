@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\Entity\Transaction;
 
-class NewTransaction implements InterfaceRequestController
+class NewTransaction
 {
 
     public static function processRequest(): array

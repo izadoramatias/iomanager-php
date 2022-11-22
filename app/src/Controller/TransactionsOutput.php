@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\Repository\TransactionsTypeOutput;
 
-class TransactionsOutput implements InterfaceRequestController
+class TransactionsOutput
 {
 
     public static function processRequest(): float|null

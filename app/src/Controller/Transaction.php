@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\Repository\TransactionsFindAll;
 
-class Transaction implements InterfaceRequestController
+class Transaction
 {
     public static function processRequest(): array|bool
     {

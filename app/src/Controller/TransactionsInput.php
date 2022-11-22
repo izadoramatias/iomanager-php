@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\Repository\TransactionsTypeInput;
 
-class TransactionsInput implements InterfaceRequestController
+class TransactionsInput
 {
 
     public static function processRequest(): float|null

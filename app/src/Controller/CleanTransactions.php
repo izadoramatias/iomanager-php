@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\Repository\CleanTransactions as CleanTransactionsRepository;
 
-class CleanTransactions
+class CleanTransactions implements InterfaceRequestController
 {
     public static function processRequest(): void
     {
