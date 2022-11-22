@@ -3,11 +3,12 @@
 namespace App\Model\Database;
 
 use App\Controller\NewTransaction;
+use App\Helper\FlashMessageTrait;
 
 class InsertTransaction
 {
-
     private static NewTransaction $transaction;
+    use FlashMessageTrait;
 
     public function __construct()
     {
@@ -17,7 +18,6 @@ class InsertTransaction
 
     public static function insert(): void
     {
-
         extract(self::$transaction::processRequest(), EXTR_OVERWRITE);
 
         $statement = DatabaseConnection::$pdo->
@@ -33,12 +33,12 @@ class InsertTransaction
         try {
 
             $statement->execute();
+            (new InsertTransaction)->messageDefinition('success', 'Transação cadastrada com sucesso!');
             header('Location: /home');
 
         } catch (\PDOException $PDOException) {
-            echo "Error: " . $PDOException->getMessage();
-            http_response_code(500);
+            (new InsertTransaction)->messageDefinition('danger', "Error: " . $PDOException->getMessage());
+            header('Location: /home');
         }
-
     }
 }

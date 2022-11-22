@@ -2,11 +2,12 @@
 
 namespace App\Controller\Pages;
 
-use App\Controller\HtmlController;
 use App\Controller\InterfaceRequestController;
+use App\Helper\HtmlRenderTrait;
 
-class NotFound extends HtmlController implements InterfaceRequestController
+class NotFound implements InterfaceRequestController
 {
+    use HtmlRenderTrait;
 
     public static function processRequest(): mixed
     {

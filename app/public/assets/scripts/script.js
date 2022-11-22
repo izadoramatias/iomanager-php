@@ -26,4 +26,15 @@ buttonClosePopup.addEventListener('click', (e) => {
     newTransactionPopUp.classList.remove('popup-open');
 })
 
+function buttonIsClickedOnlyOnce() {
+    const button = document.querySelector('.newTransaction__popup form button');
+    button.addEventListener('click', (e) => {
+        e.preventDefault()
+    });
+
+    button.addEventListener('submit', (e) => {
+        e.stopPropagation()
+    })
+}
+
 

@@ -2,7 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Controller\{HtmlController,
+use App\Helper\HtmlRenderTrait;
+use App\Controller\{
     InterfaceRequestController,
     TransactionsInput,
     TransactionsOutput,
@@ -10,8 +11,9 @@ use App\Controller\{HtmlController,
 use App\Model\Services\CalculateTotalTransactions;
 
 
-class Home extends HtmlController implements InterfaceRequestController {
-
+class Home implements InterfaceRequestController
+{
+    use HtmlRenderTrait;
     private static ?TransactionController $transaction = null;
 
     public function __construct()
@@ -36,9 +38,7 @@ class Home extends HtmlController implements InterfaceRequestController {
                 'total' => number_format($total, 2, ',', '.'),
                 'transacoes' => self::$transaction::processRequest()
             ]);
-
     }
-
 }
 
 

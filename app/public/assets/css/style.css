@@ -106,6 +106,10 @@ nav header .action__buttons button:hover {
     border-radius: 6px;
 }
 
+.io__data .total__data {
+    background-color: #00B37E;
+}
+
 .io__data .input__data header p,
 .io__data .output__data header p,
 .io__data .total__data header p {
@@ -160,7 +164,7 @@ nav header .action__buttons button:hover {
     gap: .5rem;
     background-color: #202024;
 
-    padding: 60px 0px 30px 0px;
+    padding: 40px 160px;
 
     font-size: .9rem;
     color: #fcfcfc;
@@ -168,7 +172,7 @@ nav header .action__buttons button:hover {
 }
 
 main section {
-    width: 70%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 
@@ -178,7 +182,7 @@ main section {
 }
 
 main section:first-child {
-    margin-top: 2rem;
+    margin-top: 3.6rem;
 }
 
 main section p {
@@ -379,4 +383,21 @@ main section .price__output {
 
 .container .confirm__clean__transactions .action__buttons .cancel{
     background: #7C7C8A;
+}
+
+.container .content .alert {
+    width: 100%;
+    padding: 20px 32px;
+    border-radius: 5px;
+    margin-top: 3.125rem;
+}
+
+.container .content .alert.alert-success {
+    background: rgba(0, 179, 126, .1);
+    border: 1.5px solid rgba(0, 179, 126, 0.3);
+}
+
+.container .content .alert.alert-danger {
+    background: rgba(247, 90, 104, .1);
+    border: 1.5px solid rgba(247, 90, 104, .1);
 }

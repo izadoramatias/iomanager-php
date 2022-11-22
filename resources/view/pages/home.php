@@ -18,6 +18,7 @@
     <body>
 
         <div class="container">
+
             <div class="content">
 
                 <nav>
@@ -89,6 +90,19 @@
 
                 <main>
 
+                    <?php if (isset($_SESSION['message_content'])): ?>
+
+                        <div class="alert alert-<?= $_SESSION['message_type']; ?>">
+                            <?= $_SESSION['message_content']; ?>
+                        </div>
+
+                    <?php
+
+                        unset($_SESSION['message_content'], $_SESSION['message_type']);
+                        endif;
+
+                    ?>
+
                     <?php
                         function loadTransactionsList($transacoes): void {
 
@@ -129,17 +143,17 @@
 
                     <div class="transaction__type">
                         <div role="radio" class="form-check">
-                            <input value="1" class="form-check-input" type="radio" name="type" id="input">
+                            <input required value="1" class="form-check-input" type="radio" name="type" id="input">
                             <label class="form-check-label" for="input">Entrada</label>
                         </div>
 
                         <div role="radio" class="form-check">
-                            <input value="0" class="form-check-input" type="radio" name="type" id="output">
+                            <input required value="0" class="form-check-input" type="radio" name="type" id="output">
                             <label class="form-check-label" for="output">Saída</label>
                         </div>
                     </div>
 
-                    <button type="submit">Cadastrar</button>
+                    <button onclick="buttonIsClickedOnlyOnce()" type="submit">Cadastrar</button>
                 </form>
             </div>
 

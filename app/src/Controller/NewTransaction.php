@@ -9,11 +9,6 @@ class NewTransaction implements InterfaceRequestController
 
     public static function processRequest(): mixed
     {
-
-//        echo "<pre>";
-//        var_dump($_POST);
-//        echo "</pre>"; exit();
-
         $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
         $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
         $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING);

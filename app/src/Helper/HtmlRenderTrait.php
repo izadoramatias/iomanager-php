@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Helper;
 
-abstract class HtmlController
+trait HtmlRenderTrait
 {
-
     public static function renderHtml(string $templatePath, array $data): string
     {
 
@@ -16,5 +15,4 @@ abstract class HtmlController
 
         return $html;
     }
-
 }

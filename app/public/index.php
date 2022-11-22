@@ -14,6 +14,8 @@ define("App\Model\Database\DB_PASS", 12345);
 
 $routes = require __DIR__ . '/../config/routes.php';
 
+session_start();
+
 // verifica se já há uma conexão com o banco, caso nao exista, o código abaixo irá criar e armazenar no atributo estático da classe
 $databaseConnection = DatabaseConnection::$databaseConnection;
 if (is_null($databaseConnection)) {
