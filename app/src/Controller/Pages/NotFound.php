@@ -9,7 +9,7 @@ class NotFound implements InterfaceRequestController
 {
     use HtmlRenderTrait;
 
-    public static function processRequest(): mixed
+    public static function processRequest(): void
     {
         echo self::renderHtml('/pages/404.php', array());
     }

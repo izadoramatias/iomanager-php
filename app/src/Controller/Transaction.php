@@ -6,7 +6,7 @@ use App\Model\Repository\TransactionsFindAll;
 
 class Transaction implements InterfaceRequestController
 {
-    public static function processRequest(): mixed
+    public static function processRequest(): array|bool
     {
 
         $transactionsRepository = new TransactionsFindAll();

@@ -7,7 +7,7 @@ use App\Model\Repository\TransactionsTypeInput;
 class TransactionsInput implements InterfaceRequestController
 {
 
-    public static function processRequest(): mixed
+    public static function processRequest(): float|null
     {
         $transactionsInputRepository = new TransactionsTypeInput();
         $all = $transactionsInputRepository->findTransactionsTypeInput()[0]['totalPriceInputs'];

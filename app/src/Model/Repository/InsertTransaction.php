@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Model\Database;
+namespace App\Model\Repository;
 
 use App\Controller\NewTransaction;
 use App\Helper\FlashMessageTrait;
+use App\Model\Database\DatabaseConnection;
+use const App\Model\Database\DB_NAME;
 
 class InsertTransaction
 {

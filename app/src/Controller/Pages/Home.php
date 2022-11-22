@@ -21,7 +21,7 @@ class Home implements InterfaceRequestController
         $this::$transaction = new TransactionController();
     }
 
-    public static function processRequest(): mixed
+    public static function processRequest(): void
     {
         $requestTemplate = $_SERVER['PATH_INFO']; // pega o recurso pesquisado pelo usuário na uri
         $requestTemplate = str_replace('/', '', $requestTemplate);

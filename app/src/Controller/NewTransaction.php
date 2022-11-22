@@ -7,7 +7,7 @@ use App\Model\Entity\Transaction;
 class NewTransaction implements InterfaceRequestController
 {
 
-    public static function processRequest(): mixed
+    public static function processRequest(): array
     {
         $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
         $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
