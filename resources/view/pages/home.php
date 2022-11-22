@@ -71,7 +71,7 @@
                                 <span><?= isset($saida) ? $saida : 0; ?></span>
                             </div>
                         </section>
-                        <section class="total__data">
+                        <section class="total__data <?= isset($total) && $total >= 0 ? 'positive__credit' : 'negative__credit'; ?>">
                             <header>
                                 <p>
                                     <span class="io__description">Total</span>

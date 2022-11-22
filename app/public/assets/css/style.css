@@ -106,8 +106,12 @@ nav header .action__buttons button:hover {
     border-radius: 6px;
 }
 
-.io__data .total__data {
+.io__data .total__data.positive__credit {
     background-color: #00B37E;
+}
+
+.io__data .total__data.negative__credit {
+    background-color: #F75A68;
 }
 
 .io__data .input__data header p,

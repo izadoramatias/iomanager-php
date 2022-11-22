@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Model\Repository\CleanTransactions as CleanTransactionsRepository;
 
-class CleanTransactions implements InterfaceRequestController
+class CleanTransactions
 {
-
     public static function processRequest(): void
     {
-        new CleanTransactionsRepository();
-        CleanTransactionsRepository::clean();
+        $cleanTransactionsRepository = new CleanTransactionsRepository();
+        $cleanTransactionsRepository::clean();
 
         header('Location: /home');
     }

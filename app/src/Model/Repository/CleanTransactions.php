@@ -7,7 +7,6 @@ use const App\Model\Database\DB_NAME;
 
 class CleanTransactions
 {
-
     public function __construct()
     {
         (DatabaseConnection::$pdo)->exec('USE ' . DB_NAME . ';');
