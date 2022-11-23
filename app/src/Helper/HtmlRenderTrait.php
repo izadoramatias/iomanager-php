@@ -10,7 +10,7 @@ trait HtmlRenderTrait
         extract($data, EXTR_OVERWRITE);
 
         ob_start();
-        require  __DIR__ . '/../../../resources/view/' . $templatePath;
+        require  __DIR__ . '/../View/' . $templatePath;
         $html = ob_get_clean();
 
         return $html;
