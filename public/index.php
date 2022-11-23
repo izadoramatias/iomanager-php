@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 use App\Controller\InterfaceRequestController;
 use App\Controller\Pages\NotFound;
 use App\Model\Database\DatabaseConnection;

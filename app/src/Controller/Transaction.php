@@ -10,7 +10,7 @@ class Transaction
     {
 
         $transactionsRepository = new TransactionsFindAll();
-        $all = $transactionsRepository::findAll();
+        $all = $transactionsRepository::findAll()   ;
 
         return $all;
     }

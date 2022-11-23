@@ -54,7 +54,7 @@
                             </header>
                             <div class="input__money">
                                 <span>R$</span>
-                                <span><?= isset($entrada) ? $entrada : 0; ?></span>
+                                <span><?= $input; ?></span>
                             </div>
                         </section>
                         <section class="output__data">
@@ -68,7 +68,7 @@
                             </header>
                             <div class="output__money">
                                 <span>R$</span>
-                                <span><?= isset($saida) ? $saida : 0; ?></span>
+                                <span><?= $output; ?></span>
                             </div>
                         </section>
                         <section class="total__data <?= isset($total) && $total >= 0 ? 'positive__credit' : 'negative__credit'; ?>">
@@ -87,42 +87,18 @@
                         </section>
                     </div>
                 </nav>
-
                 <main>
-
                     <?php if (isset($_SESSION['message_content'])): ?>
-
                         <div class="alert alert-<?= $_SESSION['message_type']; ?>">
                             <?= $_SESSION['message_content']; ?>
                         </div>
 
                     <?php
-
                         unset($_SESSION['message_content'], $_SESSION['message_type']);
                         endif;
-
                     ?>
 
-                    <?php
-                        function loadTransactionsList($transacoes): void {
-
-                            if (empty($transacoes)) {
-                                echo 'Nenhuma transação cadastrada   ):';
-                                return;
-                            }
-                            foreach ($transacoes as $transacao): extract($transacao, EXTR_OVERWRITE)?>
-                                <section>
-                                    <p class="description"><?php echo $description; ?></p>
-                                    <p class="<?= $type === 1 ? 'price__input' : 'price__output'; ?>" >R$ <?php echo number_format($price, 2, ',', '.'); ?></p>
-                                    <p class="category"><?php echo $category; ?></p>
-                                    <p class="date"><?php echo str_replace('-', '/', $date); ?></p>
-                                </section>
-                            <?php endforeach;
-                        }
-
-                        loadTransactionsList($transacoes);
-                    ?>
-
+                    <?= $transactions; ?>
                 </main>
             </div>
 
