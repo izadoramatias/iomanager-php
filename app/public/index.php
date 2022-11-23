@@ -20,7 +20,6 @@ if (!isset($_SERVER['PATH_INFO'])) {
 
 $path = $_SERVER['PATH_INFO'];
 if (!array_key_exists($path, $routes)) {
-
     NotFound::processRequest();
     exit();
 }
