@@ -16,11 +16,8 @@
 
     </head>
     <body>
-
         <div class="container">
-
             <div class="content">
-
                 <nav>
                     <header>
                         <div class="logo">
@@ -71,7 +68,7 @@
                                 <span><?= $output; ?></span>
                             </div>
                         </section>
-                        <section class="total__data <?= isset($total) && $total >= 0 ? 'positive__credit' : 'negative__credit'; ?>">
+                        <section class="total__data <?= $positivity; ?>">
                             <header>
                                 <p>
                                     <span class="io__description">Total</span>
@@ -109,8 +106,6 @@
                         <i class="ph-x-bold close__popup"></i>
                     </span>
                 </div>
-
-
                 <form method="post" action="/new-transaction">
                     <input type="text" name="description" id="description" placeholder="Descrição" required>
                     <input step="any" type="number" name="price" id="price" placeholder="Preço" required>
@@ -144,10 +139,8 @@
                     <a class="cancel" href="/home">Cancelar</a>
                 </div>
             </div>
-
         </div>
 
         <script src="./assets/scripts/script.js"></script>
-
     </body>
 </html>

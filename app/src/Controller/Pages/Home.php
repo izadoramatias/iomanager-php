@@ -7,7 +7,8 @@ use App\Model\Services\{ValidateIfTransactionsHasData,
     ValidatesInputDataReturn,
     ValidatesOutputDataReturn,
     CalculateTotalTransactions,
-    ValidatesTotalDataReturn};
+    ValidatesTotalDataReturn,
+    ValidatesTotalPositivity};
 use App\Controller\{
     InterfaceRequestController,
     Transaction as TransactionController};
@@ -38,6 +39,7 @@ class Home implements InterfaceRequestController
                 'input' => number_format($input, 2, ',', '.'),
                 'output' => number_format($output, 2, ',', '.'),
                 'total' => number_format($total, 2, ',', '.'),
+                'positivity' => ValidatesTotalPositivity::validate(),
                 'transactions' => ValidateIfTransactionsHasData::validate()
             ]);
     }
