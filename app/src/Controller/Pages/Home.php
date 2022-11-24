@@ -3,13 +3,14 @@
 namespace App\Controller\Pages;
 
 use App\Helper\HtmlRenderTrait;
-use App\Model\Services\ValidateIfTransactionsHasData;
-use App\Model\Services\ValidatesInputDataReturn;
-use App\Model\Services\ValidatesOutputDataReturn;
+use App\Model\Services\{ValidateIfTransactionsHasData,
+    ValidatesInputDataReturn,
+    ValidatesOutputDataReturn,
+    CalculateTotalTransactions,
+    ValidatesTotalDataReturn};
 use App\Controller\{
     InterfaceRequestController,
     Transaction as TransactionController};
-use App\Model\Services\CalculateTotalTransactions;
 
 
 class Home implements InterfaceRequestController
@@ -29,7 +30,7 @@ class Home implements InterfaceRequestController
 
         $input = ValidatesInputDataReturn::validate();
         $output = ValidatesOutputDataReturn::validate();
-        $total = CalculateTotalTransactions::calculate();
+        $total = ValidatesTotalDataReturn::validate();
 
         echo self::renderHtml(
             "pages/$requestTemplate.php",

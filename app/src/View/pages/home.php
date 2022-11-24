@@ -82,7 +82,7 @@
                             </header>
                             <div class="total__money">
                                 <span>R$</span>
-                                <span><?= isset($total) ? $total : 0; ?></span>
+                                <span><?= $total; ?></span>
                             </div>
                         </section>
                     </div>
