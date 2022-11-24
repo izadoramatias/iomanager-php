@@ -27,14 +27,27 @@ buttonClosePopup.addEventListener('click', (e) => {
 })
 
 function buttonIsClickedOnlyOnce() {
-    const button = document.querySelector('.newTransaction__popup form button');
-    button.addEventListener('click', (e) => {
-        e.preventDefault()
-    });
 
-    button.addEventListener('submit', (e) => {
-        e.stopPropagation()
-    })
+    const descriptionInput = document.querySelector("#description").value;
+    const priceInput = document.querySelector("#price").value;
+    const categoryInput = document.querySelector("#category").value;
+    const dateInput = document.querySelector("#date").value;
+    const inputRadio = document.querySelector("#input").checked;
+    const outputRadio = document.querySelector("#output").checked;
+
+    if ((descriptionInput !== '') && (priceInput !== '') && (categoryInput !== '') && (dateInput !== '') && (inputRadio || outputRadio)) {
+        const button = document.querySelector('.newTransaction__popup form button');
+        button.addEventListener('click', (e) => {
+            e.preventDefault()
+        });
+
+        button.addEventListener('submit', (e) => {
+            e.stopPropagation()
+        })
+    }
 }
+
+
+
 
 
