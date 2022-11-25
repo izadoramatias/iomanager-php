@@ -26,24 +26,13 @@
     display: flex;
     align-items: center;
     padding: 5px;
+    margin-left: 10px;
 }
 
-.screen__mode svg {
+.screen__mode img {
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-}
-
-.screen__mode svg path {
-    stroke: #fcfcfc;
-    -webkit-transition: cubic-bezier(.5,.16,.07,.67) .3s;
-    transition: cubic-bezier(.5,.16,.07,.67) .3s;
-}
-
-.screen__mode.dark__mode svg path,
-.screen__mode svg:hover path {
-    stroke: #ffbc1f;
-    fill: #ffbc1f;
 }
 
 input::-webkit-outer-spin-button,
@@ -96,6 +85,15 @@ nav header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+}
+
+nav header .logo.dark__mode a {
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #b6b6b8;
+
+    display: flex;
+    align-items: center;
 }
 
 nav header .action__buttons {
@@ -279,8 +277,6 @@ main section .price__output {
 .container .newTransaction__popup.dark__mode {
     background-color: var(--io_data-light);
 }
-
-
 
 @keyframes bright-in {
     0% {

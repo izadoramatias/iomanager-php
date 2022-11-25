@@ -55,14 +55,26 @@ const main = document.querySelector('.content main');
 const inputData = document.querySelector('.content nav .input__data');
 const outputData = document.querySelector('.content nav .output__data');
 const transactionsList = document.querySelectorAll('main section');
+const logo = document.querySelector('nav header .logo')
 
 const popup = document.querySelector('.container .newTransaction__popup');
 const popupFormInput = document.querySelectorAll('.newTransaction__popup form input');
 const popupTitle = document.querySelector('.newTransaction__popup p.popup__title');
 const popupInputRadioLabel = document.querySelectorAll('.newTransaction__popup .transaction__type label');
 
+const modeIcon = document.querySelector('.screen__mode img');
+
 screenModeButton.addEventListener('click', (e) => {
     screenModeButton.classList.toggle('dark__mode');
+    modeIcon.classList.toggle('dark__mode');
+
+    console.log(modeIcon.classList);
+    if (modeIcon.classList.contains('dark__mode')){
+        modeIcon.setAttribute('src', './assets/icons/sun-bold.svg');
+    } else {
+        modeIcon.setAttribute('src', './assets/icons/moon-bold.svg');
+
+    }
     headerNav.classList.toggle('dark__mode');
     main.classList.toggle('dark__mode');
     inputData.classList.toggle('dark__mode');
@@ -70,6 +82,7 @@ screenModeButton.addEventListener('click', (e) => {
     transactionsList.forEach(function (element) {
         element.classList.toggle('dark__mode');
     });
+    logo.classList.toggle('dark__mode');
 
     popup.classList.toggle('dark__mode');
     popupFormInput.forEach(function (element) {
@@ -79,7 +92,6 @@ screenModeButton.addEventListener('click', (e) => {
     popupInputRadioLabel.forEach(function (element) {
         element.classList.toggle('dark__mode');
     })
-
 })
 
 
