@@ -8,6 +8,44 @@
     text-decoration: none;
 }
 
+:root {
+    --bg-dark-nav: #121214;
+    --bg-dark-main: #202024;
+    --text-color-dark: #fcfcfc;
+    --transactions-list-dark: #29292E;
+    --io_data-dark: #323238;
+
+    --bg-light-nav: #EBEBEB;
+    --bg-light-main: #fcfcfc;
+    --text-color-light: #333;
+    --transactions-list-light: #E8E8E8;
+    --io_data-light: #DFDFDF;
+}
+
+.screen__mode {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.screen__mode svg {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+
+.screen__mode svg path {
+    stroke: #fcfcfc;
+    -webkit-transition: cubic-bezier(.5,.16,.07,.67) .3s;
+    transition: cubic-bezier(.5,.16,.07,.67) .3s;
+}
+
+.screen__mode.dark__mode svg path,
+.screen__mode svg:hover path {
+    stroke: #ffbc1f;
+    fill: #ffbc1f;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -42,14 +80,15 @@ input {
     height: 100%;
 }
 
-nav{
+nav {
+    height: 30%;
+    background-color: var(--bg-dark-nav);
+    position: relative;
     padding: 40px 160px;
 }
 
-nav {
-    height: 30%;
-    background-color: #121214;
-    position: relative;
+nav.dark__mode {
+    background-color: var(--bg-light-nav);
 }
 
 nav header {
@@ -95,6 +134,8 @@ nav header .action__buttons button:hover {
     top: 22vh;
     left: 50%;
     transform: translateX(-50%);
+
+    color: #fcfcfc;
 }
 
 .io__data .input__data,
@@ -102,8 +143,18 @@ nav header .action__buttons button:hover {
 .io__data .total__data{
     width: 352px;
     padding: 24px 32px;
-    background-color: #323238;
     border-radius: 6px;
+}
+
+.io__data .input__data,
+.io__data .output__data {
+    background-color: var(--io_data-dark);
+}
+
+.io__data .input__data.dark__mode,
+.io__data .output__data.dark__mode {
+    background-color: var(--io_data-light);
+    color: var(--text-color-light);
 }
 
 .io__data .total__data.positive__credit {
@@ -145,7 +196,6 @@ nav header .action__buttons button:hover {
 .io__data .output__data .io__description,
 .io__data .total__data .io__description {
     font-size: 14px;
-    color: #fcfcfc;
     font-weight: 400;
 }
 
@@ -154,7 +204,6 @@ nav header .action__buttons button:hover {
 .io__data .total__data .total__money {
     font-weight: 700;
     font-size: 1.5rem;
-    color: #fcfcfc;
     margin-top: 12px;
 }
 
@@ -166,13 +215,18 @@ nav header .action__buttons button:hover {
     justify-content: center;
     flex-direction: column;
     gap: .5rem;
-    background-color: #202024;
+    background-color: var(--bg-dark-main);
 
     padding: 40px 160px;
 
     font-size: .9rem;
-    color: #fcfcfc;
+    color: var(--text-color-dark);
     text-align: center;
+}
+
+.content main.dark__mode {
+    background-color: var(--bg-light-main);
+    color: var(--text-color-light);
 }
 
 main section {
@@ -181,8 +235,12 @@ main section {
     justify-content: space-between;
 
     border-radius: 5px;
-    background-color: #29292E;
+    background-color: var(--transactions-list-dark);
     padding: 20px 32px;
+}
+
+main section.dark__mode {
+    background-color: var(--transactions-list-light);
 }
 
 main section:first-child {
@@ -209,7 +267,7 @@ main section .price__output {
 
     width: 35%;
     min-height: 65%;
-    background-color: #323238;
+    background-color: var(--io_data-dark);
 
     padding: 48px;
     border-radius: 6px;
@@ -217,6 +275,12 @@ main section .price__output {
 
     display: none;
 }
+
+.container .newTransaction__popup.dark__mode {
+    background-color: var(--io_data-light);
+}
+
+
 
 @keyframes bright-in {
     0% {
@@ -246,8 +310,12 @@ main section .price__output {
 .newTransaction__popup p.popup__title {
     font-size: 24px;
     font-weight: 700;
-    color: #fcfcfc;
+    color: var(--text-color-dark);
     margin-bottom: 2rem;
+}
+
+.newTransaction__popup p.popup__title.dark__mode {
+    color: var(--text-color-light);
 }
 
 .newTransaction__popup .header__popup {
@@ -268,11 +336,15 @@ main section .price__output {
 
 .newTransaction__popup form input {
     padding: 1rem;
-    background-color: #121214;
+    background-color: var(--bg-dark-nav);
     border-radius: 6px;
     color: #7C7C8A;
 
     transition: border ease-out .1s;
+}
+
+.newTransaction__popup form input.dark__mode {
+    background-color: var(--bg-light-nav);
 }
 
 .newTransaction__popup form input:not([type=radio]):valid,
@@ -291,7 +363,11 @@ main section .price__output {
 .newTransaction__popup .transaction__type label {
     font-size: 15px;
     font-weight: 400;
-    color: #fcfcfc;
+    color: var(--text-color-dark);
+}
+
+.newTransaction__popup .transaction__type label.dark__mode {
+    color: var(--text-color-light);
 }
 
 .newTransaction__popup form button {

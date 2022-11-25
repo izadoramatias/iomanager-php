@@ -26,6 +26,7 @@ buttonClosePopup.addEventListener('click', (e) => {
     newTransactionPopUp.classList.remove('popup-open');
 })
 
+// previne duplo clique ao adicionar uma nova transação
 function buttonIsClickedOnlyOnce() {
 
     const descriptionInput = document.querySelector("#description").value;
@@ -47,6 +48,39 @@ function buttonIsClickedOnlyOnce() {
     }
 }
 
+// toggle dark/light mode
+const screenModeButton = document.querySelector(".screen__mode");
+const headerNav = document.querySelector('.content nav');
+const main = document.querySelector('.content main');
+const inputData = document.querySelector('.content nav .input__data');
+const outputData = document.querySelector('.content nav .output__data');
+const transactionsList = document.querySelectorAll('main section');
+
+const popup = document.querySelector('.container .newTransaction__popup');
+const popupFormInput = document.querySelectorAll('.newTransaction__popup form input');
+const popupTitle = document.querySelector('.newTransaction__popup p.popup__title');
+const popupInputRadioLabel = document.querySelectorAll('.newTransaction__popup .transaction__type label');
+
+screenModeButton.addEventListener('click', (e) => {
+    screenModeButton.classList.toggle('dark__mode');
+    headerNav.classList.toggle('dark__mode');
+    main.classList.toggle('dark__mode');
+    inputData.classList.toggle('dark__mode');
+    outputData.classList.toggle('dark__mode');
+    transactionsList.forEach(function (element) {
+        element.classList.toggle('dark__mode');
+    });
+
+    popup.classList.toggle('dark__mode');
+    popupFormInput.forEach(function (element) {
+        element.classList.toggle('dark__mode')
+    });
+    popupTitle.classList.toggle('dark__mode');
+    popupInputRadioLabel.forEach(function (element) {
+        element.classList.toggle('dark__mode');
+    })
+
+})
 
 
 
