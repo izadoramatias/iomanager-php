@@ -1,4 +1,16 @@
 // abre o popup
+
+
+const allCookies = document.cookie.split(';');
+// allCookies.forEach(function (element) {
+//     const separated = element.split('=');
+//     if (separated[0] !== ' screenmode') {
+//         document.cookie = 'screenmode=dark__mode';
+//         return;
+//     }
+// })
+// // console.log(document.cookie.split(';'));
+
 let newTransactionButton = document.querySelector('#newTransaction');
 let newTransactionPopUp = document.querySelector('.newTransaction__popup');
 
@@ -66,32 +78,40 @@ const modeIcon = document.querySelector('.screen__mode img');
 
 screenModeButton.addEventListener('click', (e) => {
     screenModeButton.classList.toggle('dark__mode');
-    modeIcon.classList.toggle('dark__mode');
+    if (document.cookie.indexOf('screenmode') < 0 && screenModeButton.classList.contains('dark__mode')) {
+        document.cookie = "screenmode=light__mode";
+        document.location = '';
 
-    console.log(modeIcon.classList);
-    if (modeIcon.classList.contains('dark__mode')){
-        modeIcon.setAttribute('src', './assets/icons/sun-bold.svg');
     } else {
-        modeIcon.setAttribute('src', './assets/icons/moon-bold.svg');
+        document.cookie = "screenmode=dark__mode";
+        headerNav.classList.add('dark__mode');
+        main.classList.add('dark__mode');
+        inputData.classList.add('dark__mode');
+        outputData.classList.add('dark__mode');
+        transactionsList.forEach(function (element) {
+            element.classList.add('dark__mode');
+        });
+        logo.classList.add('dark__mode');
 
+        popup.classList.add('dark__mode');
+        popupFormInput.forEach(function (element) {
+            element.classList.add('dark__mode')
+        });
+        popupTitle.classList.add('dark__mode');
+        popupInputRadioLabel.forEach(function (element) {
+            element.classList.add('dark__mode');
+        })
+
+        modeIcon.classList.add('dark__mode');
+        if (modeIcon.classList.contains('dark__mode')){
+            modeIcon.setAttribute('src', './assets/icons/sun-bold.svg');
+        } else {
+            modeIcon.setAttribute('src', './assets/icons/moon-bold.svg');
+        }
     }
-    headerNav.classList.toggle('dark__mode');
-    main.classList.toggle('dark__mode');
-    inputData.classList.toggle('dark__mode');
-    outputData.classList.toggle('dark__mode');
-    transactionsList.forEach(function (element) {
-        element.classList.toggle('dark__mode');
-    });
-    logo.classList.toggle('dark__mode');
 
-    popup.classList.toggle('dark__mode');
-    popupFormInput.forEach(function (element) {
-        element.classList.toggle('dark__mode')
-    });
-    popupTitle.classList.toggle('dark__mode');
-    popupInputRadioLabel.forEach(function (element) {
-        element.classList.toggle('dark__mode');
-    })
+
+
 })
 
 
