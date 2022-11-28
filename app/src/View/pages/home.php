@@ -37,7 +37,7 @@
                                 </button>
                             </div>
                             <div class="screen__mode">
-                                <img src="./assets/icons/moon-bold.svg" alt="sun icon">
+                                <img src="./assets/icons/sun-bold.svg" alt="sun icon">
                             </div>
                         </div>
                     </header>
