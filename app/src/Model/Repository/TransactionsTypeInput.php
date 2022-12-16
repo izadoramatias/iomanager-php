@@ -8,7 +8,7 @@ class TransactionsTypeInput
 {
     public function findTransactionsTypeInput()
     {
-        $query = "SELECT SUM(price) AS 'totalPriceInputs' FROM Transactions WHERE type = 1;";
+        $query = "SELECT price FROM Transactions WHERE type = 1;";
         $findTransactionsTypeInput = (DatabaseConnection::$pdo)->prepare($query);
         $findTransactionsTypeInput->execute();
 

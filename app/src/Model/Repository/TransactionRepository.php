@@ -2,24 +2,39 @@
 
 namespace App\Model\Repository;
 
+use App\Model\Database\DatabaseConnection;
 use App\Model\TransactionModel;
 
 class TransactionRepository
 {
-    public function getTotalInputTransactions(): float
+    public function getTotalInputTransactions(): array
     {
-        return 0;
-    }
+        $query = "SELECT price FROM Transactions WHERE type = 1;";
+        $findTransactionsTypeInput = (DatabaseConnection::$pdo)->query($query);
 
-    public function getTotalOutputTransactions(): float
+        $fetchTransactions = $findTransactionsTypeInput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
+        return $fetchTransactions;
+    }
+//
+    public function getTotalOutputTransactions(): array
     {
-        return 1.99;
+        $query = "SELECT price FROM Transactions WHERE type = 0;";
+        $findTransactionsTypeOutput = (DatabaseConnection::$pdo)->query($query);
+
+        $fetchTransactions = $findTransactionsTypeOutput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
+        return $fetchTransactions;
     }
 
     public function getTransactions(): array
     {
-        return [
-            new TransactionModel('batata', 1.99, 'alimentação', new \DateTimeImmutable('4 days ago'), 0)
-        ];
+        $getTransactions = (DatabaseConnection::$pdo)->query("SELECT * FROM Transactions;");
+
+        $fetchAll = $getTransactions->fetchAll(DatabaseConnection::$pdo::FETCH_ASSOC);
+        return $fetchAll;
     }
+
+//    public function getTransactions(): array
+//    {
+//        return [];
+//    }
 }
