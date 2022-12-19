@@ -3,9 +3,10 @@
 namespace App\Model\Repository;
 
 use App\Model\Database\DatabaseConnection;
+use App\Model\Services\HomeService;
 use App\Model\TransactionModel;
 
-class TransactionRepository
+class TransactionRepository implements HomeService
 {
     public function getTotalInputTransactions(): array
     {

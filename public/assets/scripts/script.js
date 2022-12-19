@@ -20,6 +20,12 @@ cleanTransactionsButton.addEventListener('click', (e) => {
 })
 
 // fecha os popups de nova transação e limpar transações
+document.addEventListener('keydown', (event) => {
+    if (contentClass.classList.contains('popup-open') && event.key === 'Escape') {
+        contentClass.classList.remove('popup-open');
+        newTransactionPopUp.classList.remove('popup-open');    }
+})
+
 let buttonClosePopup = document.querySelector('.newTransaction__popup .close__popup');
 buttonClosePopup.addEventListener('click', (e) => {
     contentClass.classList.remove('popup-open');
@@ -89,9 +95,6 @@ screenModeButton.addEventListener('click', (e) => {
     } else {
         modeIcon.setAttribute('src', './assets/icons/sun-bold.svg');
     }
-
-
-
 })
 
 
