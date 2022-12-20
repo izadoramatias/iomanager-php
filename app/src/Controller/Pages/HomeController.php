@@ -4,9 +4,8 @@ namespace App\Controller\Pages;
 
 use App\Controller\InterfaceRequestController;
 use App\Helper\RenderHome;
-use App\Model\HomeModel;
 use App\Model\Repository\TransactionRepository;
-use App\Model\Services\HomeModelService;
+use App\Model\Services\HomeService;
 
 class HomeController implements InterfaceRequestController
 {
@@ -14,7 +13,7 @@ class HomeController implements InterfaceRequestController
     {
 
         $render = new RenderHome();
-        $transactionService = new HomeModelService(new TransactionRepository());
+        $transactionService = new HomeService(new TransactionRepository());
 
         $homeModel = $transactionService->getHomeModel();
 

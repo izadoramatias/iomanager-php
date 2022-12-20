@@ -3,7 +3,7 @@
 use App\Helper\RenderHome;
 use App\Model\HomeModel;
 use App\Model\Repository\TransactionRepository;
-use App\Model\Services\HomeModelService;
+use App\Model\Services\HomeService;
 use App\Model\TransactionModel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -36,7 +36,7 @@ use Symfony\Component\DomCrawler\Crawler;
 //    {
 //        $homeModel = new HomeModel();
 //        $transactionRepository = new TransactionRepository();
-//        $homeModelService = new HomeModelService($transactionRepository);
+//        $homeModelService = new HomeService($transactionRepository);
 //
 //        $homeModel->totalInputTransactions = $homeModelService->calculateTotalInputTransactions();
 //        $homeModel->totalOutputTransactions = $homeModelService->calculateTotalOutputTransactions();

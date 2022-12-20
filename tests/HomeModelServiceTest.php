@@ -1,7 +1,7 @@
 <?php
 
 use App\Model\Repository\TransactionRepository;
-use App\Model\Services\HomeModelService;
+use App\Model\Services\HomeService;
 use App\Model\TransactionModel;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ class HomeModelServiceTest extends TestCase
             0 => 2,
             1 => 2
         ]);
-        $homeModelService = new HomeModelService($transactionRepository);
+        $homeModelService = new HomeService($transactionRepository);
 
         // assert
         $this->assertEquals(4, $homeModelService->calculateTotalInputTransactions());
@@ -33,7 +33,7 @@ class HomeModelServiceTest extends TestCase
             0 => 3,
             1 => 5
         ]);
-        $homeModelService = new HomeModelService($transactionRepository);
+        $homeModelService = new HomeService($transactionRepository);
 
         // assert
         $this->assertEquals(8, $homeModelService->calculateTotalOutputTransactions());
@@ -69,7 +69,7 @@ class HomeModelServiceTest extends TestCase
                 'type' => TransactionModel::TYPE_INPUT
             ]
         ]);
-        $homeModelService = new HomeModelService($transactionRepository);
+        $homeModelService = new HomeService($transactionRepository);
 
         // assert
         $this->assertContainsOnlyInstancesOf(TransactionModel::class, $homeModelService->convertTransactionsFromArrayToObject());
@@ -114,7 +114,7 @@ class HomeModelServiceTest extends TestCase
                 'type' => TransactionModel::TYPE_INPUT
             ]
         ]);
-        $homeModelService = new HomeModelService($transactionRepository);
+        $homeModelService = new HomeService($transactionRepository);
         $homeModel = $homeModelService->getHomeModel();
 
         // assert
