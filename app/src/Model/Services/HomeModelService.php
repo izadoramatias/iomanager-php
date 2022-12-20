@@ -2,9 +2,7 @@
 
 namespace App\Model\Services;
 
-use App\Helper\RenderHome;
 use App\Model\HomeModel;
-use App\Model\Repository\TransactionRepository;
 use App\Model\TransactionModel;
 
 class HomeModelService
@@ -24,31 +22,31 @@ class HomeModelService
         return $homeModel;
     }
 
-    private function calculateTotalInputTransactions(): float
+    public function calculateTotalInputTransactions(): float
     {
-        $inputs = $this->transactionRepository->getTotalInputTransactions();
+        $inputsArray = $this->transactionRepository->getTotalInputTransactions();
 
         $total = 0;
-        foreach ($inputs as $price) {
+        foreach ($inputsArray as $price) {
             $total += $price;
         }
 
         return $total;
     }
 
-    private function calculateTotalOutputTransactions(): float
+    public function calculateTotalOutputTransactions(): float
     {
-        $outputs = $this->transactionRepository->getTotalOutputTransactions();
+        $outputsArray = $this->transactionRepository->getTotalOutputTransactions();
 
         $total = 0;
-        foreach ($outputs as $price) {
+        foreach ($outputsArray as $price) {
             $total += $price;
         }
 
         return $total;
     }
 
-    private function convertTransactionsFromArrayToObject(): array
+    public function convertTransactionsFromArrayToObject(): array
     {
         $arrayTransactions = [];
         $transactions = $this->transactionRepository->getTransactions();

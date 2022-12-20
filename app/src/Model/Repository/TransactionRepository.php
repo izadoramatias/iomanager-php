@@ -4,7 +4,6 @@ namespace App\Model\Repository;
 
 use App\Model\Database\DatabaseConnection;
 use App\Model\Services\HomeService;
-use App\Model\TransactionModel;
 
 class TransactionRepository implements HomeService
 {
@@ -31,11 +30,7 @@ class TransactionRepository implements HomeService
         $getTransactions = (DatabaseConnection::$pdo)->query("SELECT * FROM Transactions;");
 
         $fetchAll = $getTransactions->fetchAll(DatabaseConnection::$pdo::FETCH_ASSOC);
+
         return $fetchAll;
     }
-
-//    public function getTransactions(): array
-//    {
-//        return [];
-//    }
 }

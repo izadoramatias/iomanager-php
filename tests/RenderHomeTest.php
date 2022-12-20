@@ -173,13 +173,13 @@ class RenderHomeTest extends TestCase
     {
         $homeModel = new HomeModel();
         $renderHome = new RenderHome();
-        $homeModel->addTransaction(new TransactionModel(date: new DateTimeImmutable('4 days ago')));
+        $homeModel->addTransaction(new TransactionModel(date: new DateTimeImmutable('26-12-2022')));
 
         $html = $renderHome->renderToHtml($homeModel);
         $crawler = new Crawler($html);
         $getDate = $crawler->filter('main section .date')->html();
 
-        $this->assertEquals('11/12/2022', $getDate);
+        $this->assertEquals('26/12/2022', $getDate);
     }
 
     public function testTransactionShouldHaveAInputTypePriceInputWhenTypeIsOne(): void
