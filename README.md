@@ -2,8 +2,7 @@
 
 <h3>First it all, you should have installed composer in your computer:</h3>
   
-  - Install composer: <br>
-    How to install composer?  [click here](https://linuxhint.com/install-and-use-php-composer-ubuntu-22-04/)
+  - How to install composer?  [click here](https://linuxhint.com/install-and-use-php-composer-ubuntu-22-04/)
 
 <hr>
 
