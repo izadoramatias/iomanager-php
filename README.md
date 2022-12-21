@@ -1,14 +1,9 @@
 # IOManagement-php
 
-<h3>First it all, you should have installed composer and phpunit in your computer:</h3>
+<h3>First it all, you should have installed composer in your computer:</h3>
   
-  - Install composer:
+  - Install composer: <br>
     How to install composer?  [click here](https://linuxhint.com/install-and-use-php-composer-ubuntu-22-04/)
-
-  - Install phpunit on Linux:
-    ```php
-    composer require --dev phpunit/phpunit
-    ```
 
 <hr>
 
