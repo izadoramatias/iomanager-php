@@ -4,20 +4,42 @@ namespace App\Model\Database;
 
 class DatabaseCreation
 {
+    public static $database;
+    public static \PDO|null $pdo = null;
 
-    public static ?DatabaseCreation $databaseCreation = null;
-
-    public static function create()
+    public function __construct()
     {
+        self::$pdo = DatabaseConnection::connect();
+    }
 
-        $pdo = DatabaseConnection::$pdo;
+    public static function createDatabase()
+    {
+        if (isset(self::$database)) {
+            return self::$database;
+        }
+
         try {
+            self::$database = self::create();
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+            exit();
+        }
 
-            $createDB = 'CREATE DATABASE IF NOT EXISTS ' . DB_NAME . ';';
-            $pdo->exec($createDB);
-            $pdo->exec('USE ' . DB_NAME . ';');
+        return self::$database;
+    }
 
-            $createTable =  "
+    public static function create(): void
+    {
+        $createDB = 'CREATE DATABASE IF NOT EXISTS ' . DB_NAME . ';';
+        self::$pdo->exec($createDB);
+        self::$pdo->exec('USE ' . DB_NAME . ';');
+
+        self::createTable();
+    }
+
+    private static function createTable(): void
+    {
+        $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
                                 idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                                 description varchar(255) NOT NULL,
@@ -25,13 +47,6 @@ class DatabaseCreation
                                 category varchar(45) NOT NULL,
                                 date varchar(10) NOT NULL,
                                 type TINYINT NOT NULL);";
-            $pdo->exec($createTable);
-
-        } catch (\PDOException $exception) {
-
-            echo 'Erro ao criar a base de dados ou a tabela!';
-            error_log($exception->getMessage());
-        }
+        self::$pdo->exec($createTable);
     }
-
 }
