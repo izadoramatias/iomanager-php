@@ -13,7 +13,7 @@ class HomeModelServiceTest extends TestCase
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $transactionRepository->method('getTotalInputTransactions')->willReturn([
+        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
             0 => 2,
             1 => 2
         ]);
@@ -29,7 +29,7 @@ class HomeModelServiceTest extends TestCase
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $transactionRepository->method('getTotalOutputTransactions')->willReturn([
+        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
             0 => 3,
             1 => 5
         ]);
@@ -46,7 +46,7 @@ class HomeModelServiceTest extends TestCase
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $transactionRepository->method('getTransactions')->willReturn([
+        $transactionRepository->method('getAListOfTransactions')->willReturn([
             0 => [
                 'description' => 'boneco do naruto fazendo rasengan',
                 'price' => 2,
@@ -81,17 +81,17 @@ class HomeModelServiceTest extends TestCase
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $transactionRepository->method('getTotalInputTransactions')
+        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeInput')
                                 ->willReturn([
                                     0 => 2,
                                     1 => 2
                                 ]);
-        $transactionRepository->method('getTotalOutputTransactions')
+        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeOutput')
                                 ->willReturn([
                                     0 => 3,
                                     1 => 5
                                 ]);
-        $transactionRepository->method('getTransactions')->willReturn([
+        $transactionRepository->method('getAListOfTransactions')->willReturn([
             0 => [
                 'description' => 'boneco do naruto fazendo rasengan',
                 'price' => 2,

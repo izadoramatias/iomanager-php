@@ -9,17 +9,17 @@ class DatabaseCreation
 
     public function __construct()
     {
-        self::$pdo = DatabaseConnection::connect();
+        self::$pdo = (new DatabaseConnection())->connect();
     }
 
-    public static function createDatabase()
+    public function createDatabase()
     {
         if (isset(self::$database)) {
             return self::$database;
         }
 
         try {
-            self::$database = self::create();
+            self::$database = $this->create();
         } catch (\Exception $exception) {
             echo $exception->getMessage();
             exit();
@@ -28,16 +28,16 @@ class DatabaseCreation
         return self::$database;
     }
 
-    public static function create(): void
+    public function create(): void
     {
         $createDB = 'CREATE DATABASE IF NOT EXISTS ' . DB_NAME . ';';
         self::$pdo->exec($createDB);
         self::$pdo->exec('USE ' . DB_NAME . ';');
 
-        self::createTable();
+        $this->createTable();
     }
 
-    private static function createTable(): void
+    private function createTable(): void
     {
         $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(

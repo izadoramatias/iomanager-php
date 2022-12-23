@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Database\DatabaseConnection;
 use App\Model\Repository\TransactionRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -57,9 +58,21 @@ class TransactionRepositoryTest extends TestCase
 //        $this->assertNotSame([], $result);
 //    }
 
-    public function testSomething(): void
+    public function testConnectionShouldReturnNull(): void
     {
-        $pdoMock = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD']);
+        $pdoMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
+
+        $pdoMock->method('connect')->willReturn(null);
+
+        $this->assertEquals(null, $pdoMock->connect());
+    }
+
+    public function testConnectionShouldThrowAnException(): void
+    {
+        $pdoMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
+
+        $this->expectException(Exception::class); // define que está esperando que o código a seguir deverá retornar uma exceção
+        $pdoMock->method('connect')->willReturn(new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD'])); // definição que vai fazer o código gerar uma exceção
     }
 
     public function testWhenDatabaseHasInputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
@@ -68,13 +81,13 @@ class TransactionRepositoryTest extends TestCase
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $repositoryMock->method('getTotalInputTransactions')->willReturn([
+        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
             0 => 2,
             1 => 2
         ]);
 
         // assert
-        $this->assertEquals([2, 2], $repositoryMock->getTotalInputTransactions());
+        $this->assertEquals([2, 2], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
     }
 
 //    public function testWhenDatabaseHasNotRegisteredTransactionsShouldReturnAnEmptyArray(): void
@@ -100,10 +113,10 @@ class TransactionRepositoryTest extends TestCase
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $repositoryMock->method('getTotalInputTransactions')->willReturn([]);
+        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([]);
 
         // assert
-        $this->assertEquals([], $repositoryMock->getTotalInputTransactions());
+        $this->assertEquals([], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
     }
 
 //    public function testWhenDatabaseHasOutputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
@@ -129,12 +142,12 @@ class TransactionRepositoryTest extends TestCase
         // arrange
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
-        $repositoryMock->method('getTotalOutputTransactions')->willReturn([
+        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
             0 => 3,
             1 => 5
         ]);
 
-        $this->assertEquals([3, 5], $repositoryMock->getTotalOutputTransactions());
+        $this->assertEquals([3, 5], $repositoryMock->getAListWithThePricesOfTransactionsTypeOutput());
     }
 
 //    public function testWhenDatabaseHasNotOutputTransactionsRegisteredShouldReturnAnEmptyArray(): void
@@ -159,9 +172,9 @@ class TransactionRepositoryTest extends TestCase
         // arrange
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
-        $repositoryMock->method('getTotalOutputTransactions')->willReturn([]);
+        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([]);
 
-        $this->assertEquals([], $repositoryMock->getTotalOutputTransactions());
+        $this->assertEquals([], $repositoryMock->getAListWithThePricesOfTransactionsTypeOutput());
     }
 
 //    public function testShouldReturnATransactionList(): void
@@ -204,7 +217,7 @@ class TransactionRepositoryTest extends TestCase
     {
         $transactionMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
-        $transactionMock->method('getTransactions')->willReturn([
+        $transactionMock->method('getAListOfTransactions')->willReturn([
             0 => [
                 'description' => 'abc',
                 'price' => 2,
@@ -236,7 +249,7 @@ class TransactionRepositoryTest extends TestCase
                 'date' => '26/12/2012',
                 'type' => 0
             ]
-        ], $transactionMock->getTransactions());
+        ], $transactionMock->getAListOfTransactions());
     }
 
 //    public function testShouldReturnAnEmptyListIfDontHasDataOnTable(): void
@@ -252,9 +265,9 @@ class TransactionRepositoryTest extends TestCase
     {
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
-        $repositoryMock->method('getTransactions')->willReturn([]);
+        $repositoryMock->method('getAListOfTransactions')->willReturn([]);
 
-        $this->assertEquals([], $repositoryMock->getTransactions());
+        $this->assertEquals([], $repositoryMock->getAListOfTransactions());
     }
 
 }

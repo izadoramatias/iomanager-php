@@ -3,11 +3,11 @@
 namespace App\Model\Database;
 use PDO;
 
-abstract class DatabaseConnection
+class DatabaseConnection
 {
     public static PDO|null $pdo = null;
 
-    public static function connect(): PDO
+    public function connect(): PDO|null
     {
         if (isset(self::$pdo)) {
             return self::$pdo;
@@ -17,10 +17,9 @@ abstract class DatabaseConnection
             self::$pdo = new PDO('mysql:host=' . DB_HOST . ';', DB_USER, DB_PASS);
             self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\Exception $exception) {
-            echo 'erro ao conectar';
+            echo 'não foi possível carregar a pagina';
             error_log($exception->getMessage());
         }
-
         return self::$pdo;
     }
 }
