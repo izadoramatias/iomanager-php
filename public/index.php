@@ -16,19 +16,10 @@ $routes = require __DIR__ . '/../config/routes.php';
 
 session_start();
 
-// verifica se já há uma conexão com o banco, caso nao exista, o código abaixo irá criar e armazenar no atributo estático da classe
-$databaseConnection = DatabaseConnection::$databaseConnection;
-if (is_null($databaseConnection)) {
-    DatabaseConnection::$databaseConnection = new DatabaseConnection();
-    DatabaseConnection::connect();
-}
+DatabaseConnection::connect();
 
-// verifica se existe o banco de dados existe, caso não, uma instancia será criada
-$databaseCreation = DatabaseCreation::$databaseCreation;
-if (is_null($databaseCreation)) {
-    DatabaseCreation::$databaseCreation = new DatabaseCreation();
-    DatabaseCreation::create();
-}
+$database = new DatabaseCreation();
+$database::createDatabase();
 
 // verifica se o path info não está setado
 if (!isset($_SERVER['PATH_INFO'])) {

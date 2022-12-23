@@ -7,6 +7,7 @@ use App\Model\Services\HomeServiceInterface;
 
 class TransactionRepository implements HomeServiceInterface
 {
+    // refatorar o nome do método
     public function getTotalInputTransactions(): array
     {
         $query = "SELECT price FROM Transactions WHERE type = 1;";
@@ -20,6 +21,7 @@ class TransactionRepository implements HomeServiceInterface
     {
         $query = "SELECT price FROM Transactions WHERE type = 0;";
         $findTransactionsTypeOutput = (DatabaseConnection::$pdo)->query($query);
+
 
         $fetchTransactions = $findTransactionsTypeOutput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
         return $fetchTransactions;
