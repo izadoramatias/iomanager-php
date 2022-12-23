@@ -16,10 +16,9 @@ $routes = require __DIR__ . '/../config/routes.php';
 
 session_start();
 
-DatabaseConnection::connect();
+$dbConnection = (new DatabaseConnection())->connect();
 
-$database = new DatabaseCreation();
-$database::createDatabase();
+$database = (new DatabaseCreation())->createDatabase();
 
 // verifica se o path info não está setado
 if (!isset($_SERVER['PATH_INFO'])) {

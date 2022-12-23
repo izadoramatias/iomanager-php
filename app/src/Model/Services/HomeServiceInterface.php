@@ -4,7 +4,7 @@ namespace App\Model\Services;
 
 interface HomeServiceInterface
 {
-    public function getTotalInputTransactions(): array;
-    public function getTotalOutputTransactions(): array;
-    public function getTransactions(): array;
+    public function getAListWithThePricesOfTransactionsTypeInput(): array;
+    public function getAListWithThePricesOfTransactionsTypeOutput(): array;
+    public function getAListOfTransactions(): array;
 }

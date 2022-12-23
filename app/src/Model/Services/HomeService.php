@@ -24,7 +24,7 @@ class HomeService
 
     public function calculateTotalInputTransactions(): float
     {
-        $inputsArray = $this->transactionRepository->getTotalInputTransactions();
+        $inputsArray = $this->transactionRepository->getAListWithThePricesOfTransactionsTypeInput();
 
         $total = 0;
         foreach ($inputsArray as $price) {
@@ -36,7 +36,7 @@ class HomeService
 
     public function calculateTotalOutputTransactions(): float
     {
-        $outputsArray = $this->transactionRepository->getTotalOutputTransactions();
+        $outputsArray = $this->transactionRepository->getAListWithThePricesOfTransactionsTypeOutput();
 
         $total = 0;
         foreach ($outputsArray as $price) {
@@ -49,7 +49,7 @@ class HomeService
     public function convertTransactionsFromArrayToObject(): array
     {
         $arrayTransactions = [];
-        $transactions = $this->transactionRepository->getTransactions();
+        $transactions = $this->transactionRepository->getAListOfTransactions();
         foreach ($transactions as $transaction) {
             extract($transaction, EXTR_OVERWRITE);
 
