@@ -9,10 +9,6 @@ class DatabaseConnection
 
     public function connect(): PDO|null
     {
-        if (isset(self::$pdo)) {
-            return self::$pdo;
-        }
-
         try {
             self::$pdo = new PDO('mysql:host=' . DB_HOST . ';', DB_USER, DB_PASS);
             self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
