@@ -2,6 +2,8 @@
 
 namespace App\Model\Database;
 
+use PHPUnit\Framework\MockObject\RuntimeException;
+
 class DatabaseCreation
 {
     public static $database;
@@ -14,30 +16,30 @@ class DatabaseCreation
 
     public function createDatabase()
     {
-        if (isset(self::$database)) {
-            return self::$database;
-        }
-
         try {
-            self::$database = $this->create();
+            $this->create();
         } catch (\Exception $exception) {
-            echo $exception->getMessage();
-            exit();
+            throw new $exception->getMessage();
         }
 
-        return self::$database;
+        return self::$database = $this->createDatabase();
     }
 
-    public function create(): void
+    public function create(): bool
     {
-        $createDB = 'CREATE DATABASE IF NOT EXISTS ' . DB_NAME . ';';
-        self::$pdo->exec($createDB);
-        self::$pdo->exec('USE ' . DB_NAME . ';');
+        try {
+            self::$pdo->exec('CREATE DATABASE IF NOT EXISTS ' . DB_NAME . '; USE ' . DB_NAME . ';');
+            self::$pdo->exec($this->createTable());
 
-        $this->createTable();
+            return self::$database = true;
+        } catch (\Exception $exception) {
+            self::$database = false;
+
+            throw new RuntimeException('Não foi possível continuar a execução!');
+        }
     }
 
-    private function createTable(): void
+    public function createTable(): string
     {
         $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
@@ -47,6 +49,6 @@ class DatabaseCreation
                                 category varchar(45) NOT NULL,
                                 date varchar(10) NOT NULL,
                                 type TINYINT NOT NULL);";
-        self::$pdo->exec($createTable);
+        return $createTable;
     }
 }

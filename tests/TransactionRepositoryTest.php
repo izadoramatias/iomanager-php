@@ -1,8 +1,10 @@
 <?php
 
 use App\Model\Database\DatabaseConnection;
+use App\Model\Database\DatabaseCreation;
 use App\Model\Repository\TransactionRepository;
 use PHPUnit\Framework\TestCase;
+use const App\Model\Database\DB_NAME;
 
 class TransactionRepositoryTest extends TestCase
 {
@@ -73,6 +75,44 @@ class TransactionRepositoryTest extends TestCase
 
         $this->expectException(Exception::class); // define que está esperando que o código a seguir deverá retornar uma exceção
         $pdoMock->method('connect')->willReturn(new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD'])); // definição que vai fazer o código gerar uma exceção
+    }
+
+    public function testShouldCreateADatabase(): void
+    {
+        $pdoMock = $this->getMockBuilder(PDO::class)->disableOriginalConstructor()
+            ->getMock();
+
+        $pdoMock->method('exec')->willReturn(0);
+
+        $this->assertTrue($pdoMock->exec('CREATE DATABASE IF NOT EXISTS iomanager;') >= 0);
+    }
+
+    public function testShouldCreateDatabaseTable(): void
+    {
+        $pdoMock = $this->getMockBuilder(
+            PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $pdoMock->method('exec')->willReturn(0); // refatorar pq não está intuitivo e fácil de ler
+
+        $statement = "CREATE TABLE IF NOT EXISTS                         Transactions(
+                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                                description varchar(255) NOT NULL,
+                                price float NOT NULL,
+                                category varchar(45) NOT NULL,
+                                date varchar(10) NOT NULL,
+                                type TINYINT NOT NULL);";
+        $this->assertTrue($pdoMock->exec($statement) >= 0);
+    }
+
+    public function testDatabaseCreationShouldThrowAnExceptionWhenSomethingInCreationFails(): void
+    {
+        $pdoMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+
+        $this->expectException(\PHPUnit\Framework\MockObject\RuntimeException::class);
+
+        $pdoMock->method('create')->willThrowException(throw new \PHPUnit\Framework\MockObject\RuntimeException());
     }
 
     public function testWhenDatabaseHasInputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void

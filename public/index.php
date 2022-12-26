@@ -18,7 +18,7 @@ session_start();
 
 $dbConnection = (new DatabaseConnection())->connect();
 
-$database = (new DatabaseCreation())->createDatabase();
+$database = (new DatabaseCreation())->create();
 
 // verifica se o path info não está setado
 if (!isset($_SERVER['PATH_INFO'])) {
