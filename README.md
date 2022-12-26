@@ -26,7 +26,7 @@
   php vendor/bin/phpunit
   ```
 
-  or
+  or this if you want to get a short documentation about the tests
 
   ```php
   php vendor/bin/phpunit --testdox
