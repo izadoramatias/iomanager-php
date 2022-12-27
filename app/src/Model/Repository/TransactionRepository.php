@@ -7,23 +7,23 @@ use App\Model\Services\HomeServiceInterface;
 
 class TransactionRepository implements HomeServiceInterface
 {
-    // refatorar o nome do método
     public function getAListWithThePricesOfTransactionsTypeInput(): array
     {
         $query = "SELECT price FROM Transactions WHERE type = 1;";
         $findTransactionsTypeInput = (DatabaseConnection::$pdo)->query($query);
 
         $fetchTransactions = $findTransactionsTypeInput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
+
         return $fetchTransactions;
     }
-//
+
     public function getAListWithThePricesOfTransactionsTypeOutput(): array
     {
         $query = "SELECT price FROM Transactions WHERE type = 0;";
         $findTransactionsTypeOutput = (DatabaseConnection::$pdo)->query($query);
 
-
         $fetchTransactions = $findTransactionsTypeOutput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
+
         return $fetchTransactions;
     }
 
