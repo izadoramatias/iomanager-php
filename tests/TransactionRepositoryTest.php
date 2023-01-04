@@ -9,24 +9,29 @@ class TransactionRepositoryTest extends TestCase
 {
     public function testConnectionShouldReturnNull(): void
     {
-        $pdoMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
+        $dbMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
 
-        $pdoMock->method('connect')->willReturn(null);
+        $dbMock->method('connect')->willReturn(null);
 
-        $this->assertEquals(null, $pdoMock->connect());
+        $this->assertEquals(null, $dbMock->connect());
     }
 
-    public function testShouldReturnAPdoConnection(): void
+    public function testShouldReturnAPDOConnectionWhenConnectionIsSucceed(): void
     {
-        return;
+        $dbMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
+        $pdoMock = $this->getMockBuilder(PDO::class)->disableOriginalConstructor()->getMock();
+
+        $dbMock->method('connect')->willReturn($pdoMock);
+
+        $this->assertEquals($pdoMock, $dbMock->connect());
     }
 
     public function testConnectionShouldThrowAnExceptionWhenSomeErrorOccurWhenTryingToConnect(): void
     {
-        $pdoMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
+        $dbMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
 
         $this->expectException(Exception::class); // define que está esperando que o código a seguir deverá retornar uma exceção
-        $pdoMock->method('connect')->willReturn(new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD'])); // definição que vai fazer o código gerar uma exceção
+        $dbMock->method('connect')->willReturn(new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD'])); // definição que vai fazer o código gerar uma exceção
     }
 
     public function testShouldCreateADatabase(): void
