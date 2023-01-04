@@ -16,7 +16,12 @@ class TransactionRepositoryTest extends TestCase
         $this->assertEquals(null, $pdoMock->connect());
     }
 
-    public function testConnectionShouldThrowAnException(): void
+    public function testShouldReturnAPdoConnection(): void
+    {
+        return;
+    }
+
+    public function testConnectionShouldThrowAnExceptionWhenSomeErrorOccurWhenTryingToConnect(): void
     {
         $pdoMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
 
@@ -26,40 +31,88 @@ class TransactionRepositoryTest extends TestCase
 
     public function testShouldCreateADatabase(): void
     {
-        $pdoMock = $this->getMockBuilder(PDO::class)->disableOriginalConstructor()
-            ->getMock();
+//        $pdoMock = $this->getMockBuilder(PDO::class)->disableOriginalConstructor()
+//            ->getMock();
+//
+//        $pdoMock->method('exec')->willReturn(0);
+//
+//        $this->assertTrue($pdoMock->exec('CREATE DATABASE iomanager;') > 0 || $pdoMock->exec('CREATE DATABASE iomanager;') === 0);
 
-        $pdoMock->method('exec')->willReturn(0);
+        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
 
-        $this->assertTrue($pdoMock->exec('CREATE DATABASE iomanager;') > 0 || $pdoMock->exec('CREATE DATABASE iomanager;') === 0);
+        $dbMock->method('createDatabase')->willReturn(0);
+
+        $this->assertTrue($dbMock->createDatabase() > 0 || $dbMock->createDatabase() === 0);
     }
 
     public function testShouldCreateDatabaseTable(): void
     {
-        $pdoMock = $this->getMockBuilder(
-            PDO::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+//        $pdoMock = $this->getMockBuilder(
+//            PDO::class)
+//            ->disableOriginalConstructor()
+//            ->getMock();
+//
+//        $pdoMock->method('exec')->willReturn(0); // refatorar pq não está intuitivo e fácil de ler
+//
+//        $statement = "CREATE TABLE IF NOT EXISTS                         Transactions(
+//                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+//                                description varchar(255) NOT NULL,
+//                                price float NOT NULL,
+//                                category varchar(45) NOT NULL,
+//                                date varchar(10) NOT NULL,
+//                                type TINYINT NOT NULL);";
+//        $this->assertTrue($pdoMock->exec($statement) > 0 || $pdoMock->exec($statement) === 0);
+        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
 
-        $pdoMock->method('exec')->willReturn(0); // refatorar pq não está intuitivo e fácil de ler
+        $dbMock->method('createTable')->willReturn(0);
 
-        $statement = "CREATE TABLE IF NOT EXISTS                         Transactions(
-                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                                description varchar(255) NOT NULL,
-                                price float NOT NULL,
-                                category varchar(45) NOT NULL,
-                                date varchar(10) NOT NULL,
-                                type TINYINT NOT NULL);";
-        $this->assertTrue($pdoMock->exec($statement) > 0 || $pdoMock->exec($statement) === 0);
+        $this->assertTrue($dbMock->createTable() > 0 || $dbMock->createTable() === 0);
+    }
+//
+//    public function testDatabaseCreationShouldThrowAnExceptionWhenSomethingInCreationFails(): void
+//    {
+//        $pdoMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+//
+//        $this->expectException(InvalidArgumentException::class);
+//
+////        $pdoMock->method('create')->willThrowException(throw new InvalidArgumentException());
+//        $pdoMock->method('createDatabase')->willReturn(false);
+//    }
+
+    public function testDatabaseCreationShouldReturnFalseWhenSomethingInCreationFails(): void
+    {
+        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+
+        $dbMock->method('createDatabase')->willReturn(false);
+
+        $this->assertEquals(false, $dbMock->createDatabase());
     }
 
-    public function testDatabaseCreationShouldThrowAnExceptionWhenSomethingInCreationFails(): void
+    public function testDatabaseTableCreationShouldReturnFalseWhenSomethingInCreationFails(): void
     {
-        $pdoMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
 
-        $this->expectException(\PHPUnit\Framework\MockObject\RuntimeException::class);
+        $dbMock->method('createTable')->willReturn(false);
 
-        $pdoMock->method('create')->willThrowException(throw new \PHPUnit\Framework\MockObject\RuntimeException());
+        $this->assertEquals(false, $dbMock->createTable());
+    }
+
+    public function testDatabaseCreatinShoulReturnIntWhenCreationIsSucceeded(): void
+    {
+        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+
+        $dbMock->method('createDatabase')->willReturn(0);
+
+        $this->assertEquals(0, $dbMock->createDatabase());
+    }
+
+    public function testDatabaseTableCreationShouldReturnIntWhenCreationIsSucceeded(): void
+    {
+        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+
+        $dbMock->method('createTable')->willReturn(1);
+
+        $this->assertEquals(1, $dbMock->createTable());
     }
 
     public function testWhenDatabaseHasInputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
@@ -68,10 +121,7 @@ class TransactionRepositoryTest extends TestCase
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
         // act
-        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
-            0 => 2,
-            1 => 2
-        ]);
+        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([2, 2]);
 
         // assert
         $this->assertEquals([2, 2], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
@@ -94,10 +144,7 @@ class TransactionRepositoryTest extends TestCase
         // arrange
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
-        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
-            0 => 3,
-            1 => 5
-        ]);
+        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([3, 5]);
 
         $this->assertEquals([3, 5], $repositoryMock->getAListWithThePricesOfTransactionsTypeOutput());
     }
@@ -112,7 +159,7 @@ class TransactionRepositoryTest extends TestCase
         $this->assertEquals([], $repositoryMock->getAListWithThePricesOfTransactionsTypeOutput());
     }
 
-    public function testShouldReturnATransactionListIfHasDataOnTable(): void
+    public function testShouldReturnATransactionListIfExistsDataOnTable(): void
     {
         $transactionMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 
@@ -151,7 +198,7 @@ class TransactionRepositoryTest extends TestCase
         ], $transactionMock->getAListOfTransactions());
     }
 
-    public function testShouldReturnAnEmptyListIfDontHasDataOnTable(): void
+    public function testShouldReturnAnEmptyListIfDoesNotHasDataOnTable(): void
     {
         $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
 

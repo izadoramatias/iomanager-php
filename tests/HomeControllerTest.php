@@ -1,16 +1,14 @@
 <?php
 
 use App\Helper\RenderHome;
-use App\Model\HomeModel;
 use App\Model\Repository\TransactionRepository;
 use App\Model\Services\HomeService;
-use App\Model\TransactionModel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
 class HomeControllerTest extends TestCase
 {
-    public function testShouldRenderCalculatedTotalInputsByTheService(): void
+    public function testShouldRenderTotalInputsCalculatedByTheService(): void
     {
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
@@ -23,8 +21,8 @@ class HomeControllerTest extends TestCase
             3 => 7
         ]); // total = 20,00
 
-        $service = new HomeService($transactionRepositoryMock);
-        $homeModel = $service->getHomeModel();
+        $homeService = new HomeService($transactionRepositoryMock);
+        $homeModel = $homeService->getHomeModel();
 
         $render = (new RenderHome())->renderToHtml($homeModel);
         $crawler = new Crawler($render);
@@ -33,7 +31,7 @@ class HomeControllerTest extends TestCase
         $this->assertEquals('20,00', $input);
     }
 
-    public function testShouldRenderCalculatedTotalOutputsByTheService(): void
+    public function testShouldRenderTotalOutputsCalculatedByTheService(): void
     {
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)

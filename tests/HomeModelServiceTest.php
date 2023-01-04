@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class HomeModelServiceTest extends TestCase
 {
-    public function testTotalInputTransactionsShouldBeHowTheExpected(): void
+    public function testShouldReturnTheCalculatedSumFromInputTransactions(): void
     {
         // arrange
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
@@ -23,7 +23,7 @@ class HomeModelServiceTest extends TestCase
         $this->assertEquals(4, $homeModelService->calculateTotalInputTransactions());
     }
 
-    public function testTotalOutputTransactionsShouldBeHowTheExpected(): void
+    public function testShouldReturnTheCalculatedSumFromOutputTransactions(): void
     {
         // arrange
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
@@ -37,10 +37,9 @@ class HomeModelServiceTest extends TestCase
 
         // assert
         $this->assertEquals(8, $homeModelService->calculateTotalOutputTransactions());
-
     }
 
-    public function testShouldReturnAnArrayOfTransactionModelObjects(): void
+    public function testShouldReturnAnArrayOfObjectsTypeTransactionModel(): void
     {
         // arrange
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
@@ -75,7 +74,7 @@ class HomeModelServiceTest extends TestCase
         $this->assertContainsOnlyInstancesOf(TransactionModel::class, $homeModelService->convertTransactionsFromArrayToObject());
     }
 
-    public function testShouldReturnAHomeModel(): void
+    public function testShouldReturnAHomeModelWithExpectedValues(): void
     {
         // arrange
         $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();

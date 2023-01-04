@@ -12,7 +12,8 @@ class HomeController implements InterfaceRequestController
     public static function processRequest(): void
     {
         $render = new RenderHome();
-        $transactionService = new HomeService(new TransactionRepository());
+        $transactionRepository = new TransactionRepository();
+        $transactionService = new HomeService($transactionRepository);
 
         $homeModel = $transactionService->getHomeModel();
 

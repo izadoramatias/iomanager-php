@@ -14,32 +14,26 @@ class DatabaseCreation
         self::$pdo = (new DatabaseConnection())->connect();
     }
 
-    public function createDatabase()
-    {
-        try {
-            $this->create();
-        } catch (\Exception $exception) {
-            throw new $exception->getMessage();
-        }
-
-        return self::$database = $this->createDatabase();
-    }
-
     public function create(): bool
     {
         try {
-            self::$pdo->exec('CREATE DATABASE IF NOT EXISTS ' . DB_NAME . '; USE ' . DB_NAME . ';');
-            self::$pdo->exec($this->createTable());
+            $this->createDatabase();
+            $this->createTable();
 
             return self::$database = true;
         } catch (\Exception $exception) {
             self::$database = false;
 
-            throw new RuntimeException('Não foi possível continuar a execução!');
+            throw new \InvalidArgumentException('Não foi possível continuar a execução');
         }
     }
 
-    public function createTable(): string
+    public function createDatabase(): false|int
+    {
+        return self::$pdo->exec('CREATE DATABASE IF NOT EXISTS ' . DB_NAME . '; USE ' . DB_NAME . ';');
+    }
+
+    public function createTable(): false|int
     {
         $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
@@ -49,6 +43,8 @@ class DatabaseCreation
                                 category varchar(45) NOT NULL,
                                 date varchar(10) NOT NULL,
                                 type TINYINT NOT NULL);";
-        return $createTable;
+
+        return self::$pdo->exec($createTable);
+
     }
 }
