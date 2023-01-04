@@ -17,7 +17,7 @@ class HomeService
 
         $homeModel->totalInputTransactions = $this->calculateTotalInputTransactions();
         $homeModel->totalOutputTransactions = $this->calculateTotalOutputTransactions();
-        $homeModel->addTransactions( $this->convertTransactionsFromArrayToObject());
+        $homeModel->addTransactions($this->convertTransactionsFromArrayToObject());
 
         return $homeModel;
     }
