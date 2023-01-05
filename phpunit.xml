@@ -10,9 +10,9 @@
             </testsuite>
         </testsuites>
         <php>
-            <var name="DB_DSN" value="mysql:host=localhost"/>
+            <var name="DB_DSN" value="localhost"/>
             <var name="DB_USER" value="root"/>
-            <var name="DB_PASSWORD" value="123456"/>
-            <var name="DB_NAME" value="iomanageRrTests"/>
+            <var name="DB_PASSWORD" value="12345"/>
+            <var name="DB_NAME" value="iomanager"/>
         </php>
     </phpunit>

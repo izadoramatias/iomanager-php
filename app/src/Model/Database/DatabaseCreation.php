@@ -2,40 +2,34 @@
 
 namespace App\Model\Database;
 
-use PHPUnit\Framework\MockObject\RuntimeException;
-
 class DatabaseCreation
 {
-    public static $database;
-    public static \PDO|null $pdo = null;
+    private string $databaseName;
+    public \PDO $pdo;
 
-    public function __construct()
-    {
-        self::$pdo = (new DatabaseConnection())->connect();
+    public function __construct(
+        string $databaseName,
+        \PDO $pdo
+    ) {
+        $this->databaseName = $databaseName;
+        $this->pdo = $pdo;
     }
 
-    public function create(): bool
+    public function createDatabase(): \PDO
     {
         try {
-            $this->createDatabase();
-            $this->createTable();
-
-            return self::$database = true;
-        } catch (\Exception $exception) {
-            self::$database = false;
-
-            throw new \InvalidArgumentException('Não foi possível continuar a execução');
+            $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName);
+            $this->pdo->exec('USE ' . $this->databaseName . ';');
+            return $this->pdo;
+        } catch (\PDOException $PDOException) {
+            throw new \PDOException($PDOException->getMessage());
         }
     }
 
-    public function createDatabase(): false|int
+    public function createTable(): \PDO
     {
-        return self::$pdo->exec('CREATE DATABASE IF NOT EXISTS ' . DB_NAME . '; USE ' . DB_NAME . ';');
-    }
-
-    public function createTable(): false|int
-    {
-        $createTable = "
+        try {
+            $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
                                 idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                                 description varchar(255) NOT NULL,
@@ -44,7 +38,10 @@ class DatabaseCreation
                                 date varchar(10) NOT NULL,
                                 type TINYINT NOT NULL);";
 
-        return self::$pdo->exec($createTable);
-
+            $this->pdo->exec($createTable);
+            return $this->pdo;
+        } catch (\PDOException $PDOException) {
+            throw new \PDOException($PDOException->getMessage());
+        }
     }
 }

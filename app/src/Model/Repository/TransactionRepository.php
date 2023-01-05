@@ -2,17 +2,27 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Database\DatabaseConnection;
+use App\Model\Database\PDOSingleConnection;
 use App\Model\Services\HomeServiceInterface;
+use const App\Model\Database\DB_HOST;
+use const App\Model\Database\DB_PASS;
+use const App\Model\Database\DB_USER;
 
 class TransactionRepository implements HomeServiceInterface
 {
+    private $pdo;
+    public function __construct()
+    {
+        $this->pdo = (new PDOSingleConnection())->getPDO('localhost', 'root', '12345');
+        $this->pdo->exec('USE iomanager;');
+    }
+
     public function getAListWithThePricesOfTransactionsTypeInput(): array
     {
         $query = "SELECT price FROM Transactions WHERE type = 1;";
-        $findTransactionsTypeInput = (DatabaseConnection::$pdo)->query($query);
+        $findTransactionsTypeInput = $this->pdo->query($query);
 
-        $fetchTransactions = $findTransactionsTypeInput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
+        $fetchTransactions = $findTransactionsTypeInput->fetchAll($this->pdo::FETCH_COLUMN);
 
         return $fetchTransactions;
     }
@@ -20,18 +30,18 @@ class TransactionRepository implements HomeServiceInterface
     public function getAListWithThePricesOfTransactionsTypeOutput(): array
     {
         $query = "SELECT price FROM Transactions WHERE type = 0;";
-        $findTransactionsTypeOutput = (DatabaseConnection::$pdo)->query($query);
+        $findTransactionsTypeOutput = $this->pdo->query($query);
 
-        $fetchTransactions = $findTransactionsTypeOutput->fetchAll(DatabaseConnection::$pdo::FETCH_COLUMN);
+        $fetchTransactions = $findTransactionsTypeOutput->fetchAll($this->pdo::FETCH_COLUMN);
 
         return $fetchTransactions;
     }
 
     public function getAListOfTransactions(): array
     {
-        $getTransactions = (DatabaseConnection::$pdo)->query("SELECT * FROM Transactions;");
+        $getTransactions = $this->pdo->query("SELECT * FROM Transactions;");
 
-        $fetchAll = $getTransactions->fetchAll(DatabaseConnection::$pdo::FETCH_ASSOC);
+        $fetchAll = $getTransactions->fetchAll($this->pdo::FETCH_ASSOC);
 
         return $fetchAll;
     }
