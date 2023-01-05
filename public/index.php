@@ -12,13 +12,20 @@ define("App\Model\Database\DB_NAME", 'iomanager');
 define("App\Model\Database\DB_USER", 'root');
 define("App\Model\Database\DB_PASS", 12345);
 
+use App\Model\Database\PDOSingleConnection;
+use const App\Model\Database\DB_NAME;
+
 $routes = require __DIR__ . '/../config/routes.php';
 
 session_start();
 
-$dbConnection = (new DatabaseConnection())->connect();
+//$dbConnection = (new DatabaseConnection())->connect(DB_HOST, DB_USER, DB_PASS);
+$pdoConnection = new PDOSingleConnection();
+$pdoConnection->getPDO('localhost', 'root', '12345');
 
-$database = (new DatabaseCreation())->create();
+$database = new DatabaseCreation(DB_NAME, $pdoConnection->getPDO('localhost', 'root', '12345'));
+$database->createDatabase();
+$database->createTable();
 
 // verifica se o path info não está setado
 if (!isset($_SERVER['PATH_INFO'])) {
