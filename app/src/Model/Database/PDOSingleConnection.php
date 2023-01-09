@@ -7,11 +7,12 @@ use PDO;
 class PDOSingleConnection
 {
     private PDO|null $pdo = null;
-//    private string $hostName = 'localhost';
-//    private string $username = 'root';
-//    private string $password = '12345';
 
-    public function getPDO($hostName, $username, $password): PDO
+    public function getPDO(
+        $hostName = 'localhost',
+        $username = 'root',
+        $password = '12345'
+    ): PDO
     {
         if (is_null($this->pdo)) {
             try {

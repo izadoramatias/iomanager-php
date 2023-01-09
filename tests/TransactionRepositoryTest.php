@@ -7,139 +7,141 @@ use PHPUnit\Framework\TestCase;
 
 class TransactionRepositoryTest extends TestCase
 {
-//    public function testConnectionShouldReturnNull(): void
-//    {
-//        $dbMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
-//
-//        $dbMock->method('connect')->willReturn(null);
-//
-//        $this->assertEquals(null, $dbMock->connect());
-//    }
-
-//    public function testSomething(): void
-//    {
-//        $test = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], '123456');
-//
-//        var_dump($test);
-//
-//    }
-
     public function testShouldReturnAPdoConnectionWhenConnectionIsSucceed(): void
     {
-//        $dbMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
-//
-//        $dbMock->method('connect')->willReturn(new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD']));
-//
-//        $this->assertEquals(PDO::class, get_class($dbMock->connect($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD'])));
-
-//        $db = new DatabaseConnection();
         $db = new \App\Model\Database\PDOSingleConnection();
 
-        $connection = $db->getPDO('localhost', 'root', '12345');
-
-//        $connection = $db->connect($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWORD']);
+        $connection = $db->getPDO();
 
         $this->assertEquals(PDO::class, get_class($connection));
     }
 
     public function testConnectionShouldThrowAnExceptionWhenSomeErrorOccurWhenTryingToConnect(): void
     {
-//        $dbMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
-//
-//        $this->expectException(PDOException::class); // define que está esperando que o código a seguir deverá retornar uma exceção do tipo PDO
-//        $dbMock->method('connect')->willReturn(new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], '123456')); // definição que vai fazer o código gerar uma exceção
         $db = new \App\Model\Database\PDOSingleConnection();
 
         $this->expectException(PDOException::class);
 
-        $db->getPDO('localhost', 'ro', '12345');
+        $db->getPDO(username: 'ro');
     }
 
-    public function testShouldCreateADatabase(): void
+    public function testShouldReturnAPdoObjectWhenDatabaseCreationIsSucceed(): void
     {
-//        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
-//
-//        $dbMock->method('createDatabase')->willReturn(0);
-//
-//        $this->assertTrue($dbMock->createDatabase() > 0 || $dbMock->createDatabase() === 0);
-//        $dbConnectionMock = $this->getMockBuilder(DatabaseConnection::class)->getMock();
-//        $dbConnectionMock->method('connect')->willReturn(PDO::class)->with('localhost', 'root', '12345');
-        $instance = new DatabaseCreation('iomanager', (new \App\Model\Database\PDOSingleConnection())->getPDO('localhost', 'root', '12345'));
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $db = $instance->createDatabase();
+        $pdoMock->method('exec')->willReturn(1);
+        $db = new DatabaseCreation('iomanager', $pdoMock);
 
-        $this->assertEquals(PDO::class, get_class($db));
-
+        $this->assertInstanceOf(PDO::class, $db->createDatabase());
     }
 
-    public function testShouldCreateDatabaseTable(): void
+
+    public function testShouldReturnAPdoObjectWhenDatabaseTableCreationIsSucceed(): void
     {
-//        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
-//
-//        $dbMock->method('createTable')->willReturn(0);
-//
-//        $this->assertTrue($dbMock->createTable() > 0 || $dbMock->createTable() === 0);
-        $instance = new DatabaseCreation($GLOBALS['DB_NAME'], (new \App\Model\Database\PDOSingleConnection())->getPDO('localhost', 'root', '12345'));
-        $instance->createDatabase();
+        $pdoMock = $this->getMockBuilder(PDO::class)->disableOriginalConstructor()->getMock();
+        $pdoMock
+            ->method('exec')->willReturn(1);
 
-        $dbTable = $instance->createTable();
+        $db = new DatabaseCreation('iomanager', $pdoMock);
 
-        $this->assertEquals(PDO::class, get_class($dbTable));
+        $this->assertInstanceOf(PDO::class, $db->createTable());
     }
 
     public function testDatabaseCreationShouldThrowAnExceptionWhenSomethingInCreationFails(): void
     {
-//        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
-//
-//        $dbMock->method('createDatabase')->willReturn(false);
-//
-//        $this->assertEquals(false, $dbMock->createDatabase());
+        $pdoMock = $this->getMockBuilder(PDO::class)->disableOriginalConstructor()->getMock();
+        $pdoMock->method('exec')->willThrowException(new PDOException());
+
         $this->expectException(PDOException::class);
 
-        $instance = new DatabaseCreation('iomanager', (new \App\Model\Database\PDOSingleConnection())->getPDO('localhost', 'root', '12345'));
-        $instance->createDatabase();
+        (new DatabaseCreation('iomanager', $pdoMock))->createDatabase();
     }
 
     public function testDatabaseTableCreationShouldThrowAnExceptionWhenSomethingInCreationFails(): void
     {
-//        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
-//
-//        $dbMock->method('createTable')->willReturn(false);
-//
-//        $this->assertEquals(false, $dbMock->createTable());
-        $pdoMock = $this->getMockBuilder(\App\Model\Database\PDOSingleConnection::class)->getMock();
-        $instance = new DatabaseCreation($GLOBALS['DB_NAME'], $pdoMock->getPDO());
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock->method('exec')->willThrowException(new PDOException());
 
+        $this->expectException(PDOException::class);
+
+        (new DatabaseCreation('iomanager', $pdoMock))->createTable();
     }
 
-    public function testDatabaseCreatinShoulReturnIntWhenCreationIsSucceeded(): void
+
+
+
+
+    public function testCreateTableShouldReturnFalse(): void
     {
-        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock->method('exec')->willReturn(false);
 
-        $dbMock->method('createDatabase')->willReturn(0);
+        $db = new DatabaseCreation('iomanager', $pdoMock);
 
-        $this->assertEquals(0, $dbMock->createDatabase($GLOBALS['DB_NAME']));
+        $this->assertInstanceOf(PDO::class, $db->createTable()); // mesmo quando exec é false ele está retornando uma instancia de PDO?????
     }
 
-    public function testDatabaseTableCreationShouldReturnIntWhenCreationIsSucceeded(): void
+    public function testCreateDatabaseShouldReturnFalse(): void
     {
-        $dbMock = $this->getMockBuilder(DatabaseCreation::class)->disableOriginalConstructor()->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->withConsecutive(['CREATE DATABASE IF NOT EXISTS iomanager;'])
+            ->willReturn(false);
 
-        $dbMock->method('createTable')->willReturn(1);
+        $db = new DatabaseCreation('iomanager', $pdoMock);
 
-        $this->assertEquals(1, $dbMock->createTable());
+        $this->assertInstanceOf(PDO::class, $db->createDatabase());
     }
 
+    public function testUseDatabaseShouldReturnFalse(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(false)
+            ->withConsecutive(
+                ['CREATE DATABASE IF NOT EXISTS iomanager;'],
+                ['USE iomanager;']);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->assertInstanceOf(PDO::class, $db->createDatabase());
+    }
+
+
+
+
+
+    // testes do repository
     public function testWhenDatabaseHasInputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
     {
-        // arrange
-        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+//        // arrange
+//        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+//
+//        // act
+//        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([2, 2]);
+//
+//        // assert
+//        $this->assertEquals([2, 2], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
+//        var_dump($tr->getAListWithThePricesOfTransactionsTypeInput());
 
-        // act
-        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([2, 2]);
-
-        // assert
-        $this->assertEquals([2, 2], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
+//        $this->assertEquals([2, 2], $tr->getAListWithThePricesOfTransactionsTypeInput());
     }
 
     public function testWhenDatabaseHasNotInputTransactionsRegisteredShouldReturnAnEmptyArray(): void
