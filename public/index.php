@@ -20,10 +20,9 @@ $routes = require __DIR__ . '/../config/routes.php';
 session_start();
 
 //$dbConnection = (new DatabaseConnection())->connect(DB_HOST, DB_USER, DB_PASS);
-$pdoConnection = new PDOSingleConnection();
-$pdoConnection->getPDO('localhost', 'root', '12345');
+$pdoConnection = PDOSingleConnection::getPDO();
 
-$database = new DatabaseCreation(DB_NAME, $pdoConnection->getPDO('localhost', 'root', '12345'));
+$database = new DatabaseCreation(DB_NAME, $pdoConnection);
 $database->createDatabase();
 $database->createTable();
 

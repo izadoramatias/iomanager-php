@@ -13,8 +13,7 @@ class HomeController implements InterfaceRequestController
     public static function processRequest(): void
     {
         $render = new RenderHome();
-        $connection = new PDOSingleConnection();
-        $transactionRepository = new TransactionRepository($connection->getPDO());
+        $transactionRepository = new TransactionRepository(PDOSingleConnection::getPDO());
         $transactionService = new HomeService($transactionRepository);
 
         $homeModel = $transactionService->getHomeModel();
