@@ -12,7 +12,6 @@ class TransactionRepository implements HomeServiceInterface
         \PDO $pdo
     ){
         $this->pdo = $pdo;
-        $this->pdo->exec('USE iomanager;');
     }
 
     public function getAListWithThePricesOfTransactionsTypeInput(): array

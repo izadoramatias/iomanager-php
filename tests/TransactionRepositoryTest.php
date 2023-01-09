@@ -2,6 +2,7 @@
 
 use App\Model\Database\DatabaseConnection;
 use App\Model\Database\DatabaseCreation;
+use App\Model\Database\PDOSingleConnection;
 use App\Model\Repository\TransactionRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -9,16 +10,14 @@ class TransactionRepositoryTest extends TestCase
 {
     public function testShouldReturnAPdoConnectionWhenConnectionIsSucceed(): void
     {
-        $db = new \App\Model\Database\PDOSingleConnection();
+        $dbConnection = PDOSingleConnection::getPDO();
 
-        $connection = $db->getPDO();
-
-        $this->assertEquals(PDO::class, get_class($connection));
+        $this->assertInstanceOf(PDO::class, $dbConnection);
     }
 
     public function testConnectionShouldThrowAnExceptionWhenSomeErrorOccurWhenTryingToConnect(): void
     {
-        $db = new \App\Model\Database\PDOSingleConnection();
+        $db = new PDOSingleConnection();
 
         $this->expectException(PDOException::class);
 
@@ -131,17 +130,15 @@ class TransactionRepositoryTest extends TestCase
     // testes do repository
     public function testWhenDatabaseHasInputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
     {
-//        // arrange
-//        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
-//
-//        // act
-//        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([2, 2]);
-//
-//        // assert
-//        $this->assertEquals([2, 2], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
-//        var_dump($tr->getAListWithThePricesOfTransactionsTypeInput());
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)->setConstructorArgs(['', 'root', '12345'])
+            ->addMethods(['fetchAll'])
+            ->getMock();
+        $pdoMock->method('fetchAll')->willReturn([2, 2]);
 
-//        $this->assertEquals([2, 2], $tr->getAListWithThePricesOfTransactionsTypeInput());
+        $transactionRepository = new TransactionRepository($pdoMock);
+
+        $this->assertEquals([2, 2], $transactionRepository->getAListWithThePricesOfTransactionsTypeInput());
     }
 
     public function testWhenDatabaseHasNotInputTransactionsRegisteredShouldReturnAnEmptyArray(): void

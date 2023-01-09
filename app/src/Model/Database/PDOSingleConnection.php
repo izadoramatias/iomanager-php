@@ -6,23 +6,28 @@ use PDO;
 
 class PDOSingleConnection
 {
-    private PDO|null $pdo = null;
+    private static PDO|null $pdo = null;
 
-    public function getPDO(
+    public function __construct(PDO $pdo)
+    {
+        self::$pdo = $pdo;
+    }
+
+    public static function getPDO(
         $hostName = 'localhost',
         $username = 'root',
         $password = '12345'
     ): PDO
     {
-        if (is_null($this->pdo)) {
+        if (is_null(self::$pdo)) {
             try {
-                $this->pdo = new PDO("mysql:host=$hostName;", $username, $password);
-                $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                self::$pdo = new PDO("mysql:host=$hostName;", $username, $password);
+                self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $PDOException) {
                 throw new \PDOException($PDOException->getMessage());
             }
         }
 
-        return $this->pdo;
+        return self::$pdo;
     }
 }
