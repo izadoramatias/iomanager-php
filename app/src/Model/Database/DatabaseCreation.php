@@ -18,7 +18,7 @@ class DatabaseCreation
     public function createDatabase(): \PDO
     {
         try {
-            $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName);
+            $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
             $this->pdo->exec('USE ' . $this->databaseName . ';');
             return $this->pdo;
         } catch (\PDOException $PDOException) {

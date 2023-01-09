@@ -4,16 +4,14 @@ namespace App\Model\Repository;
 
 use App\Model\Database\PDOSingleConnection;
 use App\Model\Services\HomeServiceInterface;
-use const App\Model\Database\DB_HOST;
-use const App\Model\Database\DB_PASS;
-use const App\Model\Database\DB_USER;
 
 class TransactionRepository implements HomeServiceInterface
 {
-    private $pdo;
-    public function __construct()
-    {
-        $this->pdo = (new PDOSingleConnection())->getPDO('localhost', 'root', '12345');
+    private \PDO $pdo;
+    public function __construct(
+        \PDO $pdo
+    ){
+        $this->pdo = $pdo;
         $this->pdo->exec('USE iomanager;');
     }
 
