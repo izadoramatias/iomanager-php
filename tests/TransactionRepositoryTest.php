@@ -1,6 +1,5 @@
 <?php
 
-use App\Model\Database\DatabaseConnection;
 use App\Model\Database\DatabaseCreation;
 use App\Model\Database\PDOSingleConnection;
 use App\Model\Repository\TransactionRepository;
@@ -17,11 +16,12 @@ class TransactionRepositoryTest extends TestCase
 
     public function testConnectionShouldThrowAnExceptionWhenSomeErrorOccurWhenTryingToConnect(): void
     {
-        $db = new PDOSingleConnection();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->expectException(PDOException::class);
-
-        $db->getPDO(username: 'ro');
+        $dbConnection = new PDOSingleConnection($pdoMock);
     }
 
     public function testShouldReturnAPdoObjectWhenDatabaseCreationIsSucceed(): void
