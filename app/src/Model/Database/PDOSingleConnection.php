@@ -6,12 +6,8 @@ use PDO;
 
 class PDOSingleConnection
 {
-    private static PDO|null $pdo = null;
+    protected static PDO|null $pdo = null;
 
-    public function __construct(PDO $pdo)
-    {
-        self::$pdo = $pdo;
-    }
 
     public static function getPDO(
         $hostName = 'localhost',
@@ -21,8 +17,7 @@ class PDOSingleConnection
     {
         if (is_null(self::$pdo)) {
             try {
-                self::$pdo = new PDO("mysql:host=$hostName;", $username, $password);
-                self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                self::createInstancePDO($hostName, $username, $password);
             } catch (\PDOException $PDOException) {
                 throw new \PDOException($PDOException->getMessage());
             }
@@ -30,4 +25,24 @@ class PDOSingleConnection
 
         return self::$pdo;
     }
+
+    protected static function createInstancePDO($hostName, $username, $password){
+        self::$pdo = new PDO("mysql:host=$hostName;", $username, $password);
+        self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    }
 }
+
+//class PDOSingleConnectionTest  extends PDOSingleConnection{
+//    public static $qtdInv = 0;
+//
+//    protected static function createInstancePDO($hostName, $username, $password)
+//    {
+//        self::$qtdInv++;
+//    }
+//}
+//
+//PDOSingleConnectionTest::getPDO();
+//PDOSingleConnectionTest::$qtdInv ==1
+//
+//PDOSingleConnectionTest::getPDO();
+//PDOSingleConnectionTest::$qtdInv == 1

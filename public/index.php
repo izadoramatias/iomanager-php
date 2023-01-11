@@ -19,7 +19,6 @@ $routes = require __DIR__ . '/../config/routes.php';
 
 session_start();
 
-//$dbConnection = (new DatabaseConnection())->connect(DB_HOST, DB_USER, DB_PASS);
 $pdoConnection = PDOSingleConnection::getPDO();
 
 $database = new DatabaseCreation(DB_NAME, $pdoConnection);
