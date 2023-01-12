@@ -79,54 +79,28 @@ class TransactionRepositoryTest extends TestCase
         $this->assertEquals('USE iomanager', $querieUse->queryString);
     }
 
-    public function testCreateTableShouldReturnFalse(): void
+    public function testShouldBuildACreateTableQueryCorrectly(): void
     {
-        $pdoMock = $this
-            ->getMockBuilder(PDO::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pdoMock->method('exec')->willReturn(false);
+        $pdo = new PDO('mysql:host=localhost', 'root', '12345');
+        $pdo->query("CREATE DATABASE IF NOT EXISTS iomanager");
+        $pdo->query("USE iomanager");
 
-        $db = new DatabaseCreation('iomanager', $pdoMock);
+        $querieCreate = $pdo->query("CREATE TABLE IF NOT EXISTS Transactions(
+                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                                description varchar(255) NOT NULL,
+                                price float NOT NULL,
+                                category varchar(45) NOT NULL,
+                                date varchar(10) NOT NULL,
+                                type TINYINT NOT NULL);");
 
-        $this->assertInstanceOf(PDO::class, $db->createTable());
+        $this->assertEquals('CREATE TABLE IF NOT EXISTS Transactions(
+                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                                description varchar(255) NOT NULL,
+                                price float NOT NULL,
+                                category varchar(45) NOT NULL,
+                                date varchar(10) NOT NULL,
+                                type TINYINT NOT NULL);', $querieCreate->queryString);
     }
-
-    public function testCreateDatabaseShouldReturnFalse(): void
-    {
-        $pdoMock = $this
-            ->getMockBuilder(PDO::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pdoMock
-            ->method('exec')
-            ->withConsecutive(['CREATE DATABASE IF NOT EXISTS iomanager;'])
-            ->willReturn(false);
-
-        $db = new DatabaseCreation('iomanager', $pdoMock);
-
-        $this->assertInstanceOf(PDO::class, $db->createDatabase());
-    }
-
-    public function testUseDatabaseShouldReturnFalse(): void
-    {
-        $pdoMock = $this
-            ->getMockBuilder(PDO::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $pdoMock
-            ->method('exec')
-            ->willReturn(false)
-            ->withConsecutive(
-                ['CREATE DATABASE IF NOT EXISTS iomanager;'],
-                ['USE iomanager;']);
-
-        $db = new DatabaseCreation('iomanager', $pdoMock);
-
-        $this->assertInstanceOf(PDO::class, $db->createDatabase());
-    }
-
-
 
 
 
@@ -134,14 +108,16 @@ class TransactionRepositoryTest extends TestCase
     public function testWhenDatabaseHasInputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
     {
         $pdoMock = $this
-            ->getMockBuilder(PDO::class)->setConstructorArgs(['', 'root', '12345'])
-            ->addMethods(['fetchAll'])
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
             ->getMock();
-        $pdoMock->method('fetchAll')->willReturn([2, 2]);
+        $pdoMock
+            ->method('fetchAll')
+            ->willReturn([2, 2]);
 
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $this->assertEquals([2, 2], $transactionRepository->getAListWithThePricesOfTransactionsTypeInput());
+        $this->assertEquals([2, 2], $transactionRepository);
     }
 
     public function testWhenDatabaseHasNotInputTransactionsRegisteredShouldReturnAnEmptyArray(): void

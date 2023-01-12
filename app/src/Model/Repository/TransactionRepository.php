@@ -19,7 +19,7 @@ class TransactionRepository implements HomeServiceInterface
         $query = "SELECT price FROM Transactions WHERE type = 1;";
         $findTransactionsTypeInput = $this->pdo->query($query);
 
-        $fetchTransactions = $findTransactionsTypeInput->fetchAll($this->pdo::FETCH_COLUMN);
+        $fetchTransactions = $findTransactionsTypeInput->fetchAll(\PDO::FETCH_COLUMN);
 
         return $fetchTransactions;
     }
