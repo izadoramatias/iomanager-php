@@ -16,17 +16,13 @@ class PDOSingleConnection
     ): PDO
     {
         if (is_null(self::$pdo)) {
-            try {
-                self::createInstancePDO($hostName, $username, $password);
-            } catch (\PDOException $PDOException) {
-                throw new \PDOException($PDOException->getMessage());
-            }
+            self::createInstancePDO($hostName, $username, $password);
         }
-
         return self::$pdo;
     }
 
-    protected static function createInstancePDO($hostName, $username, $password){
+    protected static function createInstancePDO($hostName, $username, $password)
+    {
         self::$pdo = new PDO("mysql:host=$hostName;", $username, $password);
         self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }

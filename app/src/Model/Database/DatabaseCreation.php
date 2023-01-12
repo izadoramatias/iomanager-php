@@ -15,20 +15,14 @@ class DatabaseCreation
         $this->pdo = $pdo;
     }
 
-    public function createDatabase(): \PDO
+    public function createDatabase()
     {
-        try {
-            $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
-            $this->pdo->exec('USE ' . $this->databaseName . ';');
-            return $this->pdo;
-        } catch (\PDOException $PDOException) {
-            throw new \PDOException($PDOException->getMessage());
-        }
+        $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
+        $this->pdo->exec('USE ' . $this->databaseName . ';');
     }
 
-    public function createTable(): \PDO
+    public function createTable()
     {
-        try {
             $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
                                 idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -39,9 +33,5 @@ class DatabaseCreation
                                 type TINYINT NOT NULL);";
 
             $this->pdo->exec($createTable);
-            return $this->pdo;
-        } catch (\PDOException $PDOException) {
-            throw new \PDOException($PDOException->getMessage());
-        }
     }
 }
