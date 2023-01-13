@@ -17,7 +17,22 @@ class DatabaseCreation
 
     public function createDatabase()
     {
-        $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
+        try {
+            $result = $this->pdo->exec('CREddlATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
+
+            if (!is_numeric($result)) {
+                throw new \PDOException('Não foi possível executar essa ação!');
+            }
+
+        } catch (\PDOException $PDOException) {
+            echo '<pre>';
+            print_r($PDOException->getMessage());
+            echo '</pre>';
+        }
+    }
+
+    public function useDatabase()
+    {
         $this->pdo->exec('USE ' . $this->databaseName . ';');
     }
 

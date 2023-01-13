@@ -8,7 +8,6 @@ class PDOSingleConnection
 {
     protected static PDO|null $pdo = null;
 
-
     public static function getPDO(
         $hostName = 'localhost',
         $username = 'root',

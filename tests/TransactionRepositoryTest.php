@@ -55,28 +55,40 @@ class TransactionRepositoryTest extends TestCase
 
     public function testConnectionShouldThrowAnExceptionWhenSomeErrorOccurWhenTryingToConnect(): void
     {
-       $PDOSingleConnectionTest = new class extends PDOSingleConnection {
-           public static function getPDO($hostName = 'localhost', $username = 'root', $password = '12345'): PDO
-           {
-               return throw new PDOException();
-           }
-       };
+        $PDOSingleConnectionTest = new class extends PDOSingleConnection {
+            public static function getPDO($hostName = 'localhost', $username = 'root', $password = '12345'): PDO
+            {
+                return throw new PDOException();
+            }
+        };
 
-       $this->expectException(PDOException::class);
+        $this->expectException(PDOException::class);
 
         $PDOSingleConnectionTest::getPDO();
     }
 
     public function testShouldBuildACreateDatabaseQueryCorrectly(): void
     {
-        $pdo = new PDO('mysql:host=localhost', 'root', '12345');
+//        $pdo = new PDO('mysql:host=localhost', 'root', '12345');
+//
+//        $dbName = 'iomanager';
+//        $querieCreate = $pdo->query("CREATE DATABASE IF NOT EXISTS $dbName");
+//        $querieUse = $pdo->query("USE $dbName");
+//
+//        $this->assertEquals('CREATE DATABASE IF NOT EXISTS iomanager', $querieCreate->queryString);
+//        $this->assertEquals('USE iomanager', $querieUse->queryString);
 
-        $dbName = 'iomanager';
-        $querieCreate = $pdo->query("CREATE DATABASE IF NOT EXISTS $dbName");
-        $querieUse = $pdo->query("USE $dbName");
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->with('CREATE DATABASE IF NOT EXISTS iomanager;')
+            ->willReturn(1);
 
-        $this->assertEquals('CREATE DATABASE IF NOT EXISTS iomanager', $querieCreate->queryString);
-        $this->assertEquals('USE iomanager', $querieUse->queryString);
+        $database = new DatabaseCreation('iomanager', $pdoMock);
+        var_dump($database->createDatabase());
     }
 
     public function testShouldBuildACreateTableQueryCorrectly(): void
@@ -111,67 +123,121 @@ class TransactionRepositoryTest extends TestCase
             ->getMockBuilder(PDO::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $pdoStatementMock = $this
+            ->getMockBuilder(PDOStatement::class)
+            ->getMock();
+
         $pdoMock
+            ->method('query')
+            ->willReturn($pdoStatementMock);
+        $pdoStatementMock
             ->method('fetchAll')
             ->willReturn([2, 2]);
 
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $this->assertEquals([2, 2], $transactionRepository);
+        $this->assertEquals([2, 2], $transactionRepository->getAListWithThePricesOfTransactionsTypeInput());
     }
 
     public function testWhenDatabaseHasNotInputTransactionsRegisteredShouldReturnAnEmptyArray(): void
     {
-        // arrange
-        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoStatementMock = $this
+            ->getMockBuilder(PDOStatement::class)
+            ->getMock();
 
-        // act
-        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([]);
+        $pdoMock
+            ->method('query')
+            ->willReturn($pdoStatementMock);
+        $pdoStatementMock
+            ->method('fetchAll')
+            ->willReturn([]);
 
-        // assert
-        $this->assertEquals([], $repositoryMock->getAListWithThePricesOfTransactionsTypeInput());
+        $transactionRepository = new TransactionRepository($pdoMock);
+
+        $this->assertEquals([], $transactionRepository->getAListWithThePricesOfTransactionsTypeInput());
     }
 
     public function testWhenDatabaseHasOutputTransactionsRegisteredShouldReturnAnArrayWithThemPrice(): void
     {
-        // arrange
-        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoStatementMock = $this
+            ->getMockBuilder(PDOStatement::class)
+            ->getMock();
 
-        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([3, 5]);
+        $pdoMock
+            ->method('query')
+            ->willReturn($pdoStatementMock);
+        $pdoStatementMock
+            ->method('fetchAll')
+            ->willReturn([3, 5]);
 
-        $this->assertEquals([3, 5], $repositoryMock->getAListWithThePricesOfTransactionsTypeOutput());
+        $transactionRepository = new TransactionRepository($pdoMock);
+
+        $this->assertEquals([3, 5], $transactionRepository->getAListWithThePricesOfTransactionsTypeOutput());
     }
 
     public function testWhenDatabaseHasNotOutputTransactionsRegisteredShouldReturnAnEmptyArray(): void
     {
-        // arrange
-        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoStatementMock = $this
+            ->getMockBuilder(PDOStatement::class)
+            ->getMock();
 
-        $repositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([]);
+        $pdoMock
+            ->method('query')
+            ->willReturn($pdoStatementMock);
+        $pdoStatementMock
+            ->method('fetchAll')
+            ->willReturn([]);
 
-        $this->assertEquals([], $repositoryMock->getAListWithThePricesOfTransactionsTypeOutput());
+        $transactionRepository = new TransactionRepository($pdoMock);
+
+        $this->assertEquals([], $transactionRepository->getAListWithThePricesOfTransactionsTypeOutput());
     }
 
     public function testShouldReturnATransactionListIfExistsDataOnTable(): void
     {
-        $transactionMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoStatementMock = $this
+            ->getMockBuilder(PDOStatement::class)
+            ->getMock();
 
-        $transactionMock->method('getAListOfTransactions')->willReturn([
-            0 => [
+        $pdoMock
+            ->method('query')
+            ->willReturn($pdoStatementMock);
+        $pdoStatementMock->method('fetchAll')->willReturn(
+            [
+                    0 => [
                 'description' => 'abc',
                 'price' => 2,
                 'category' => 'nenhuma',
                 'date' => '12/12/2012',
                 'type' => 1
-            ],
-            2 => [
+                ],
+                    2 => [
                 'description' => 'def',
                 'price' => 8,
                 'category' => 'nenhuma',
                 'date' => '26/12/2012',
                 'type' => 0
+                ]
             ]
-        ]);
+        );
+
+        $transactionRepository = new TransactionRepository($pdoMock);
 
         $this->assertEquals([
             0 => [
@@ -188,15 +254,28 @@ class TransactionRepositoryTest extends TestCase
                 'date' => '26/12/2012',
                 'type' => 0
             ]
-        ], $transactionMock->getAListOfTransactions());
+        ], $transactionRepository->getAListOfTransactions());
     }
 
     public function testShouldReturnAnEmptyListIfDoesNotHasDataOnTable(): void
     {
-        $repositoryMock = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoStatementMock = $this
+            ->getMockBuilder(PDOStatement::class)
+            ->getMock();
 
-        $repositoryMock->method('getAListOfTransactions')->willReturn([]);
+        $pdoMock
+            ->method('query')
+            ->willReturn($pdoStatementMock);
+        $pdoStatementMock
+            ->method('fetchAll')
+            ->willReturn([]);
 
-        $this->assertEquals([], $repositoryMock->getAListOfTransactions());
+        $transactionRepository = new TransactionRepository($pdoMock);
+
+        $this->assertEquals([], $transactionRepository->getAListOfTransactions());
     }
 }
