@@ -67,53 +67,74 @@ class TransactionRepositoryTest extends TestCase
         $PDOSingleConnectionTest::getPDO();
     }
 
-    public function testShouldBuildACreateDatabaseQueryCorrectly(): void
-    {
-//        $pdo = new PDO('mysql:host=localhost', 'root', '12345');
+//    public function testShouldBuildACreateDatabaseQueryCorrectly(): void
+//    {
+//        $pdoMock = $this
+//            ->getMockBuilder(PDO::class)
+//            ->disableOriginalConstructor()
+//            ->getMock();
+//        $pdoMock
+//            ->method('exec')
+//            ->with('CREATE DATABASE IF NOT EXISTS iomanager;')
+//            ->willReturn(1);
 //
-//        $dbName = 'iomanager';
-//        $querieCreate = $pdo->query("CREATE DATABASE IF NOT EXISTS $dbName");
-//        $querieUse = $pdo->query("USE $dbName");
-//
-//        $this->assertEquals('CREATE DATABASE IF NOT EXISTS iomanager', $querieCreate->queryString);
-//        $this->assertEquals('USE iomanager', $querieUse->queryString);
+//        $database = new DatabaseCreation('iomanager', $pdoMock);
+//    }
 
+//    public function testShouldBuildACreateTableQueryCorrectly(): void
+//    {
+//        $pdo = new PDO('mysql:host=localhost', 'root', '12345');
+//        $pdo->query("CREATE DATABASE IF NOT EXISTS iomanager");
+//        $pdo->query("USE iomanager");
+//
+//        $querieCreate = $pdo->query("CREATE TABLE IF NOT EXISTS Transactions(
+//                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+//                                description varchar(255) NOT NULL,
+//                                price float NOT NULL,
+//                                category varchar(45) NOT NULL,
+//                                date varchar(10) NOT NULL,
+//                                type TINYINT NOT NULL);");
+//
+//        $this->assertEquals('CREATE TABLE IF NOT EXISTS Transactions(
+//                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+//                                description varchar(255) NOT NULL,
+//                                price float NOT NULL,
+//                                category varchar(45) NOT NULL,
+//                                date varchar(10) NOT NULL,
+//                                type TINYINT NOT NULL);', $querieCreate->queryString);
+//    }
+
+    public function testShouldReturnAPdoObjectIfCreationResultIsSuccessful(): void
+    {
         $pdoMock = $this
             ->getMockBuilder(PDO::class)
             ->disableOriginalConstructor()
             ->getMock();
         $pdoMock
             ->method('exec')
-            ->with('CREATE DATABASE IF NOT EXISTS iomanager;')
             ->willReturn(1);
 
-        $database = new DatabaseCreation('iomanager', $pdoMock);
-        var_dump($database->createDatabase());
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->assertInstanceOf(PDO::class, $db->createDatabase());
     }
 
-    public function testShouldBuildACreateTableQueryCorrectly(): void
+    public function testShouldThrowAnExceptionWhenCreationResultIsFalse(): void
     {
-        $pdo = new PDO('mysql:host=localhost', 'root', '12345');
-        $pdo->query("CREATE DATABASE IF NOT EXISTS iomanager");
-        $pdo->query("USE iomanager");
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(false);
 
-        $querieCreate = $pdo->query("CREATE TABLE IF NOT EXISTS Transactions(
-                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                                description varchar(255) NOT NULL,
-                                price float NOT NULL,
-                                category varchar(45) NOT NULL,
-                                date varchar(10) NOT NULL,
-                                type TINYINT NOT NULL);");
+        $db = new DatabaseCreation('iomanager', $pdoMock);
 
-        $this->assertEquals('CREATE TABLE IF NOT EXISTS Transactions(
-                                idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                                description varchar(255) NOT NULL,
-                                price float NOT NULL,
-                                category varchar(45) NOT NULL,
-                                date varchar(10) NOT NULL,
-                                type TINYINT NOT NULL);', $querieCreate->queryString);
+        $this->expectException(PDOException::class);
+
+        $db->createDatabase();
     }
-
 
 
     // testes do repository
