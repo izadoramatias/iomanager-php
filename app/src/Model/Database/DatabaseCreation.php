@@ -17,13 +17,28 @@ class DatabaseCreation
 
     public function createDatabase()
     {
-        $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
-        $this->pdo->exec('USE ' . $this->databaseName . ';');
+        $result = $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
+
+        if ($result === false) {
+            throw new \PDOException('Não foi possível continuar esta ação!');
+        }
+
+        return $this->pdo;
     }
 
-    public function createTable()
+    public function useDatabase(): \PDO
     {
-            $createTable = "
+        $result = $this->pdo->exec('USE ' . $this->databaseName . ';');
+
+        if (is_numeric($result) === false) {
+            throw new \PDOException('Não foi possível executar essa ação!');
+        }
+        return $this->pdo;
+    }
+
+    public function createTable(): \PDO
+    {
+        $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
                                 idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                                 description varchar(255) NOT NULL,
@@ -32,6 +47,12 @@ class DatabaseCreation
                                 date varchar(10) NOT NULL,
                                 type TINYINT NOT NULL);";
 
-            $this->pdo->exec($createTable);
+        $result = $this->pdo->exec($createTable);
+
+        if (is_numeric($result) === false) {
+            throw new \PDOException('Não foi possível executar essa ação!');
+        }
+
+        return $this->pdo;
     }
 }

@@ -23,6 +23,7 @@ $pdoConnection = PDOSingleConnection::getPDO();
 
 $database = new DatabaseCreation(DB_NAME, $pdoConnection);
 $database->createDatabase();
+$database->useDatabase();
 $database->createTable();
 
 // verifica se o path info não está setado

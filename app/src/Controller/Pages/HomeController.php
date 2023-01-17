@@ -10,6 +10,7 @@ use App\Model\Services\HomeService;
 
 class HomeController implements InterfaceRequestController
 {
+
     public static function processRequest(): void
     {
         $render = new RenderHome();

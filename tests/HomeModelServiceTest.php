@@ -10,13 +10,18 @@ class HomeModelServiceTest extends TestCase
     public function testShouldReturnTheCalculatedSumFromInputTransactions(): void
     {
         // arrange
-        $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $transactionRepository = $this
+            ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         // act
-        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
-            0 => 2,
-            1 => 2
-        ]);
+        $transactionRepository
+            ->method('getAListWithThePricesOfTransactionsTypeInput')
+            ->willReturn([
+                0 => 2,
+                1 => 2
+            ]);
         $homeModelService = new HomeService($transactionRepository);
 
         // assert
@@ -26,10 +31,15 @@ class HomeModelServiceTest extends TestCase
     public function testShouldReturnTheCalculatedSumFromOutputTransactions(): void
     {
         // arrange
-        $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $transactionRepository = $this
+            ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         // act
-        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
+        $transactionRepository
+            ->method('getAListWithThePricesOfTransactionsTypeOutput')
+            ->willReturn([
             0 => 3,
             1 => 5
         ]);
@@ -42,32 +52,37 @@ class HomeModelServiceTest extends TestCase
     public function testShouldReturnAnArrayOfObjectsTypeTransactionModel(): void
     {
         // arrange
-        $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $transactionRepository = $this
+            ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         // act
-        $transactionRepository->method('getAListOfTransactions')->willReturn([
-            0 => [
-                'description' => 'boneco do naruto fazendo rasengan',
-                'price' => 2,
-                'category' => 'decoração',
-                'date' => '12/12/2022',
-                'type' => TransactionModel::TYPE_OUTPUT
-            ],
-            1 => [
-                'description' => 'patinho de borracha com oculos aviador',
-                'price' => 6,
-                'category' => 'decoração',
-                'date' => '12/12/2022',
-                'type' => TransactionModel::TYPE_OUTPUT
-            ],
-            2 => [
-                'description' => 'camiseta',
-                'price' => 4,
-                'category' => 'vestuario',
-                'date' => '12/12/2022',
-                'type' => TransactionModel::TYPE_INPUT
-            ]
-        ]);
+        $transactionRepository
+            ->method('getAListOfTransactions')
+            ->willReturn([
+                0 => [
+                    'description' => 'boneco do naruto fazendo rasengan',
+                    'price' => 2,
+                    'category' => 'decoração',
+                    'date' => '12/12/2022',
+                    'type' => TransactionModel::TYPE_OUTPUT
+                ],
+                1 => [
+                    'description' => 'patinho de borracha com oculos aviador',
+                    'price' => 6,
+                    'category' => 'decoração',
+                    'date' => '12/12/2022',
+                    'type' => TransactionModel::TYPE_OUTPUT
+                ],
+                2 => [
+                    'description' => 'camiseta',
+                    'price' => 4,
+                    'category' => 'vestuario',
+                    'date' => '12/12/2022',
+                    'type' => TransactionModel::TYPE_INPUT
+                ]
+            ]);
         $homeModelService = new HomeService($transactionRepository);
 
         // assert
@@ -77,20 +92,27 @@ class HomeModelServiceTest extends TestCase
     public function testShouldReturnAHomeModelWithExpectedValues(): void
     {
         // arrange
-        $transactionRepository = $this->getMockBuilder(TransactionRepository::class)->getMock();
+        $transactionRepository = $this
+            ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         // act
-        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeInput')
-                                ->willReturn([
-                                    0 => 2,
-                                    1 => 2
-                                ]);
-        $transactionRepository->method('getAListWithThePricesOfTransactionsTypeOutput')
-                                ->willReturn([
-                                    0 => 3,
-                                    1 => 5
-                                ]);
-        $transactionRepository->method('getAListOfTransactions')->willReturn([
+        $transactionRepository
+            ->method('getAListWithThePricesOfTransactionsTypeInput')
+            ->willReturn([
+                0 => 2,
+                1 => 2
+            ]);
+        $transactionRepository
+            ->method('getAListWithThePricesOfTransactionsTypeOutput')
+             ->willReturn([
+                0 => 3,
+                1 => 5
+            ]);
+        $transactionRepository
+            ->method('getAListOfTransactions')
+            ->willReturn([
             0 => [
                 'description' => 'boneco do naruto fazendo rasengan',
                 'price' => 2,
