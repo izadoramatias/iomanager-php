@@ -12,6 +12,7 @@ class HomeControllerTest extends TestCase
     {
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
         $transactionRepositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
@@ -25,7 +26,7 @@ class HomeControllerTest extends TestCase
         $homeModel = $homeService->getHomeModel();
 
         $render = (new RenderHome())->renderToHtml($homeModel);
-        $crawler = new Crawler($render);
+    $crawler = new Crawler($render);
         $input = $crawler->filter('#input__money span:last-child')->text();
 
         $this->assertEquals('20,00', $input);
@@ -35,6 +36,7 @@ class HomeControllerTest extends TestCase
     {
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
             ->getMock();
         $transactionRepositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
             0 => 1,
@@ -57,6 +59,7 @@ class HomeControllerTest extends TestCase
     {
         $transactionRepostoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
         $transactionRepostoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
@@ -80,6 +83,7 @@ class HomeControllerTest extends TestCase
     {
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
         $transactionRepositoryMock->method('getAListOfTransactions')->willReturn([
