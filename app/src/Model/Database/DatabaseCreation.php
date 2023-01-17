@@ -17,38 +17,28 @@ class DatabaseCreation
 
     public function createDatabase()
     {
-        try {
-            $result = $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
+        $result = $this->pdo->exec('CREATE DATABASE IF NOT EXISTS ' . $this->databaseName . ';');
 
-            if ($result === false) {
-                throw new \PDOException('Não foi possível executar essa ação!');
-            }
-
-            return $this->pdo;
-        } catch (\PDOException $PDOException) {
-            echo $PDOException->getMessage() . PHP_EOL;
-            die();
+        if ($result === false) {
+            throw new \PDOException('Não foi possível continuar esta ação!');
         }
+
+        return $this->pdo;
     }
 
     public function useDatabase(): \PDO
     {
-        try {
-            $result = $this->pdo->exec('USE ' . $this->databaseName . ';');
+        $result = $this->pdo->exec('USE ' . $this->databaseName . ';');
 
-            if (is_numeric($result) === false) {
-                throw new \PDOException('Não foi possível executar essa ação!');
-            }
-            return $this->pdo;
-        } catch (\PDOException $PDOException) {
-            print_r($PDOException->getMessage());
+        if (is_numeric($result) === false) {
+            throw new \PDOException('Não foi possível executar essa ação!');
         }
+        return $this->pdo;
     }
 
     public function createTable(): \PDO
     {
-        try {
-            $createTable = "
+        $createTable = "
                             CREATE TABLE IF NOT EXISTS Transactions(
                                 idTransaction int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                                 description varchar(255) NOT NULL,
@@ -57,15 +47,12 @@ class DatabaseCreation
                                 date varchar(10) NOT NULL,
                                 type TINYINT NOT NULL);";
 
-            $result = $this->pdo->exec($createTable);
+        $result = $this->pdo->exec($createTable);
 
-            if (is_numeric($result) === false) {
-                throw new \PDOException('Não foi possível executar essa ação!');
-            }
-
-            return $this->pdo;
-        } catch (\PDOException $PDOException) {
-            print_r($PDOException->getMessage());
+        if (is_numeric($result) === false) {
+            throw new \PDOException('Não foi possível executar essa ação!');
         }
+
+        return $this->pdo;
     }
 }
