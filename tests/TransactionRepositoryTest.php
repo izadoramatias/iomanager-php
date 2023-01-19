@@ -231,11 +231,7 @@ class TransactionRepositoryTest extends TestCase
         $this->assertEquals([], $transactionsList);
     }
 
-<<<<<<< HEAD
-    public function filledTransactionsList(): array
-=======
     private function filledTransactionsList(): array
->>>>>>> dev
     {
         return [
             0 => [
@@ -265,11 +261,7 @@ class TransactionRepositoryTest extends TestCase
         return $pdoMock;
     }
 
-<<<<<<< HEAD
-    private function createMocks($return, PDO|MockObject $pdo): void
-=======
     private function createMocks($return, PDO|MockObject $pdo)
->>>>>>> dev
     {
         $pdoMock = $pdo;
         $pdoStatementMock = $this
