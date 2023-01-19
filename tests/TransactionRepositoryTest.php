@@ -231,6 +231,26 @@ class TransactionRepositoryTest extends TestCase
         $this->assertEquals([], $transactionsList);
     }
 
+    private function filledTransactionsList(): array
+    {
+        return [
+            0 => [
+                'description' => 'abc',
+                'price' => 2,
+                'category' => 'nenhuma',
+                'date' => '12/12/2012',
+                'type' => 1
+            ],
+            2 => [
+                'description' => 'def',
+                'price' => 8,
+                'category' => 'nenhuma',
+                'date' => '26/12/2012',
+                'type' => 0
+            ]
+        ];
+    }
+
     private function createPDOMock(): PDO|MockObject
     {
         $pdoMock = $this
@@ -250,28 +270,5 @@ class TransactionRepositoryTest extends TestCase
 
         $pdoMock->method('query')->willReturn($pdoStatementMock);
         $pdoStatementMock->method('fetchAll')->willReturn($return);
-    }
-
-    /**
-     * @return array[]
-     */
-    public function filledTransactionsList(): array
-    {
-        return [
-            0 => [
-                'description' => 'abc',
-                'price' => 2,
-                'category' => 'nenhuma',
-                'date' => '12/12/2012',
-                'type' => 1
-            ],
-            2 => [
-                'description' => 'def',
-                'price' => 8,
-                'category' => 'nenhuma',
-                'date' => '26/12/2012',
-                'type' => 0
-            ]
-        ];
     }
 }
