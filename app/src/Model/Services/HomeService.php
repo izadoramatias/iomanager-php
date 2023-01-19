@@ -4,6 +4,7 @@ namespace App\Model\Services;
 
 use App\Model\HomeModel;
 use App\Model\TransactionModel;
+use JetBrains\PhpStorm\ArrayShape;
 
 class HomeService
 {
@@ -14,43 +15,42 @@ class HomeService
     public function getHomeModel(): HomeModel
     {
         $homeModel = new HomeModel();
+        $repositoryLists = $this->arrayWithTransactionRepositoryLists();
 
-        $homeModel->totalInputTransactions = $this->calculateTotalInputTransactions();
-        $homeModel->totalOutputTransactions = $this->calculateTotalOutputTransactions();
-        $homeModel->addTransactions($this->convertTransactionsFromArrayToObject());
+        $homeModel->totalInputTransactions = $this
+            ->calculateTotalInputTransactions($repositoryLists['inputTransactionsList']);
+        $homeModel->totalOutputTransactions = $this
+            ->calculateTotalOutputTransactions($repositoryLists['outputTransactionsList']);
+        $homeModel->addTransactions($this
+            ->convertTransactionsFromArrayToObject($repositoryLists['transactionsList']));
 
         return $homeModel;
     }
 
-    public function calculateTotalInputTransactions(): float
+    public function calculateTotalInputTransactions(array $inputTransactionsList): float
     {
-        $inputsArray = $this->transactionRepository->getAListWithThePricesOfTransactionsTypeInput();
-
         $total = 0;
-        foreach ($inputsArray as $price) {
+        foreach ($inputTransactionsList as $price) {
             $total += $price;
         }
 
         return $total;
     }
 
-    public function calculateTotalOutputTransactions(): float
+    public function calculateTotalOutputTransactions(array $outputTransactionsList): float
     {
-        $outputsArray = $this->transactionRepository->getAListWithThePricesOfTransactionsTypeOutput();
-
         $total = 0;
-        foreach ($outputsArray as $price) {
+        foreach ($outputTransactionsList as $price) {
             $total += $price;
         }
 
         return $total;
     }
 
-    public function convertTransactionsFromArrayToObject(): array
+    public function convertTransactionsFromArrayToObject(array $transactionsList): array
     {
         $arrayTransactions = [];
-        $transactions = $this->transactionRepository->getAListOfTransactions();
-        foreach ($transactions as $transaction) {
+        foreach ($transactionsList as $transaction) {
             extract($transaction, EXTR_OVERWRITE);
 
             $transactionToObject = new TransactionModel($description, $price, $category, (new \DateTimeImmutable)::createFromFormat('d/m/Y', $date), $type);
@@ -58,6 +58,26 @@ class HomeService
         }
 
         return $arrayTransactions;
+    }
+
+    private function arrayWithTransactionRepositoryLists(): array
+    {
+        $inputTransactionsList = $this
+            ->transactionRepository
+            ->getAListWithThePricesOfTransactionsTypeInput();
+        $outputTransactionsList = $this
+            ->transactionRepository
+            ->getAListWithThePricesOfTransactionsTypeOutput();
+        $transactionsList = $this
+            ->transactionRepository
+            ->getAListOfTransactions();
+
+        return [
+            'inputTransactionsList' => $inputTransactionsList,
+            'outputTransactionsList' => $outputTransactionsList,
+            'transactionsList' => $transactionsList
+        ];
+
     }
 }
 
