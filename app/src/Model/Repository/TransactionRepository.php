@@ -45,9 +45,6 @@ class TransactionRepository implements HomeServiceInterface
         $createStatement = $this->pdo->query($statement);
 
         $fetchAll = $createStatement->fetchAll(\PDO::FETCH_ASSOC);
-        if ($fetchAll === false) {
-            throw new \PDOException('Não foi possível concluir esta ação!');
-        }
 
         return $fetchAll;
     }
