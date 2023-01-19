@@ -30,7 +30,15 @@ class HomeService
     public function calculateTotalInputTransactions(array $inputTransactionsList): float
     {
         $total = 0;
+<<<<<<< HEAD
         foreach ($inputTransactionsList as $price) {
+=======
+<<<<<<< Updated upstream
+        foreach ($inputsArray as $price) {
+=======
+        foreach ($inputTransactionsList[0] as $price) {
+>>>>>>> Stashed changes
+>>>>>>> dev
             $total += $price;
         }
 
@@ -40,7 +48,15 @@ class HomeService
     public function calculateTotalOutputTransactions(array $outputTransactionsList): float
     {
         $total = 0;
+<<<<<<< HEAD
         foreach ($outputTransactionsList as $price) {
+=======
+<<<<<<< Updated upstream
+        foreach ($outputsArray as $price) {
+=======
+        foreach ($outputTransactionsList[0] as $price) {
+>>>>>>> Stashed changes
+>>>>>>> dev
             $total += $price;
         }
 
