@@ -4,6 +4,7 @@ namespace App\Model\Repository;
 
 use App\Model\Database\PDOSingleConnection;
 use App\Model\Services\HomeServiceInterface;
+use PDOStatement;
 
 class TransactionRepository implements HomeServiceInterface
 {
@@ -14,31 +15,39 @@ class TransactionRepository implements HomeServiceInterface
         $this->pdo = $pdo;
     }
 
+    // pode retornar um array com itens de transação
+    // pode retornar um array vazio
+    // pode retornar falso
     public function getAListWithThePricesOfTransactionsTypeInput(): array
     {
-        $query = "SELECT price FROM Transactions WHERE type = 1;";
-        $findTransactionsTypeInput = $this->pdo->query($query);
+        $inputTransactionsList = $this->getTransactions(
+            "SELECT price FROM Transactions WHERE type = 1;");
 
-        $fetchTransactions = $findTransactionsTypeInput->fetchAll(\PDO::FETCH_COLUMN);
-
-        return $fetchTransactions;
+        return $inputTransactionsList;
     }
 
     public function getAListWithThePricesOfTransactionsTypeOutput(): array
     {
-        $query = "SELECT price FROM Transactions WHERE type = 0;";
-        $findTransactionsTypeOutput = $this->pdo->query($query);
+        $outputTransactionsList = $this->getTransactions("SELECT price FROM Transactions WHERE type = 0;");
 
-        $fetchTransactions = $findTransactionsTypeOutput->fetchAll($this->pdo::FETCH_COLUMN);
-
-        return $fetchTransactions;
+        return $outputTransactionsList;
     }
 
     public function getAListOfTransactions(): array
     {
-        $getTransactions = $this->pdo->query("SELECT * FROM Transactions;");
+        $transactionsList = $this->getTransactions("SELECT * FROM Transactions;");
 
-        $fetchAll = $getTransactions->fetchAll($this->pdo::FETCH_ASSOC);
+        return $transactionsList;
+    }
+
+    private function getTransactions(string $statement): array|false
+    {
+        $createStatement = $this->pdo->query($statement);
+
+        $fetchAll = $createStatement->fetchAll(\PDO::FETCH_ASSOC);
+        if ($fetchAll === false) {
+            throw new \PDOException('Não foi possível concluir esta ação!');
+        }
 
         return $fetchAll;
     }

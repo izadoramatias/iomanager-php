@@ -27,7 +27,11 @@ class HomeService
         $inputsArray = $this->transactionRepository->getAListWithThePricesOfTransactionsTypeInput();
 
         $total = 0;
+<<<<<<< Updated upstream
         foreach ($inputsArray as $price) {
+=======
+        foreach ($inputTransactionsList[0] as $price) {
+>>>>>>> Stashed changes
             $total += $price;
         }
 
@@ -39,7 +43,11 @@ class HomeService
         $outputsArray = $this->transactionRepository->getAListWithThePricesOfTransactionsTypeOutput();
 
         $total = 0;
+<<<<<<< Updated upstream
         foreach ($outputsArray as $price) {
+=======
+        foreach ($outputTransactionsList[0] as $price) {
+>>>>>>> Stashed changes
             $total += $price;
         }
 
