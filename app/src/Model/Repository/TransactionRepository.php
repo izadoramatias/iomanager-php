@@ -15,9 +15,6 @@ class TransactionRepository implements HomeServiceInterface
         $this->pdo = $pdo;
     }
 
-    // pode retornar um array com itens de transação
-    // pode retornar um array vazio
-    // pode retornar falso
     public function getAListWithThePricesOfTransactionsTypeInput(): array
     {
         $inputTransactionsList = $this->getTransactions(
