@@ -30,8 +30,8 @@ class HomeService
     public function calculateTotalInputTransactions(array $inputTransactionsList): float
     {
         $total = 0;
-        foreach ($inputTransactionsList[0] as $price) {
-            $total += $price;
+        foreach ($inputTransactionsList as $price) {
+            $total += $price['price'];
         }
 
         return $total;
@@ -40,8 +40,8 @@ class HomeService
     public function calculateTotalOutputTransactions(array $outputTransactionsList): float
     {
         $total = 0;
-        foreach ($outputTransactionsList[0] as $price) {
-            $total += $price;
+        foreach ($outputTransactionsList as $price) {
+            $total += $price['price'];
         }
 
         return $total;
@@ -64,13 +64,13 @@ class HomeService
     {
         $inputTransactionsList = $this
             ->transactionRepository
-            ->getAListWithThePricesOfTransactionsTypeInput();
+            ->getAPriceListOfTransactionsInputType();
         $outputTransactionsList = $this
             ->transactionRepository
-            ->getAListWithThePricesOfTransactionsTypeOutput();
+            ->getAPriceListOfTransactionsOutputType();
         $transactionsList = $this
             ->transactionRepository
-            ->getAListOfTransactions();
+            ->getTransactionsList();
 
         return [
             'inputTransactionsList' => $inputTransactionsList,

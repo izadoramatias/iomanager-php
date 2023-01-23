@@ -8,65 +8,50 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class HomeControllerTest extends TestCase
 {
-    public function testShouldRenderTotalInputsCalculatedByTheService(): void
+    public function testShouldCorrectlyRenderTotalInputValueCalculatedByTheService(): void
     {
-        $transactionRepositoryMock = $this
-            ->getMockBuilder(TransactionRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $crawler = $this->crawler('getAPriceListOfTransactionsInputType', [
+            ['price' => 2],
+            ['price' => 3],
+            ['price' => 8],
+            ['price' => 7]
+        ]);
 
-        $transactionRepositoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
-            0 => 2,
-            1 => 3,
-            2 => 8,
-            3 => 7
-        ]); // total = 20,00
-
-        $homeService = new HomeService($transactionRepositoryMock);
-        $homeModel = $homeService->getHomeModel();
-
-        $render = (new RenderHome())->renderToHtml($homeModel);
-    $crawler = new Crawler($render);
         $input = $crawler->filter('#input__money span:last-child')->text();
 
         $this->assertEquals('20,00', $input);
     }
 
-    public function testShouldRenderTotalOutputsCalculatedByTheService(): void
+    public function testShouldCorrectlyRenderTotalOutputValueCalculatedByTheService(): void
     {
-        $transactionRepositoryMock = $this
-            ->getMockBuilder(TransactionRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $transactionRepositoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
-            0 => 1,
-            1 => 2,
-            2 => 2,
-            3 => 5
-        ]); // total = 10,00
+        $crawler = $this->crawler('getAPriceListOfTransactionsOutputType', [
+            ['price' => 1],
+            ['price' => 2],
+            ['price' => 2],
+            ['price' => 5]
+        ]);
 
-        $service = new HomeService($transactionRepositoryMock);
-        $homeModel = $service->getHomeModel();
-        $render = (new RenderHome())->renderToHtml($homeModel);
-
-        $crawler = new Crawler($render);
         $output = $crawler->filter('#output__money span:last-child')->text();
 
         $this->assertEquals('10,00', $output);
     }
 
-    public function testShouldRenderCalculatedTotal(): void
+    public function testShouldCalculateTheDifferenceFromTotalOfInputTransactionsAndOutputTransactions(): void
     {
         $transactionRepostoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $transactionRepostoryMock->method('getAListWithThePricesOfTransactionsTypeInput')->willReturn([
-            1, 2, 2
+        $transactionRepostoryMock->method('getAPriceListOfTransactionsInputType')->willReturn([
+            ['price' => 1],
+            ['price' => 2],
+            ['price' => 2]
         ]);
-        $transactionRepostoryMock->method('getAListWithThePricesOfTransactionsTypeOutput')->willReturn([
-            5, 3, 2
+        $transactionRepostoryMock->method('getAPriceListOfTransactionsOutputType')->willReturn([
+            ['price' => 5],
+            ['price' => 3],
+            ['price' => 2]
         ]);
 
         $service = new HomeService($transactionRepostoryMock);
@@ -79,14 +64,14 @@ class HomeControllerTest extends TestCase
         $this->assertEquals('-5,00', $total);
     }
 
-    public function testShouldBeCorrectlyRenderingTransactions(): void
+    public function testShouldCorrectlyTransactionsRender(): void
     {
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $transactionRepositoryMock->method('getAListOfTransactions')->willReturn([
+        $transactionRepositoryMock->method('getTransactionsList')->willReturn([
             0 => [
                 'description' => 'batata',
                 'price' => 2.99,
@@ -113,4 +98,23 @@ class HomeControllerTest extends TestCase
         $this->assertEquals('20/12/2022', $date);
     }
 
+    private function crawler($testedMethod, $result): Crawler
+    {
+        $transactionRepositoryMock = $this
+            ->getMockBuilder(TransactionRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $transactionRepositoryMock
+            ->method($testedMethod)
+            ->willReturn($result);
+
+        $homeService = new HomeService($transactionRepositoryMock);
+        $homeModel = $homeService->getHomeModel();
+
+        $render = (new RenderHome())->renderToHtml($homeModel);
+        $crawler = new Crawler($render);
+
+        return $crawler;
+    }
 }

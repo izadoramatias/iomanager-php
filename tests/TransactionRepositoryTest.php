@@ -170,7 +170,7 @@ class TransactionRepositoryTest extends TestCase
         $this->manipulateReturn([2, 2], $pdoMock);
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $listWithTransactionsInputPrices = $transactionRepository->getAListWithThePricesOfTransactionsTypeInput();
+        $listWithTransactionsInputPrices = $transactionRepository->getAPriceListOfTransactionsInputType();
 
         $this->assertEquals([2, 2], $listWithTransactionsInputPrices);
     }
@@ -181,7 +181,7 @@ class TransactionRepositoryTest extends TestCase
         $this->manipulateReturn([], $pdoMock);
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $listWithTransactionsInputPrices = $transactionRepository->getAListWithThePricesOfTransactionsTypeInput();
+        $listWithTransactionsInputPrices = $transactionRepository->getAPriceListOfTransactionsInputType();
 
         $this->assertEquals([], $listWithTransactionsInputPrices);
     }
@@ -192,7 +192,7 @@ class TransactionRepositoryTest extends TestCase
         $this->manipulateReturn([3, 5], $pdoMock);
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $listWithTransactionsOutputPrices = $transactionRepository->getAListWithThePricesOfTransactionsTypeOutput();
+        $listWithTransactionsOutputPrices = $transactionRepository->getAPriceListOfTransactionsOutputType();
 
         $this->assertEquals([3, 5], $listWithTransactionsOutputPrices);
     }
@@ -203,7 +203,7 @@ class TransactionRepositoryTest extends TestCase
         $this->manipulateReturn([], $pdoMock);
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $listWithTransactionsOutputPrices = $transactionRepository->getAListWithThePricesOfTransactionsTypeOutput();
+        $listWithTransactionsOutputPrices = $transactionRepository->getAPriceListOfTransactionsOutputType();
 
         $this->assertEquals([], $listWithTransactionsOutputPrices);
     }
@@ -214,7 +214,7 @@ class TransactionRepositoryTest extends TestCase
         $this->manipulateReturn($this->filledTransactionsList(), $pdoMock);
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $transactionsList = $transactionRepository->getAListOfTransactions();
+        $transactionsList = $transactionRepository->getTransactionsList();
 
         $this->assertEquals($this->filledTransactionsList(), $transactionsList);
     }
@@ -225,7 +225,7 @@ class TransactionRepositoryTest extends TestCase
         $this->manipulateReturn([], $pdoMock);
         $transactionRepository = new TransactionRepository($pdoMock);
 
-        $transactionsList = $transactionRepository->getAListOfTransactions();
+        $transactionsList = $transactionRepository->getTransactionsList();
 
         $this->assertEquals([], $transactionsList);
     }

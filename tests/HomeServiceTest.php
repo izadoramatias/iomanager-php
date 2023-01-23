@@ -13,7 +13,10 @@ class HomeServiceTest extends TestCase
             ->getMockBuilder(TransactionRepository::class)
             ->disableOriginalConstructor()
             ->getMock(); // dummy
-        $inputTransactionsList = [2, 2.5];
+        $inputTransactionsList = [
+            ['price' => 2,],
+            ['price' => 2.5]
+        ];
 
         $homeService = new HomeService($transactionRepositoryMock);
         $transactionsSum = $homeService->calculateTotalInputTransactions($inputTransactionsList);
@@ -27,7 +30,10 @@ class HomeServiceTest extends TestCase
             ->getMockBuilder(TransactionRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $outputTransactionsList = [3, 5.5];
+        $outputTransactionsList = [
+            ['price' => 3],
+            ['price' => 5.5]
+        ];
 
         $homeService = new HomeService($transactionRepositoryMock);
         $transactionsSum = $homeService->calculateTotalOutputTransactions($outputTransactionsList);
@@ -57,13 +63,19 @@ class HomeServiceTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $transactionRepositoryMock
-            ->method('getAListWithThePricesOfTransactionsTypeInput')
-            ->willReturn([2, 2]);
+            ->method('getAPriceListOfTransactionsInputType')
+            ->willReturn([
+                ['price' => 2],
+                ['price' => 2]
+            ]);
         $transactionRepositoryMock
-            ->method('getAListWithThePricesOfTransactionsTypeOutput')
-             ->willReturn([3, 5]);
+            ->method('getAPriceListOfTransactionsOutputType')
+             ->willReturn([
+                 ['price' => 3],
+                 ['price' => 5]
+             ]);
         $transactionRepositoryMock
-            ->method('getAListOfTransactions')
+            ->method('getTransactionsList')
             ->willReturn($this->filledTransactionsList());
 
         $homeModelService = new HomeService($transactionRepositoryMock);

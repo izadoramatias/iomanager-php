@@ -15,7 +15,7 @@ class TransactionRepository implements HomeServiceInterface
         $this->pdo = $pdo;
     }
 
-    public function getAListWithThePricesOfTransactionsTypeInput(): array
+    public function getAPriceListOfTransactionsInputType(): array
     {
         $inputTransactionsList = $this->getTransactions(
             "SELECT price FROM Transactions WHERE type = 1;");
@@ -23,14 +23,14 @@ class TransactionRepository implements HomeServiceInterface
         return $inputTransactionsList;
     }
 
-    public function getAListWithThePricesOfTransactionsTypeOutput(): array
+    public function getAPriceListOfTransactionsOutputType(): array
     {
         $outputTransactionsList = $this->getTransactions("SELECT price FROM Transactions WHERE type = 0;");
 
         return $outputTransactionsList;
     }
 
-    public function getAListOfTransactions(): array
+    public function getTransactionsList(): array
     {
         $transactionsList = $this->getTransactions("SELECT * FROM Transactions;");
 
