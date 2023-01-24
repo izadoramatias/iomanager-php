@@ -3,6 +3,7 @@
 use App\Model\Database\DatabaseCreation;
 use App\Model\Database\PDOSingleConnection;
 use App\Model\Repository\TransactionRepository;
+use App\Model\Storage\TransactionStorage;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -164,70 +165,66 @@ class TransactionRepositoryTest extends TestCase
         $db->createTable();
     }
 
-    public function testeShouldReturnAPriceArrayWhenDatabaseHasInputTransactionsInputRegistered(): void
+
+
+    public function testShouldReturnAPricesArrayWhenDatabaseHasInputTransactionsRegistered(): void
     {
-        $pdoMock = $this->createPDOMock();
-        $this->manipulateReturn([2, 2], $pdoMock);
-        $transactionRepository = new TransactionRepository($pdoMock);
+        $storage = $this->mockGetTransactions([2,2]);
+        $transactionRepository = new TransactionRepository($storage);
 
-        $listWithTransactionsInputPrices = $transactionRepository->getAPriceListOfTransactionsInputType();
+        $result = $transactionRepository->getAPriceListOfTransactionsInputType();
 
-        $this->assertEquals([2, 2], $listWithTransactionsInputPrices);
+        $this->assertEquals([2, 2], $result);
     }
 
     public function testShouldReturnAnEmptyArrayWhenDatabaseDoesNotHasTransactionsInputRegistered(): void
     {
-        $pdoMock = $this->createPDOMock();
-        $this->manipulateReturn([], $pdoMock);
-        $transactionRepository = new TransactionRepository($pdoMock);
+        $storage = $this->mockGetTransactions([]);
+        $transactionRepository = new TransactionRepository($storage);
 
-        $listWithTransactionsInputPrices = $transactionRepository->getAPriceListOfTransactionsInputType();
+        $result = $transactionRepository->getAPriceListOfTransactionsInputType();
 
-        $this->assertEquals([], $listWithTransactionsInputPrices);
+        $this->assertEquals([], $result);
     }
 
     public function testeShouldReturnAPriceArrayWhenDatabaseHasOutputTransactionsInputRegistered(): void
     {
-        $pdoMock = $this->createPDOMock();
-        $this->manipulateReturn([3, 5], $pdoMock);
-        $transactionRepository = new TransactionRepository($pdoMock);
+        $storage = $this->mockGetTransactions([3, 5]);
+        $transactionRepository = new TransactionRepository($storage);
 
-        $listWithTransactionsOutputPrices = $transactionRepository->getAPriceListOfTransactionsOutputType();
+        $result = $transactionRepository->getAPriceListOfTransactionsOutputType();
 
-        $this->assertEquals([3, 5], $listWithTransactionsOutputPrices);
+        $this->assertEquals([3, 5], $result);
     }
 
     public function testShouldReturnAnEmptyArrayWhenDatabaseDoesNotHasOutputTransactionsRegistered(): void
     {
-        $pdoMock = $this->createPDOMock();
-        $this->manipulateReturn([], $pdoMock);
-        $transactionRepository = new TransactionRepository($pdoMock);
+        $storage = $this->mockGetTransactions([]);
+        $transactionRepository = new TransactionRepository($storage);
 
-        $listWithTransactionsOutputPrices = $transactionRepository->getAPriceListOfTransactionsOutputType();
+        $result = $transactionRepository->getAPriceListOfTransactionsOutputType();
 
-        $this->assertEquals([], $listWithTransactionsOutputPrices);
+        $this->assertEquals([], $result);
     }
 
     public function testShouldReturnAnArrayOfTransactionsIfExistsDataOnTable(): void
     {
-        $pdoMock = $this->createPDOMock();
-        $this->manipulateReturn($this->filledTransactionsList(), $pdoMock);
-        $transactionRepository = new TransactionRepository($pdoMock);
+        $storage = $this->mockGetTransactions($this->filledTransactionsList());
+        $transactionRepository = new TransactionRepository($storage);
 
-        $transactionsList = $transactionRepository->getTransactionsList();
+        $result = $transactionRepository->getTransactionsList();
 
-        $this->assertEquals($this->filledTransactionsList(), $transactionsList);
+        $this->assertEquals($this->filledTransactionsList(), $result);
     }
 
     public function testShouldReturnAnEmptyListIfDoesNotHasDataOnTable(): void
     {
-        $pdoMock = $this->createPDOMock();
-        $this->manipulateReturn([], $pdoMock);
-        $transactionRepository = new TransactionRepository($pdoMock);
+        $storage = $this->mockGetTransactions([]);
+        $transactionRepository = new TransactionRepository($storage);
 
-        $transactionsList = $transactionRepository->getTransactionsList();
+        $result = $transactionRepository->getTransactionsList();
 
-        $this->assertEquals([], $transactionsList);
+        $this->assertEquals([], $result);
     }
 
     private function filledTransactionsList(): array
@@ -250,24 +247,18 @@ class TransactionRepositoryTest extends TestCase
         ];
     }
 
-    private function createPDOMock(): PDO|MockObject
+    private function mockGetTransactions($expectedResult): TransactionStorage|MockObject
     {
-        $pdoMock = $this
-            ->getMockBuilder(PDO::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $storageMock = $this->getStorageMock();
 
-        return $pdoMock;
+//        $storageMock->method('getTransactions')->willReturnCallback(function () use ($expectedResult) {return $expectedResult;});
+        $storageMock->method('getTransactions')->willReturn($expectedResult);
+
+        return $storageMock;
     }
 
-    private function manipulateReturn($return, PDO|MockObject $pdo): void
+    private function getStorageMock(): TransactionStorage|MockObject
     {
-        $pdoMock = $pdo;
-        $pdoStatementMock = $this
-            ->getMockBuilder(PDOStatement::class)
-            ->getMock();
-
-        $pdoMock->method('query')->willReturn($pdoStatementMock);
-        $pdoStatementMock->method('fetchAll')->willReturn($return);
+        return $this->getMockBuilder(TransactionStorage::class)->disableOriginalConstructor()->getMock();
     }
 }

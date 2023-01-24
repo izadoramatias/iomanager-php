@@ -2,47 +2,30 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Database\PDOSingleConnection;
 use App\Model\Services\HomeServiceInterface;
-use PDOStatement;
+use App\Model\Storage\TransactionStorage;
 
 class TransactionRepository implements HomeServiceInterface
 {
-    private \PDO $pdo;
-    public function __construct(
-        \PDO $pdo
-    ){
-        $this->pdo = $pdo;
+    private TransactionStorage $storage;
+
+    public function __construct(TransactionStorage $storage)
+    {
+        $this->storage = $storage;
     }
 
     public function getAPriceListOfTransactionsInputType(): array
     {
-        $inputTransactionsList = $this->getTransactions(
-            "SELECT price FROM Transactions WHERE type = 1;");
-
-        return $inputTransactionsList;
+        return $this->storage->getTransactions("SELECT price FROM Transactions WHERE type = 1;");
     }
 
     public function getAPriceListOfTransactionsOutputType(): array
     {
-        $outputTransactionsList = $this->getTransactions("SELECT price FROM Transactions WHERE type = 0;");
-
-        return $outputTransactionsList;
+        return $this->storage->getTransactions("SELECT price FROM Transactions WHERE type = 0;");
     }
 
     public function getTransactionsList(): array
     {
-        $transactionsList = $this->getTransactions("SELECT * FROM Transactions;");
-
-        return $transactionsList;
-    }
-
-    private function getTransactions(string $statement): array|false
-    {
-        $createStatement = $this->pdo->query($statement);
-
-        $fetchAll = $createStatement->fetchAll(\PDO::FETCH_ASSOC);
-
-        return $fetchAll;
+        return $this->storage->getTransactions("SELECT * FROM Transactions;");
     }
 }
