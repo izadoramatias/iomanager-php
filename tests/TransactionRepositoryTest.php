@@ -3,13 +3,166 @@
 use App\Model\Database\DatabaseCreation;
 use App\Model\Database\PDOSingleConnection;
 use App\Model\Repository\TransactionRepository;
-use App\Model\Storage\TransactionStorage;
 use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TransactionRepositoryTest extends TestCase
 {
+    public function testInvokeQuantityShouldReturnNullIfCreateInstanceIsNeverCalled(): void
+    {
+        $PDOSingleConnectionTest = new class extends PDOSingleConnection {
+            public static ?int $invokeQuantity = null;
+
+            public static function getPDO($hostName = 'mysql:host=localhost', $username = 'root', $password = '12345'): PDO
+            {
+                if (is_null(self::$invokeQuantity)){
+                    self::createInstancePDO($hostName, $username, $password);
+                }
+                return new PDO($hostName, $username, $password);
+            }
+
+            protected static function createInstancePDO($hostName, $username, $password): void
+            {
+                self::$invokeQuantity = 1;
+            }
+        };
+
+        $this->assertEquals(null, $PDOSingleConnectionTest::$invokeQuantity);
+    }
+
+    public function testInstanceQuantityShouldBeOneWhenCreateInstanceIsCalled(): void
+    {
+        $PDOSingleConnectionTest = new class extends PDOSingleConnection {
+            public static ?int $instancesQuantity = null;
+
+            public static function getPDO($hostName = 'mysql:host=localhost', $username = 'root', $password = '12345'): PDO // os parametros e retorno não importam, importa apenas a chamada do método
+            {
+                if (is_null(self::$instancesQuantity)){
+                    self::createInstancePDO($hostName, $username, $password);
+                }
+                var_dump(self::$instancesQuantity);
+                return new PDO($hostName, $username, $password);
+            }
+
+            protected static function createInstancePDO($hostName, $username, $password): void
+            {
+                self::$instancesQuantity++;
+            }
+        };
+
+        $this->assertEquals(1, $PDOSingleConnectionTest::$instancesQuantity);
+    }
+
+    public function testShouldThrowAnExceptionWhenAnErrorOccursWhileTryingToConnectToTheDatabase(): void
+    {
+        $PDOSingleConnectionTest = new class extends PDOSingleConnection {
+            public static function getPDO($hostName = 'localhost', $username = 'root', $password = '12345'): PDO
+            {
+                return throw new PDOException();
+            }
+        };
+
+        $this->expectException(PDOException::class);
+
+        $PDOSingleConnectionTest::getPDO();
+    }
+
+    public function testShouldReturnAPdoObjectWhenCreateDatabaseExecutionReturnAnIntegerGreaterThanOrEqualToZero(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(1);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->assertInstanceOf(PDO::class, $db->createDatabase());
+    }
+
+    public function testShouldThrowAnExceptionWhenResultOfCreateDatabaseExecutionIsFalse(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(false);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->expectException(PDOException::class);
+
+        $db->createDatabase();
+    }
+
+    public function testShouldReturnAPdoObjectWhenUseDatabaseExecutionReturnAnIntegerGreaterThanOrEqualToZero(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(1);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->assertInstanceOf(PDO::class, $db->useDatabase());
+    }
+
+    public function testShoundThrowAnExceptionWhenUseDatabaseIsFalse(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(false);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->expectException(PDOException::class);
+
+        $db->useDatabase();
+    }
+
+    public function testShouldReturnAPdoObjectIsCreateTableIsSuccessful(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(1);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->assertInstanceOf(PDO::class, $db->createTable());
+    }
+
+    public function testShouldThrowAnExceptionWhenCreateTableIsFalse(): void
+    {
+        $pdoMock = $this
+            ->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pdoMock
+            ->method('exec')
+            ->willReturn(false);
+
+        $db = new DatabaseCreation('iomanager', $pdoMock);
+
+        $this->expectException(PDOException::class);
+
+        $db->createTable();
+    }
+
     public function testShouldReturnAPricesArrayWhenDatabaseHasInputTransactionsRegistered(): void
     {
         $pdoMock = $this->mocks()['getPdoMock'];
@@ -101,8 +254,6 @@ class TransactionRepositoryTest extends TestCase
     {
         $pdoStatementMock = $this->mocks()['getPdoStatementMock'];
         $pdoMock->method('query')->willReturn($pdoStatementMock);
-
-//        $storageMock->method('getTransactions')->willReturnCallback(function () use ($expectedResult) {return $expectedResult;});
 
         return $pdoStatementMock->method('fetchAll')->willReturn($expectedResult);
     }

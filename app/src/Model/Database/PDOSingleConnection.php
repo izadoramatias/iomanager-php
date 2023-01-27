@@ -20,7 +20,7 @@ class PDOSingleConnection
         return self::$pdo;
     }
 
-    protected static function createInstancePDO($hostName, $username, $password)
+    protected static function createInstancePDO($hostName, $username, $password): void
     {
         self::$pdo = new PDO("mysql:host=$hostName;", $username, $password);
         self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
