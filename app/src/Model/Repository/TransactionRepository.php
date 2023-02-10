@@ -3,7 +3,6 @@
 namespace App\Model\Repository;
 
 use App\Model\Services\HomeServiceInterface;
-use App\Model\Storage\TransactionStorage;
 
 class TransactionRepository implements HomeServiceInterface
 {

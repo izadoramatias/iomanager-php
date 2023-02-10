@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <phpunit bootstrap="vendor/autoload.php"
-            colors="true"
-            verbose="true"
-            stopOnFailure="false">
+    <phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        verbose="true"
+        stopOnFailure="false">
         <testsuites>
             <testsuite name="Testes">
                 <directory>tests</directory>
@@ -15,4 +17,7 @@
             <var name="DB_PASSWORD" value="12345"/>
             <var name="DB_NAME" value="iomanager"/>
         </php>
+        <logging>
+            <testdoxText outputFile="testdox.txt" />
+        </logging>
     </phpunit>

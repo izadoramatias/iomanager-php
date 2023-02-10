@@ -35,12 +35,11 @@ class TransactionRepositoryTest extends TestCase
         $PDOSingleConnectionTest = new class extends PDOSingleConnection {
             public static ?int $instancesQuantity = null;
 
-            public static function getPDO($hostName = 'mysql:host=localhost', $username = 'root', $password = '12345'): PDO // os parametros e retorno não importam, importa apenas a chamada do método
+            public static function getPDO($hostName = 'mysql:host=localhost', $username = 'root', $password = 'fulltime12345'): PDO // os parametros e retorno não importam, importa apenas a chamada do método
             {
                 if (is_null(self::$instancesQuantity)){
                     self::createInstancePDO($hostName, $username, $password);
                 }
-                var_dump(self::$instancesQuantity);
                 return new PDO($hostName, $username, $password);
             }
 
@@ -49,6 +48,8 @@ class TransactionRepositoryTest extends TestCase
                 self::$instancesQuantity++;
             }
         };
+
+        $PDOSingleConnectionTest::getPDO();
 
         $this->assertEquals(1, $PDOSingleConnectionTest::$instancesQuantity);
     }
@@ -186,7 +187,7 @@ class TransactionRepositoryTest extends TestCase
         $this->assertEquals([], $result);
     }
 
-    public function testeShouldReturnAPriceArrayWhenDatabaseHasOutputTransactionsInputRegistered(): void
+    public function testShouldReturnAPriceArrayWhenDatabaseHasOutputTransactionsInputRegistered(): void
     {
         $pdoMock = $this->mocks()['getPdoMock'];
         $storage = $this->mockFetchAll([3, 5], $pdoMock);

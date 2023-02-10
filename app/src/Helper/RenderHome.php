@@ -10,6 +10,7 @@ class RenderHome
     public function renderToHtml(HomeModel $home): string
     {
         $transactionHtml = '';
+
         foreach ($home->getTransactions() as $transaction){
             $transactionHtml .= $this->renderTransactionToHtml($transaction);
         }

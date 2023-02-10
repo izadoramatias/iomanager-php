@@ -12,7 +12,7 @@ class HomeServiceTest extends TestCase
         $transactionRepositoryMock = $this
             ->getMockBuilder(TransactionRepository::class)
             ->disableOriginalConstructor()
-            ->getMock(); // dummy
+            ->getMock();
         $inputTransactionsList = [
             ['price' => 2,],
             ['price' => 2.5]

@@ -1,0 +1,55 @@
+Home Controller
+ [x] Should correctly render total input value calculated by the service
+ [x] Should correctly render total output value calculated by the service
+ [x] Should calculate the difference from total of input transactions and output transactions
+ [x] Should correctly transactions render
+
+Home Model
+ [x] Total input and total output should be zero when model is created
+ [x] Transactions list should be empty when model is created
+
+Home Service
+ [x] Should return the calculated sum from input transactions
+ [x] Should return the calculated sum from output transactions
+ [x] Should convert an array of arrays to an array of objects type transaction
+ [x] Should return a home model with expected values
+
+Render Home
+ [x] Input number should be correctly formated replacing decimal pointing number separator with comma
+ [x] Output number should be correctly formated replacing decimal pointing number separator with comma
+ [x] Total number should be correctly formated replacing decimal pointing number separator with comma
+ [x] When total is negative should have a dash before the number
+ [x] When total is positive should not have a dash before the number
+ [x] When total is positive should have class positive credit
+ [x] When total is negative should have class negative credit
+ [x] When add a transaction it should have into a section
+ [x] Transaction should have a description
+ [x] Transaction should have a price
+ [x] Transaction should have a category
+ [x] Transaction should have date
+ [x] Transaction should have a input type price input when type is one
+ [x] Transaction should have a input type price output when type is zero
+
+Transaction Model (Tests\TransactionModel)
+ [x] Should return true if transaction price is equal or greater than zero
+ [x] Should return false if transaction type is lower than zero
+ [x] Should return true if transaction type is one
+ [x] Should return false if transaction type is zero
+
+Transaction Repository
+ [x] Invoke quantity should return null if create instance is never called
+ [x] Instance quantity should be one when create instance is called
+ [x] Should throw an exception when an error occurs while trying to connect to the database
+ [x] Should return a pdo object when create database execution return an integer greater than or equal to zero
+ [x] Should throw an exception when result of create database execution is false
+ [x] Should return a pdo object when use database execution return an integer greater than or equal to zero
+ [x] Shound throw an exception when use database is false
+ [x] Should return a pdo object is create table is successful
+ [x] Should throw an exception when create table is false
+ [x] Should return a prices array when database has input transactions registered
+ [x] Should return an empty array when database does not has transactions input registered
+ [x] Should return a price array when database has output transactions input registered
+ [x] Should return an empty array when database does not has output transactions registered
+ [x] Should return an array of transactions if exists data on table
+ [x] Should return an empty list if does not has data on table
+

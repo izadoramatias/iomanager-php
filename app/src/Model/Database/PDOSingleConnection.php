@@ -11,7 +11,7 @@ class PDOSingleConnection
     public static function getPDO(
         $hostName = 'localhost',
         $username = 'root',
-        $password = '12345'
+        $password = 'fulltime12345'
     ): PDO
     {
         if (is_null(self::$pdo)) {
@@ -26,18 +26,3 @@ class PDOSingleConnection
         self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 }
-
-//class PDOSingleConnectionTest  extends PDOSingleConnection{
-//    public static $qtdInv = 0;
-//
-//    protected static function createInstancePDO($hostName, $username, $password)
-//    {
-//        self::$qtdInv++;
-//    }
-//}
-//
-//PDOSingleConnectionTest::getPDO();
-//PDOSingleConnectionTest::$qtdInv ==1
-//
-//PDOSingleConnectionTest::getPDO();
-//PDOSingleConnectionTest::$qtdInv == 1
